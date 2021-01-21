@@ -94,7 +94,7 @@
             <section class="inner">
                 <section class="inner-main">
                     <div class="post">
-    <article id="post-ckk6kggje000111sq2trn92q6" class="article article-type-post" itemscope
+    <article id="post-ckk6v615s000107qzd06a79q0" class="article article-type-post" itemscope
     itemprop="blogPost">
 
     <div class="article-inner">
@@ -136,7 +136,88 @@
         </div>
 
         <div class="article-entry post-inner-html hairline" itemprop="articleBody">
-            <h1 id="实现一个log函数"><a href="#实现一个log函数" class="headerlink" title="实现一个log函数"></a>实现一个log函数</h1>
+            <h1 id="实现一个log函数"><a href="#实现一个log函数" class="headerlink" title="实现一个log函数"></a>实现一个log函数</h1><p>首先 有换底公式 log<sub>a</sub>b=lnb/lna<br>由此 求log(b,a)可以转化为求lnb/lna</p>
+<pre><code class="c">double mylog(double b,double a)&#123;
+    return ln(b) / ln(a);
+&#125;</code></pre>
+<p>接下来只需要编写ln函数<br>常用的方法是采用多项式展开（泰勒级数）<br>ln(1+x)展开后为</p>
+<img src="/2021/01/21/%E5%AE%9E%E7%8E%B0log%E5%87%BD%E6%95%B0/1.png" class="" title="ln(1+x)的泰勒展开">
+
+<p>所以 先将ln(t)中 t 化为 2^k*(1+f) 的形式<br>其中sqrt(2)/2 &lt; f &lt; sqrt(2)</p>
+<h3 id="定义常量"><a href="#定义常量" class="headerlink" title="定义常量"></a>定义常量</h3><pre><code class="c">#define SQRT2 1.4142135623730950488016887242097
+#define SQRT2D2 0.70710678118654752440084436210485
+#define LN2H 6.93147180369123816490e-01
+#define LN2L 1.90821492927058770002e-10</code></pre>
+<h3 id="参数化约"><a href="#参数化约" class="headerlink" title="参数化约"></a>参数化约</h3><pre><code class="c">    int k=0;
+    if(x&gt;SQRT2)&#123;
+        do
+        &#123;
+            x/=2;
+            k++;
+        &#125; while (x&gt;SQRT2);
+    &#125;else if(x&lt;SQRT2D2)&#123;
+        do
+        &#123;
+            x*=2;
+            k--;
+        &#125; while (x&lt;SQRT2D2);
+    &#125;</code></pre>
+<p>此时 不难看出 ln(t)=ln(2^k*(1+f))=kln2+ln(1+f)<br>ln(2)在上方已经预先求出并定义</p>
+<p>此时只需求出ln(1+f)<br>为了保证泰勒展开计算的精确度，要使f尽可能接近1，做如下变换<br>s=f/(2+f)<br>则ln(1+f)=ln(1+s)-ln(1-s)<br>此时 做泰勒展开 可得<br>ln(1+f)=ln(1+s)-ln(1-s)<br>       =2(s-s^3/3+s^5/5+…)<br>做循环求出该多项式即可</p>
+<h3 id="求多项式"><a href="#求多项式" class="headerlink" title="求多项式"></a>求多项式</h3><pre><code class="c">    for(int i=1;i&lt;14;i+=2)&#123;
+        double s=x;
+        for(int c=1;c&lt;i;c++)&#123;
+            s*=x;
+        &#125;
+        res+=2*s/i;
+    &#125;</code></pre>
+<h3 id="测试用代码"><a href="#测试用代码" class="headerlink" title="测试用代码"></a>测试用代码</h3><pre><code class="c">#include &lt;stdio.h&gt;
+#include &lt;math.h&gt;
+#define SQRT2 1.4142135623730950488016887242097
+#define SQRT2D2 0.70710678118654752440084436210485
+#define LN2H 6.93147180369123816490e-01
+#define LN2L 1.90821492927058770002e-10
+
+double ln(double x)&#123;  
+    int k=0;
+    if(x&gt;SQRT2)&#123;
+        do
+        &#123;
+            x/=2;
+            k++;
+        &#125; while (x&gt;SQRT2);
+    &#125;else if(x&lt;SQRT2D2)&#123;
+        do
+        &#123;
+            x*=2;
+            k--;
+        &#125; while (x&lt;SQRT2D2);
+    &#125;
+    double res=k*LN2H+k*LN2L;
+    x-=1;
+    x=x/(2+x);
+    for(int i=1;i&lt;14;i+=2)&#123;
+        double s=x;
+        for(int c=1;c&lt;i;c++)&#123;
+            s*=x;
+        &#125;
+        res+=2*s/i;
+    &#125;
+    return res;
+&#125;
+
+double mylog(double b,double a)&#123;
+    return ln(b)/ln(a);
+&#125;
+
+int main()&#123;
+    printf(&quot;%lf %lf&quot;,mylog(15,2),log(15)/log(2));
+    return 0;
+&#125;
+</code></pre>
+<h3 id="测试结果"><a href="#测试结果" class="headerlink" title="测试结果"></a>测试结果</h3><img src="/2021/01/21/%E5%AE%9E%E7%8E%B0log%E5%87%BD%E6%95%B0/2.png" class="" title="测试输出">
+<a href="/2021/01/21/%E5%AE%9E%E7%8E%B0log%E5%87%BD%E6%95%B0/log.c" title="下载源代码文件(log.c)">下载源代码文件(log.c)</a>
+
         </div>
 
     </div>
