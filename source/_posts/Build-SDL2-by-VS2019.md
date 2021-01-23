@@ -1,6 +1,6 @@
 ---
 title: Build SDL2 by VS2019
-date: 2021-01-22 21:18:12
+date: 2021-01-21 21:18:12
 tags: 
     - VS2019
     - SDL2
