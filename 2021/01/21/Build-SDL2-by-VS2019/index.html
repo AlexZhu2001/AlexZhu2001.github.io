@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     
-    <title>实现log函数 | Alex&#39;s Blog</title>
+    <title>Build SDL2 by VS2019 | Alex&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
     
@@ -94,7 +94,7 @@
             <section class="inner">
                 <section class="inner-main">
                     <div class="post">
-    <article id="post-ckk9llpz10004zbwj0y16g2jg" class="article article-type-post" itemscope
+    <article id="post-ckk9lmk3t00000wr297zbgnwz" class="article article-type-post" itemscope
     itemprop="blogPost">
 
     <div class="article-inner">
@@ -110,7 +110,7 @@
             
   
     <h1 class="article-title" itemprop="name">
-      实现log函数
+      Build SDL2 by VS2019
     </h1>
   
 
@@ -120,14 +120,14 @@
         <div class="article-more-info article-more-info-post hairline">
 
             <div class="article-date">
-  <time datetime="2021-01-21T07:58:40.000Z" itemprop="datePublished">2021-01-21</time>
+  <time datetime="2021-01-21T13:18:12.000Z" itemprop="datePublished">2021-01-21</time>
 </div>
 
             
 
             
             <div class="article-tag">
-                <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li></ul>
+                <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/BuildForWindows/" rel="tag">BuildForWindows</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CMake/" rel="tag">CMake</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SDL2/" rel="tag">SDL2</a></li></ul>
             </div>
             
 
@@ -136,87 +136,26 @@
         </div>
 
         <div class="article-entry post-inner-html hairline" itemprop="articleBody">
-            <h1 id="实现一个log函数"><a href="#实现一个log函数" class="headerlink" title="实现一个log函数"></a>实现一个log函数</h1><p>首先 有换底公式 log<sub>a</sub>b=lnb/lna<br>由此 求log(b,a)可以转化为求lnb/lna</p>
-<pre><code class="c">double mylog(double b,double a)&#123;
-    return ln(b) / ln(a);
-&#125;</code></pre>
-<p>接下来只需要编写ln函数<br>常用的方法是采用多项式展开（泰勒级数）<br>ln(1+x)展开后为</p>
-<img src="/2021/01/21/%E5%AE%9E%E7%8E%B0log%E5%87%BD%E6%95%B0/1.png" class="" title="ln(1+x)的泰勒展开">
+            <h1 id="使用CMake-GUI-完成SDL2的编译（MSVC2019）"><a href="#使用CMake-GUI-完成SDL2的编译（MSVC2019）" class="headerlink" title="使用CMake GUI 完成SDL2的编译（MSVC2019）"></a>使用CMake GUI 完成SDL2的编译（MSVC2019）</h1><hr>
+<h3 id="Step1-CMake设置"><a href="#Step1-CMake设置" class="headerlink" title="Step1.CMake设置"></a>Step1.CMake设置</h3><pre><code>打开CMake(GUI) 设置源码所在文件夹以及存放build文件的文件夹</code></pre>
+<img src="/2021/01/21/Build-SDL2-by-VS2019/1.png" class="" title="Settings1">
+<pre><code>点击Configure 选择 Visual Studio 16 2019 Finish</code></pre>
+<img src="/2021/01/21/Build-SDL2-by-VS2019/2.png" class="" title="Settings2">
+<pre><code>等待生成文件</code></pre>
+<h3 id="Step2-设置安装目录"><a href="#Step2-设置安装目录" class="headerlink" title="Step2.设置安装目录"></a>Step2.设置安装目录</h3><pre><code>修改 CMAKE_INSTALL_PREFIX 的变量值
+点击Generate</code></pre>
+<img src="/2021/01/21/Build-SDL2-by-VS2019/3.png" class="" title="Prefix Setting">
 
-<p>所以 先将ln(t)中 t 化为 2^k*(1+f) 的形式<br>其中sqrt(2)/2 &lt; f &lt; sqrt(2)</p>
-<h3 id="定义常量"><a href="#定义常量" class="headerlink" title="定义常量"></a>定义常量</h3><pre><code class="c">#define SQRT2 1.4142135623730950488016887242097
-#define SQRT2D2 0.70710678118654752440084436210485
-#define LN2H 6.93147180369123816490e-01
-#define LN2L 1.90821492927058770002e-10</code></pre>
-<h3 id="参数化约"><a href="#参数化约" class="headerlink" title="参数化约"></a>参数化约</h3><pre><code class="c">    int k=0;
-    if(x&gt;SQRT2)&#123;
-        do
-        &#123;
-            x/=2;
-            k++;
-        &#125; while (x&gt;SQRT2);
-    &#125;else if(x&lt;SQRT2D2)&#123;
-        do
-        &#123;
-            x*=2;
-            k--;
-        &#125; while (x&lt;SQRT2D2);
-    &#125;</code></pre>
-<p>此时 不难看出 ln(t)=ln(2^k*(1+f))=kln2+ln(1+f)<br>ln(2)在上方已经预先求出并定义</p>
-<p>此时只需求出ln(1+f)<br>为了保证泰勒展开计算的精确度，要使f尽可能接近1，做如下变换<br>s=f/(2+f)<br>则ln(1+f)=ln(1+s)-ln(1-s)<br>此时 做泰勒展开 可得<br>ln(1+f)=ln(1+s)-ln(1-s)<br>       =2(s-s^3/3+s^5/5+…)<br>做循环求出该多项式即可</p>
-<h3 id="求多项式"><a href="#求多项式" class="headerlink" title="求多项式"></a>求多项式</h3><pre><code class="c">    for(int i=1;i&lt;14;i+=2)&#123;
-        double s=x;
-        for(int c=1;c&lt;i;c++)&#123;
-            s*=x;
-        &#125;
-        res+=2*s/i;
-    &#125;</code></pre>
-<h3 id="测试用代码"><a href="#测试用代码" class="headerlink" title="测试用代码"></a>测试用代码</h3><pre><code class="c">#include &lt;stdio.h&gt;
-#include &lt;math.h&gt;
-#define SQRT2 1.4142135623730950488016887242097
-#define SQRT2D2 0.70710678118654752440084436210485
-#define LN2H 6.93147180369123816490e-01
-#define LN2L 1.90821492927058770002e-10
+<h3 id="Step3-开始编译"><a href="#Step3-开始编译" class="headerlink" title="Step3.开始编译"></a>Step3.开始编译</h3><pre><code>以管理员身份打开VS2019 打开设置的build存放目录下的SDL2.sln
+右击INSTALL 生成 等待编译和复制完成</code></pre>
+<img src="/2021/01/21/Build-SDL2-by-VS2019/4.png" class="" title="Build With VS2019">
+<img src="/2021/01/21/Build-SDL2-by-VS2019/5.png" class="" title="Build Success">
 
-double ln(double x)&#123;  
-    int k=0;
-    if(x&gt;SQRT2)&#123;
-        do
-        &#123;
-            x/=2;
-            k++;
-        &#125; while (x&gt;SQRT2);
-    &#125;else if(x&lt;SQRT2D2)&#123;
-        do
-        &#123;
-            x*=2;
-            k--;
-        &#125; while (x&lt;SQRT2D2);
-    &#125;
-    double res=k*LN2H+k*LN2L;
-    x-=1;
-    x=x/(2+x);
-    for(int i=1;i&lt;14;i+=2)&#123;
-        double s=x;
-        for(int c=1;c&lt;i;c++)&#123;
-            s*=x;
-        &#125;
-        res+=2*s/i;
-    &#125;
-    return res;
-&#125;
 
-double mylog(double b,double a)&#123;
-    return ln(b)/ln(a);
-&#125;
 
-int main()&#123;
-    printf(&quot;%lf %lf&quot;,mylog(15,2),log(15)/log(2));
-    return 0;
-&#125;
-</code></pre>
-<h3 id="测试结果"><a href="#测试结果" class="headerlink" title="测试结果"></a>测试结果</h3><img src="/2021/01/21/%E5%AE%9E%E7%8E%B0log%E5%87%BD%E6%95%B0/2.png" class="" title="测试输出">
-<a href="/2021/01/21/%E5%AE%9E%E7%8E%B0log%E5%87%BD%E6%95%B0/log.c" title="下载源代码文件(log.c)">下载源代码文件(log.c)</a>
+
+
+
 
         </div>
 
@@ -256,15 +195,15 @@ int main()&#123;
     <section class="share">
         <div class="share-title">分享</div>
         <a class="share-item" target="_blank"
-            href="https://twitter.com/share?text=实现log函数 - Alex's Blog&url=https://alexzhu2001.github.io/AlexZhu2001/2021/01/21/%E5%AE%9E%E7%8E%B0log%E5%87%BD%E6%95%B0/">
+            href="https://twitter.com/share?text=Build SDL2 by VS2019 - Alex's Blog&url=https://alexzhu2001.github.io/AlexZhu2001/2021/01/21/Build-SDL2-by-VS2019/">
             <box-icon type='logo' name='twitter'></box-icon>
         </a>
         <a class="share-item" target="_blank"
-            href="https://www.facebook.com/sharer.php?title=实现log函数 - Alex's Blog&u=https://alexzhu2001.github.io/AlexZhu2001/2021/01/21/%E5%AE%9E%E7%8E%B0log%E5%87%BD%E6%95%B0/">
+            href="https://www.facebook.com/sharer.php?title=Build SDL2 by VS2019 - Alex's Blog&u=https://alexzhu2001.github.io/AlexZhu2001/2021/01/21/Build-SDL2-by-VS2019/">
             <box-icon name='facebook-square' type='logo' ></box-icon>
         </a>
         <!-- <a class="share-item" target="_blank"
-            href="https://service.weibo.com/share/share.php?title=实现log函数 - Alex's Blog&url=https://alexzhu2001.github.io/AlexZhu2001/2021/01/21/%E5%AE%9E%E7%8E%B0log%E5%87%BD%E6%95%B0/&pic=">
+            href="https://service.weibo.com/share/share.php?title=Build SDL2 by VS2019 - Alex's Blog&url=https://alexzhu2001.github.io/AlexZhu2001/2021/01/21/Build-SDL2-by-VS2019/&pic=">
             <div class="n-icon n-icon-weibo"></div>
         </a> -->
     </section>
@@ -319,19 +258,19 @@ int main()&#123;
       <ul>
         
           <li>
-            <a href="/2021/01/22/Build-SDL2-by-VS2019/">Build SDL2 by VS2019</a>
-          </li>
-        
-          <li>
             <a href="/2021/01/22/SDL-DAY1/">SDL_DAY1</a>
           </li>
         
           <li>
-            <a href="/2021/01/21/%E5%AE%9E%E7%8E%B0log%E5%87%BD%E6%95%B0/">实现log函数</a>
+            <a href="/2021/01/21/Build-SDL2-by-VS2019/">Build SDL2 by VS2019</a>
           </li>
         
           <li>
             <a href="/2021/01/21/Post121/">Post121</a>
+          </li>
+        
+          <li>
+            <a href="/2021/01/19/%E5%AE%9E%E7%8E%B0log%E5%87%BD%E6%95%B0/">实现log函数</a>
           </li>
         
       </ul>
