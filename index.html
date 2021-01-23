@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     
-    <title>Alex Blog</title>
+    <title>Alex&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
     
@@ -41,7 +41,7 @@
             <div class="header-type-inner">
                 
                     <div id="typed-strings" style="display:none">
-                        <p>Alex Blog</p>
+                        <p>Alex&#39;s Blog</p>
                     </div>
                     <a class="header-type-title" id="typed" href="/"></a>
                 
@@ -161,7 +161,7 @@
   
     
       <article
-  id="post-Post121"
+  id="post-SDL-DAY1"
   class="article article-type-post"
 >
 
@@ -172,17 +172,49 @@
 
     <div class="article-body">
       <header class="article-title">
-        <a href="/2021/01/21/Post121/">Post121</a>
+        <a href="/2021/01/22/SDL-DAY1/">SDL_DAY1</a>
       </header>
       <div class="article-entry post-inner-html">
         
-          <h1 id="TestPost"><a href="#TestPost" class="headerlink" title="TestPost"></a>TestPost</h1><pre><code class="c">#include &lt;stdio.h&gt;
+          <h1 id=""><a href="#" class="headerlink" title=""></a></h1><table>
+<thead>
+<tr>
+<th align="center">函数名</th>
+<th align="center">函数作用</th>
+<th align="center">备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">SDL_Init</td>
+<td align="center">初始化SDL2</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">SDL_CreateWindow</td>
+<td align="center">创建窗口</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">SDL_ShowWindow</td>
+<td align="center">显示窗口</td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<pre><code class="c">#include &lt;stdio.h&gt;
+#include &lt;SDL2/SDL.h&gt;
 
-int main()&#123;
-    printf(&quot;HelloWorld&quot;);
+#define  WIDTH 400
+#define HEIGHT 300
+int main() &#123;
+    if(SDL_Init(SDL_INIT_VIDEO) != 0)&#123;
+        SDL_Log(&quot;Error,%s&quot;,SDL_GetError());
+    &#125;
+    SDL_Window *win=SDL_CreateWindow(&quot;HelloWorld&quot;,SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,WIDTH,HEIGHT,SDL_WINDOW_SHOWN);
+    SDL_ShowWindow(win);
+    SDL_Delay(5000);
     return 0;
-&#125;
-</code></pre>
+&#125;</code></pre>
+<img src="/2021/01/22/SDL-DAY1/1.png" class="" title="运行效果">
 
         
       </div>
@@ -195,12 +227,12 @@ int main()&#123;
   <footer class="article-footer">
     <div class="article-more-info">
       <div class="article-date">
-  <time datetime="2021-01-21T07:43:44.000Z" itemprop="datePublished">2021-01-21</time>
+  <time datetime="2021-01-22T10:42:16.000Z" itemprop="datePublished">2021-01-22</time>
 </div>
       
       
         <div class="article-tag">
-          <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/TestPost/" rel="tag">TestPost</a></li></ul>
+          <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CMake/" rel="tag">CMake</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SDL2/" rel="tag">SDL2</a></li></ul>
         </div>
       
     </div>
@@ -223,7 +255,7 @@ int main()&#123;
 
     <div class="article-body">
       <header class="article-title">
-        <a href="/2021/01/19/%E5%AE%9E%E7%8E%B0log%E5%87%BD%E6%95%B0/">实现log函数</a>
+        <a href="/2021/01/21/%E5%AE%9E%E7%8E%B0log%E5%87%BD%E6%95%B0/">实现log函数</a>
       </header>
       <div class="article-entry post-inner-html">
         
@@ -232,7 +264,7 @@ int main()&#123;
     return ln(b) / ln(a);
 &#125;</code></pre>
 <p>接下来只需要编写ln函数<br>常用的方法是采用多项式展开（泰勒级数）<br>ln(1+x)展开后为</p>
-<img src="/2021/01/19/%E5%AE%9E%E7%8E%B0log%E5%87%BD%E6%95%B0/1.png" class="" title="ln(1+x)的泰勒展开">
+<img src="/2021/01/21/%E5%AE%9E%E7%8E%B0log%E5%87%BD%E6%95%B0/1.png" class="" title="ln(1+x)的泰勒展开">
 
 <p>所以 先将ln(t)中 t 化为 2^k*(1+f) 的形式<br>其中sqrt(2)/2 &lt; f &lt; sqrt(2)</p>
 <h3 id="定义常量"><a href="#定义常量" class="headerlink" title="定义常量"></a>定义常量</h3><pre><code class="c">#define SQRT2 1.4142135623730950488016887242097
@@ -306,8 +338,8 @@ int main()&#123;
     return 0;
 &#125;
 </code></pre>
-<h3 id="测试结果"><a href="#测试结果" class="headerlink" title="测试结果"></a>测试结果</h3><img src="/2021/01/19/%E5%AE%9E%E7%8E%B0log%E5%87%BD%E6%95%B0/2.png" class="" title="测试输出">
-<a href="/2021/01/19/%E5%AE%9E%E7%8E%B0log%E5%87%BD%E6%95%B0/log.c" title="下载源代码文件(log.c)">下载源代码文件(log.c)</a>
+<h3 id="测试结果"><a href="#测试结果" class="headerlink" title="测试结果"></a>测试结果</h3><img src="/2021/01/21/%E5%AE%9E%E7%8E%B0log%E5%87%BD%E6%95%B0/2.png" class="" title="测试输出">
+<a href="/2021/01/21/%E5%AE%9E%E7%8E%B0log%E5%87%BD%E6%95%B0/log.c" title="下载源代码文件(log.c)">下载源代码文件(log.c)</a>
 
         
       </div>
@@ -320,12 +352,63 @@ int main()&#123;
   <footer class="article-footer">
     <div class="article-more-info">
       <div class="article-date">
-  <time datetime="2021-01-19T07:58:40.000Z" itemprop="datePublished">2021-01-19</time>
+  <time datetime="2021-01-21T07:58:40.000Z" itemprop="datePublished">2021-01-21</time>
 </div>
       
       
         <div class="article-tag">
           <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li></ul>
+        </div>
+      
+    </div>
+  </footer>
+
+</article>
+
+    
+  
+    
+      <article
+  id="post-Post121"
+  class="article article-type-post"
+>
+
+  
+
+  <div class="article-inner">
+    
+
+    <div class="article-body">
+      <header class="article-title">
+        <a href="/2021/01/21/Post121/">Post121</a>
+      </header>
+      <div class="article-entry post-inner-html">
+        
+          <h1 id="TestPost"><a href="#TestPost" class="headerlink" title="TestPost"></a>TestPost</h1><pre><code class="c">#include &lt;stdio.h&gt;
+
+int main()&#123;
+    printf(&quot;HelloWorld&quot;);
+    return 0;
+&#125;
+</code></pre>
+
+        
+      </div>
+    </div>
+
+    
+
+  </div>
+
+  <footer class="article-footer">
+    <div class="article-more-info">
+      <div class="article-date">
+  <time datetime="2021-01-21T07:43:44.000Z" itemprop="datePublished">2021-01-21</time>
+</div>
+      
+      
+        <div class="article-tag">
+          <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/TestPost/" rel="tag">TestPost</a></li></ul>
         </div>
       
     </div>
@@ -376,11 +459,15 @@ int main()&#123;
           </li>
         
           <li>
-            <a href="/2021/01/21/Post121/">Post121</a>
+            <a href="/2021/01/22/SDL-DAY1/">SDL_DAY1</a>
           </li>
         
           <li>
-            <a href="/2021/01/19/%E5%AE%9E%E7%8E%B0log%E5%87%BD%E6%95%B0/">实现log函数</a>
+            <a href="/2021/01/21/%E5%AE%9E%E7%8E%B0log%E5%87%BD%E6%95%B0/">实现log函数</a>
+          </li>
+        
+          <li>
+            <a href="/2021/01/21/Post121/">Post121</a>
           </li>
         
       </ul>
@@ -412,7 +499,7 @@ int main()&#123;
 
     <div class="footer-wrap">
         <div class="footer-inner"> 
-            Alex Blog &copy; 2021<br>
+            Alex&#39;s Blog &copy; 2021<br>
             Powered By Hexo · Theme By <a href="https://github.com/lh1me/hexo-theme-aomori" target="_blank">Aomori</a>
         </div>
     </div>
