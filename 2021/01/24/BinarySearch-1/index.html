@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     
-    <title>Archive | Alex&#39;s Blog</title>
+    <title>BinarySearch_1 | Alex&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
     
@@ -20,7 +20,7 @@
 
 
     <script>
-        window.isPost = false
+        window.isPost = true
         window.aomori = {
             
             
@@ -93,84 +93,128 @@
         <div class="main">
             <section class="inner">
                 <section class="inner-main">
-                    
+                    <div class="post">
+    <article id="post-ckkax8evu00000yq07pqkbvvo" class="article article-type-post" itemscope
+    itemprop="blogPost">
+
+    <div class="article-inner">
+
+        
+          
+        
+        
+        
+
+        
+        <header class="article-header">
+            
   
+    <h1 class="article-title" itemprop="name">
+      BinarySearch_1
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2021" class="archive-year">2021</a>
+
+        </header>
+        
+
+        <div class="article-more-info article-more-info-post hairline">
+
+            <div class="article-date">
+  <time datetime="2021-01-24T08:49:35.000Z" itemprop="datePublished">2021-01-24</time>
+</div>
+
+            
+
+            
+            <div class="article-tag">
+                <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/BinarySearch/" rel="tag">BinarySearch</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li></ul>
+            </div>
+            
+
+            
+
         </div>
-        <div class="archives">
+
+        <div class="article-entry post-inner-html hairline" itemprop="articleBody">
+            <h1 id="二分查找-1"><a href="#二分查找-1" class="headerlink" title="二分查找-1"></a>二分查找-1</h1><h2 id="思路-1：在循环体中查找元素"><a href="#思路-1：在循环体中查找元素" class="headerlink" title="思路 1：在循环体中查找元素"></a>思路 1：在循环体中查找元素</h2><h4 id="代码模板"><a href="#代码模板" class="headerlink" title="代码模板"></a>代码模板</h4><pre><code class="cpp">int bs(vector&lt;T&gt; &amp;vec,int target)&#123;
+    int l=0,r=vec.size()-1,mid;
+    while(l&lt;=r)&#123;
+        mid=l+(r-l)/2;
+        if(vec[mid]==target)
+            return mid;
+        else if(vec[mid]&lt;target)
+            l=mid+1;
+        else 
+            r=mid-1;
+    &#125;
+    return -1;
+&#125;</code></pre>
+<h4 id="复杂度分析："><a href="#复杂度分析：" class="headerlink" title="复杂度分析："></a>复杂度分析：</h4><ul>
+<li>时间复杂度 二分查找的时间复杂度是 O(log⁡N) 这里N是输入数组的长度</li>
+<li>空间复杂度 由于二分查找算法在执行的过程中只使用到常数个临时变量 因此空间复杂度是 O(1)</li>
+</ul>
+<h4 id="细节"><a href="#细节" class="headerlink" title="细节"></a>细节</h4><ol>
+<li>循环可以继续的条件 <code>left&lt;=right</code> 表明区间仅剩一个元素时仍需继续查找 </li>
+<li>取中间值 <code>(l+r)/2</code>可能导致<code>l+r</code>发生溢出 所以使用<code>l+(r-l)/2</code>来防止溢出</li>
+<li>取中间值也可以向上取整</li>
+</ol>
+<h2 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h2><a href="/2021/01/24/BinarySearch-1/374.%E7%8C%9C%E6%95%B0%E5%AD%97%E5%A4%A7%E5%B0%8F.cpp" title="374.猜数字大小.cpp">374.猜数字大小.cpp</a>
+
+<a href="/2021/01/24/BinarySearch-1/704.%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE.cpp" title="704.二分查找.cpp">704.二分查找.cpp</a>
+
+        </div>
+
+    </div>
+
     
-    <article class="archive-article archive-type-post">
+
+    
+
+    
+
+    
+
+    
+
+    
+<nav class="article-nav">
   
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/01/24/BinarySearch-1/">BinarySearch_1</a>
-    </h1>
+    <a href="/2021/01/22/SDL-DAY1/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-caption">上一篇</div>
+      <div class="article-nav-title">SDL_DAY1</div>
+    </a>
   
+</nav>
+
+
+    <section class="share">
+        <div class="share-title">分享</div>
+        <a class="share-item" target="_blank"
+            href="https://twitter.com/share?text=BinarySearch_1 - Alex's Blog&url=https://alexzhu2001.github.io/AlexZhu2001/2021/01/24/BinarySearch-1/">
+            <box-icon type='logo' name='twitter'></box-icon>
+        </a>
+        <a class="share-item" target="_blank"
+            href="https://www.facebook.com/sharer.php?title=BinarySearch_1 - Alex's Blog&u=https://alexzhu2001.github.io/AlexZhu2001/2021/01/24/BinarySearch-1/">
+            <box-icon name='facebook-square' type='logo' ></box-icon>
+        </a>
+        <!-- <a class="share-item" target="_blank"
+            href="https://service.weibo.com/share/share.php?title=BinarySearch_1 - Alex's Blog&url=https://alexzhu2001.github.io/AlexZhu2001/2021/01/24/BinarySearch-1/&pic=">
+            <div class="n-icon n-icon-weibo"></div>
+        </a> -->
+    </section>
 
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/01/22/SDL-DAY1/">SDL_DAY1</a>
-    </h1>
-  
-
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/01/21/Build-SDL2-by-VS2019/">Build SDL2 by VS2019</a>
-    </h1>
-  
-
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/01/21/Post121/">Post121</a>
-    </h1>
-  
-
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/01/19/%E5%AE%9E%E7%8E%B0log%E5%87%BD%E6%95%B0/">实现log函数</a>
-    </h1>
-  
-
-</article>
-  
-  
-    </div></section>
-  
 
 
 
 
+
+
+
+
+
+</div>
                 </section>
             </section>
 
@@ -183,6 +227,12 @@
 <div class="widget" id="widget">
     
       
+  <div class="widget-wrap">
+    <div class="widget-inner">
+      <div class="toc post-toc-html"></div>
+    </div>
+  </div>
+
     
       
 
