@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     
-    <title>Post121 | Alex&#39;s Blog</title>
+    <title>SDL-DAY2 | Alex&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
     
@@ -94,7 +94,7 @@
             <section class="inner">
                 <section class="inner-main">
                     <div class="post">
-    <article id="post-ckkdyrsg500030mp62qi12c61" class="article article-type-post" itemscope
+    <article id="post-ckkdyrsg600050mp67k54hi5e" class="article article-type-post" itemscope
     itemprop="blogPost">
 
     <div class="article-inner">
@@ -110,7 +110,7 @@
             
   
     <h1 class="article-title" itemprop="name">
-      Post121
+      SDL-DAY2
     </h1>
   
 
@@ -120,14 +120,14 @@
         <div class="article-more-info article-more-info-post hairline">
 
             <div class="article-date">
-  <time datetime="2021-01-21T07:43:44.000Z" itemprop="datePublished">2021-01-21</time>
+  <time datetime="2021-01-26T11:14:40.000Z" itemprop="datePublished">2021-01-26</time>
 </div>
 
             
 
             
             <div class="article-tag">
-                <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/TestPost/" rel="tag">TestPost</a></li></ul>
+                <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SDL2/" rel="tag">SDL2</a></li></ul>
             </div>
             
 
@@ -136,13 +136,79 @@
         </div>
 
         <div class="article-entry post-inner-html hairline" itemprop="articleBody">
-            <h1 id="TestPost"><a href="#TestPost" class="headerlink" title="TestPost"></a>TestPost</h1><pre><code class="c">#include &lt;stdio.h&gt;
+            <h1 id="SDL绘制"><a href="#SDL绘制" class="headerlink" title="SDL绘制"></a>SDL绘制</h1><p>要在SDL的窗口中绘图 需要先获得 SDL_Surface<br>SDL提供了<code>SDL_GetWindowSurface(SDL_Window *)</code>来获得客户区的SDL_Surface</p>
+<pre><code class="c">SDL_Window *win=SDL_CreateWindow(&quot;HelloWorld&quot;,
+                                SDL_WINDOWPOS_CENTERED,
+                                SDL_WINDOWPOS_CENTERED,
+                                WIDTH,HEIGHT,
+                                SDL_WINDOW_SHOWN);
+SDL_Surface *screen=SDL_GetWindowsSurface(win);</code></pre>
+<p>获得了SDL_Surface之后 我们有两种方法可以绘制客户区</p>
+<ul>
+<li><h4>利用SDL提供的函数</h4>
+SDL提供了一些函数来方便绘制
+例如 `SDL_FillRect(SDL_Surface *s,SDL_Rect *r,uint32_t color)`
+其中 第三个参数是颜色值 按照ARGB顺序排列 每个值为八位
+我们可以利用这个函数将客户区涂成白色
 
-int main()&#123;
-    printf(&quot;HelloWorld&quot;);
-    return 0;
-&#125;
+</li>
+</ul>
+<pre><code class="c">SDL_Rect r=&#123;0,0,WIDTH,HEIGHT&#125;;
+SDL_FillRect(screen,&amp;r,0xffffffff);</code></pre>
+<ul>
+<li><h4>手动绘制</h4>
+SDL_Surface是一个结构体,其定义如下
+
+</li>
+</ul>
+<pre><code class="c">typedef struct SDL_Surface
+&#123;
+    Uint32 flags;               /**&lt; Read-only */
+    SDL_PixelFormat *format;    /**&lt; Read-only */
+    int w, h;                   /**&lt; Read-only */
+    int pitch;                  /**&lt; Read-only */
+    void *pixels;               /**&lt; Read-write */
+
+    /** Application data associated with the surface */
+    void *userdata;             /**&lt; Read-write */
+
+    /** information needed for surfaces requiring locks */
+    int locked;                 /**&lt; Read-only */
+    void *lock_data;            /**&lt; Read-only */
+
+    /** clipping information */
+    SDL_Rect clip_rect;         /**&lt; Read-only */
+
+    /** info for fast blit mapping to other surfaces */
+    struct SDL_BlitMap *map;    /**&lt; Private */
+
+    /** Reference count -- used when freeing surface */
+    int refcount;               /**&lt; Read-mostly */
+&#125; SDL_Surface;
 </code></pre>
+<p>我们需要关注其中的 w,h 和pixels<br>w h 分别是宽度和高度<br>而pixels是一个指向一块内存的指针 此处定义为<code>void * </code>实际使用时可转换为<code>uint32_t *</code><br>他对应着屏幕上任意一点处的像素的颜色值 颜色定义为ARGB<br>而(x,y)处的的像素获取方式为<code>(uint32_t *)pixels[x*w+y]</code><br>我们通过手动绘制来画一个100x100的方块 放置于(0,0)处</p>
+<pre><code class="c">uint32_t *p=(uint32_t *)screen-&gt;pixels;
+for(int i=0;i&lt;100;i++)&#123;
+    for(int j=0;j&lt;100;j++)&#123;
+        p[i*screen-&gt;w+j]=0xff0000ff;//ARGB Blue 100%
+    &#125;
+&#125;</code></pre>
+<h1 id="SDL2事件循环"><a href="#SDL2事件循环" class="headerlink" title="SDL2事件循环"></a>SDL2事件循环</h1><p>SDL为事件处理提供了灵活的API，当收到来自设备的事件时，SDL会将其存入事件队列等待取出<br>在程序中，应当有一个循环来处理这些事件，每次循环时应从中取出事件并处理它<br>SDL 提供了 <code>SDL_PollEvent(SDL_Event *)</code>函数来提供取出事件的功能<br>如果对列中还有事件 则会取出事件存入SDL_Event类型的变量中 并返回一个非零值 否则返回零<br>轮询事件后，您可以在逻辑链中响应它。<br>为了方便阅读 通常会将循环抽出写成一个函数</p>
+<pre><code class="c">void eventloop()&#123;
+    SDL_Event e;
+    while(1)&#123;
+        while(SDL_PollEvent(&amp;e))&#123;
+            switch(e.type)&#123;
+                case SDL_QUIT:
+                    return;
+                default:
+                    break;
+            &#125;
+        &#125;
+    &#125;
+&#125;</code></pre>
+<img src="/2021/01/26/SDL-DAY2/1.png" class="" title="运行效果">
+<p><a target="_blank" rel="noopener" href="https://github.com/2018-EPI-GROUP/2020Freshman/tree/%E9%80%9A%E5%B7%A52009-%E6%9C%B1%E5%BD%A6%E6%99%9F/SDL2/SDL2-02">代码</a></p>
 
         </div>
 
@@ -161,19 +227,10 @@ int main()&#123;
     
 <nav class="article-nav">
   
-    <a href="/2021/01/21/Build-SDL2-by-VS2019/" id="article-nav-newer" class="article-nav-link-wrap">
-      <div class="article-nav-caption">下一篇</div>
-      <div class="article-nav-title">
-        
-          Build SDL2 by VS2019
-        
-      </div>
-    </a>
   
-  
-    <a href="/2021/01/19/%E5%AE%9E%E7%8E%B0log%E5%87%BD%E6%95%B0/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2021/01/25/%E6%9E%84%E9%80%A0%E5%9B%9E%E6%96%87%E6%95%B0/" id="article-nav-older" class="article-nav-link-wrap">
       <div class="article-nav-caption">上一篇</div>
-      <div class="article-nav-title">实现log函数</div>
+      <div class="article-nav-title">构造回文数</div>
     </a>
   
 </nav>
@@ -182,15 +239,15 @@ int main()&#123;
     <section class="share">
         <div class="share-title">分享</div>
         <a class="share-item" target="_blank"
-            href="https://twitter.com/share?text=Post121 - Alex's Blog&url=https://alexzhu2001.github.io/AlexZhu2001/2021/01/21/Post121/">
+            href="https://twitter.com/share?text=SDL-DAY2 - Alex's Blog&url=https://alexzhu2001.github.io/AlexZhu2001/2021/01/26/SDL-DAY2/">
             <box-icon type='logo' name='twitter'></box-icon>
         </a>
         <a class="share-item" target="_blank"
-            href="https://www.facebook.com/sharer.php?title=Post121 - Alex's Blog&u=https://alexzhu2001.github.io/AlexZhu2001/2021/01/21/Post121/">
+            href="https://www.facebook.com/sharer.php?title=SDL-DAY2 - Alex's Blog&u=https://alexzhu2001.github.io/AlexZhu2001/2021/01/26/SDL-DAY2/">
             <box-icon name='facebook-square' type='logo' ></box-icon>
         </a>
         <!-- <a class="share-item" target="_blank"
-            href="https://service.weibo.com/share/share.php?title=Post121 - Alex's Blog&url=https://alexzhu2001.github.io/AlexZhu2001/2021/01/21/Post121/&pic=">
+            href="https://service.weibo.com/share/share.php?title=SDL-DAY2 - Alex's Blog&url=https://alexzhu2001.github.io/AlexZhu2001/2021/01/26/SDL-DAY2/&pic=">
             <div class="n-icon n-icon-weibo"></div>
         </a> -->
     </section>
