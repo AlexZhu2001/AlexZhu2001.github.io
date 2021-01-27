@@ -45,11 +45,11 @@ post_asset_folder: true
 relative_link: false
 future: true
 highlight:
-  enable: false
+  enable: true
   line_number: true
-  auto_detect: false
+  auto_detect: true
   tab_replace: ''
-  wrap: true
+  wrap: false
   hljs: false
 prismjs:
   enable: false
@@ -98,21 +98,41 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: hexo-theme-aomori
+theme: next
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: ''
 
-aomori_logo_typed_animated: true
+#live2d 
+live2d:
+  enable: true
+  scriptFrom: local
+  pluginRootPath: live2dw/
+  pluginJsPath: lib/
+  pluginModelPath: assets/
+  tagMode: false
+  debug: false
+  model:
+    use: live2d-widget-model-koharu
+  display:
+    position: right
+    width: 150
+    height: 300
+  mobile:
+    show: true
+  react:
+    opacity: 1
 
-aomori_menu:
-  Home: /
-  Archives: /archives
+# aomori_logo_typed_animated: true
 
-aomori_widgets:
-  - toc # 文章导航
-  - category  #文章分类
-  - tag # 文章标签
-  - recent_posts  # 最新文章
-  - archive #文章归档
+# aomori_menu:
+#   Home: /
+#   Archives: /archives
+
+# aomori_widgets:
+#   - toc # 文章导航
+#   - category  #文章分类
+#   - tag # 文章标签
+#   - recent_posts  # 最新文章
+#   - archive #文章归档
