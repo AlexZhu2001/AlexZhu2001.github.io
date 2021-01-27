@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/128x128.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"alexzhu2001.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="SDL绘制要在SDL的窗口中绘图 需要先获得 SDL_SurfaceSDL提供了SDL_GetWindowSurface(SDL_Window *)来获得客户区的SDL_Surface 123456SDL_Window *win&#x3D;SDL_CreateWindow(&quot;HelloWorld&quot;,                                SDL_WINDOWPOS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SDL-DAY2">
+<meta property="og:url" content="https://alexzhu2001.github.io/AlexZhu2001/2021/01/26/SDL-DAY2/index.html">
+<meta property="og:site_name" content="Alex&#39;s Blog">
+<meta property="og:description" content="SDL绘制要在SDL的窗口中绘图 需要先获得 SDL_SurfaceSDL提供了SDL_GetWindowSurface(SDL_Window *)来获得客户区的SDL_Surface 123456SDL_Window *win&#x3D;SDL_CreateWindow(&quot;HelloWorld&quot;,                                SDL_WINDOWPOS">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://alexzhu2001.github.io/2021/01/26/SDL-DAY2/1.png">
+<meta property="article:published_time" content="2021-01-26T11:14:40.000Z">
+<meta property="article:modified_time" content="2021-01-27T14:52:17.917Z">
+<meta property="article:author" content="Alex Zhu">
+<meta property="article:tag" content="SDL2">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://alexzhu2001.github.io/2021/01/26/SDL-DAY2/1.png">
+
+<link rel="canonical" href="https://alexzhu2001.github.io/AlexZhu2001/2021/01/26/SDL-DAY2/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>SDL-DAY2 | Alex's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script>
+jQuery(document).ready(function(){
+      window.mX=0;
+      window.mY=0;
+      window.dX=0;
+      window.dY=0;
+      window.isDown=false;
+      setTimeout(()=>{
+          $("#live2d-widget").css("pointer-events","auto");
+          $("#live2d-widget").mousedown(function(e){
+              window.mX=e.clientX;
+              window.mY=e.clientY;
+              window.dX=$("#live2d-widget").position().left;
+              window.dY=$("#live2d-widget").position().top;
+              window.isDown=true;
+          });
+          $("#live2d-widget").mouseup(function(e){
+              window.isDown=false;
+          });
+          $(document).mouseup(function(e){
+              window.isDown=false;
+          });
+          jQuery(document).mousemove(function(e){
+              x=e.clientX;
+              y=e.clientY;
+              if(window.isDown){
+                $("#live2d-widget").css({left:x-mX+dX,top:y-mY+dY})
+              };
+          });
+        },1000);
+      });
+</script>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Alex's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://alexzhu2001.github.io/AlexZhu2001/2021/01/26/SDL-DAY2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="Alex Zhu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Alex's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          SDL-DAY2
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-01-26 19:14:40" itemprop="dateCreated datePublished" datetime="2021-01-26T19:14:40+08:00">2021-01-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-01-27 22:52:17" itemprop="dateModified" datetime="2021-01-27T22:52:17+08:00">2021-01-27</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="SDL绘制"><a href="#SDL绘制" class="headerlink" title="SDL绘制"></a>SDL绘制</h1><p>要在SDL的窗口中绘图 需要先获得 SDL_Surface<br>SDL提供了<code>SDL_GetWindowSurface(SDL_Window *)</code>来获得客户区的SDL_Surface</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SDL_Window *win=SDL_CreateWindow(<span class="string">&quot;HelloWorld&quot;</span>,</span><br><span class="line">                                SDL_WINDOWPOS_CENTERED,</span><br><span class="line">                                SDL_WINDOWPOS_CENTERED,</span><br><span class="line">                                WIDTH,HEIGHT,</span><br><span class="line">                                SDL_WINDOW_SHOWN);</span><br><span class="line">SDL_Surface *screen=SDL_GetWindowsSurface(win);</span><br></pre></td></tr></table></figure>
+<p>获得了SDL_Surface之后 我们有两种方法可以绘制客户区</p>
+<ul>
+<li><h4>利用SDL提供的函数</h4>
+SDL提供了一些函数来方便绘制
+例如 `SDL_FillRect(SDL_Surface *s,SDL_Rect *r,uint32_t color)`
+其中 第三个参数是颜色值 按照ARGB顺序排列 每个值为八位
+我们可以利用这个函数将客户区涂成白色
+
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SDL_Rect r=&#123;<span class="number">0</span>,<span class="number">0</span>,WIDTH,HEIGHT&#125;;</span><br><span class="line">SDL_FillRect(screen,&amp;r,<span class="number">0xffffffff</span>);</span><br></pre></td></tr></table></figure>
+<ul>
+<li><h4>手动绘制</h4>
+SDL_Surface是一个结构体,其定义如下
+
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">SDL_Surface</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    Uint32 flags;               <span class="comment">/**&lt; Read-only */</span></span><br><span class="line">    SDL_PixelFormat *format;    <span class="comment">/**&lt; Read-only */</span></span><br><span class="line">    <span class="keyword">int</span> w, h;                   <span class="comment">/**&lt; Read-only */</span></span><br><span class="line">    <span class="keyword">int</span> pitch;                  <span class="comment">/**&lt; Read-only */</span></span><br><span class="line">    <span class="keyword">void</span> *pixels;               <span class="comment">/**&lt; Read-write */</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/** Application data associated with the surface */</span></span><br><span class="line">    <span class="keyword">void</span> *userdata;             <span class="comment">/**&lt; Read-write */</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/** information needed for surfaces requiring locks */</span></span><br><span class="line">    <span class="keyword">int</span> locked;                 <span class="comment">/**&lt; Read-only */</span></span><br><span class="line">    <span class="keyword">void</span> *lock_data;            <span class="comment">/**&lt; Read-only */</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/** clipping information */</span></span><br><span class="line">    SDL_Rect clip_rect;         <span class="comment">/**&lt; Read-only */</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/** info for fast blit mapping to other surfaces */</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">SDL_BlitMap</span> *<span class="title">map</span>;</span>    <span class="comment">/**&lt; Private */</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/** Reference count -- used when freeing surface */</span></span><br><span class="line">    <span class="keyword">int</span> refcount;               <span class="comment">/**&lt; Read-mostly */</span></span><br><span class="line">&#125; SDL_Surface;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>我们需要关注其中的 w,h 和pixels<br>w h 分别是宽度和高度<br>而pixels是一个指向一块内存的指针 此处定义为<code>void * </code>实际使用时可转换为<code>uint32_t *</code><br>他对应着屏幕上任意一点处的像素的颜色值 颜色定义为ARGB<br>而(x,y)处的的像素获取方式为<code>(uint32_t *)pixels[x*w+y]</code><br>我们通过手动绘制来画一个100x100的方块 放置于(0,0)处</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">uint32_t</span> *p=(<span class="keyword">uint32_t</span> *)screen-&gt;pixels;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">100</span>;i++)&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;<span class="number">100</span>;j++)&#123;</span><br><span class="line">        p[i*screen-&gt;w+j]=<span class="number">0xff0000ff</span>;<span class="comment">//ARGB Blue 100%</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="SDL2事件循环"><a href="#SDL2事件循环" class="headerlink" title="SDL2事件循环"></a>SDL2事件循环</h1><p>SDL为事件处理提供了灵活的API，当收到来自设备的事件时，SDL会将其存入事件队列等待取出<br>在程序中，应当有一个循环来处理这些事件，每次循环时应从中取出事件并处理它<br>SDL 提供了 <code>SDL_PollEvent(SDL_Event *)</code>函数来提供取出事件的功能<br>如果对列中还有事件 则会取出事件存入SDL_Event类型的变量中 并返回一个非零值 否则返回零<br>轮询事件后，您可以在逻辑链中响应它。<br>为了方便阅读 通常会将循环抽出写成一个函数</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">eventloop</span><span class="params">()</span></span>&#123;</span><br><span class="line">    SDL_Event e;</span><br><span class="line">    <span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">        <span class="keyword">while</span>(SDL_PollEvent(&amp;e))&#123;</span><br><span class="line">            <span class="keyword">switch</span>(e.type)&#123;</span><br><span class="line">                <span class="keyword">case</span> SDL_QUIT:</span><br><span class="line">                    <span class="keyword">return</span>;</span><br><span class="line">                <span class="keyword">default</span>:</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<img src="/2021/01/26/SDL-DAY2/1.png" class="" title="运行效果">
+<p><a target="_blank" rel="noopener" href="https://github.com/2018-EPI-GROUP/2020Freshman/tree/%E9%80%9A%E5%B7%A52009-%E6%9C%B1%E5%BD%A6%E6%99%9F/SDL2/SDL2-02">代码</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/SDL2/" rel="tag"># SDL2</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/01/25/%E6%9E%84%E9%80%A0%E5%9B%9E%E6%96%87%E6%95%B0/" rel="prev" title="构造回文数">
+      <i class="fa fa-chevron-left"></i> 构造回文数
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SDL%E7%BB%98%E5%88%B6"><span class="nav-number">1.</span> <span class="nav-text">SDL绘制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">利用SDL提供的函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">1.0.0.2.</span> <span class="nav-text">手动绘制</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SDL2%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF"><span class="nav-number">2.</span> <span class="nav-text">SDL2事件循环</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Alex Zhu"
+      src="/images/head.png">
+  <p class="site-author-name" itemprop="name">Alex Zhu</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/AlexZhu2001" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;AlexZhu2001" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=340 height=86 src="//music.163.com/outchain/player?type=2&id=1439814454&auto=0&height=66"></iframe>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Alex Zhu</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div><script color="0,0,255" opacity="0.5" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+    <script src="https://cdn.jsdelivr.net/gh/Sanarous/files@1.151/js/clicksocialvalue.js"></script>
+  
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":1},"log":false});</script></body>
+</html>

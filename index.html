@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/128x128.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"alexzhu2001.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Alex&#39;s Blog">
+<meta property="og:url" content="https://alexzhu2001.github.io/AlexZhu2001/index.html">
+<meta property="og:site_name" content="Alex&#39;s Blog">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="Alex Zhu">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://alexzhu2001.github.io/AlexZhu2001/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Alex's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script>
+jQuery(document).ready(function(){
+      window.mX=0;
+      window.mY=0;
+      window.dX=0;
+      window.dY=0;
+      window.isDown=false;
+      setTimeout(()=>{
+          $("#live2d-widget").css("pointer-events","auto");
+          $("#live2d-widget").mousedown(function(e){
+              window.mX=e.clientX;
+              window.mY=e.clientY;
+              window.dX=$("#live2d-widget").position().left;
+              window.dY=$("#live2d-widget").position().top;
+              window.isDown=true;
+          });
+          $("#live2d-widget").mouseup(function(e){
+              window.isDown=false;
+          });
+          $(document).mouseup(function(e){
+              window.isDown=false;
+          });
+          jQuery(document).mousemove(function(e){
+              x=e.clientX;
+              y=e.clientY;
+              if(window.isDown){
+                $("#live2d-widget").css({left:x-mX+dX,top:y-mY+dY})
+              };
+          });
+        },1000);
+      });
+</script>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Alex's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content index posts-expand">
+            
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://alexzhu2001.github.io/AlexZhu2001/2021/01/26/SDL-DAY2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="Alex Zhu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Alex's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/26/SDL-DAY2/" class="post-title-link" itemprop="url">SDL-DAY2</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-01-26 19:14:40" itemprop="dateCreated datePublished" datetime="2021-01-26T19:14:40+08:00">2021-01-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-01-27 22:52:17" itemprop="dateModified" datetime="2021-01-27T22:52:17+08:00">2021-01-27</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="SDL绘制"><a href="#SDL绘制" class="headerlink" title="SDL绘制"></a>SDL绘制</h1><p>要在SDL的窗口中绘图 需要先获得 SDL_Surface<br>SDL提供了<code>SDL_GetWindowSurface(SDL_Window *)</code>来获得客户区的SDL_Surface</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SDL_Window *win=SDL_CreateWindow(<span class="string">&quot;HelloWorld&quot;</span>,</span><br><span class="line">                                SDL_WINDOWPOS_CENTERED,</span><br><span class="line">                                SDL_WINDOWPOS_CENTERED,</span><br><span class="line">                                WIDTH,HEIGHT,</span><br><span class="line">                                SDL_WINDOW_SHOWN);</span><br><span class="line">SDL_Surface *screen=SDL_GetWindowsSurface(win);</span><br></pre></td></tr></table></figure>
+<p>获得了SDL_Surface之后 我们有两种方法可以绘制客户区</p>
+<ul>
+<li><h4>利用SDL提供的函数</h4>
+SDL提供了一些函数来方便绘制
+例如 `SDL_FillRect(SDL_Surface *s,SDL_Rect *r,uint32_t color)`
+其中 第三个参数是颜色值 按照ARGB顺序排列 每个值为八位
+我们可以利用这个函数将客户区涂成白色
+
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SDL_Rect r=&#123;<span class="number">0</span>,<span class="number">0</span>,WIDTH,HEIGHT&#125;;</span><br><span class="line">SDL_FillRect(screen,&amp;r,<span class="number">0xffffffff</span>);</span><br></pre></td></tr></table></figure>
+<ul>
+<li><h4>手动绘制</h4>
+SDL_Surface是一个结构体,其定义如下
+
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">SDL_Surface</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    Uint32 flags;               <span class="comment">/**&lt; Read-only */</span></span><br><span class="line">    SDL_PixelFormat *format;    <span class="comment">/**&lt; Read-only */</span></span><br><span class="line">    <span class="keyword">int</span> w, h;                   <span class="comment">/**&lt; Read-only */</span></span><br><span class="line">    <span class="keyword">int</span> pitch;                  <span class="comment">/**&lt; Read-only */</span></span><br><span class="line">    <span class="keyword">void</span> *pixels;               <span class="comment">/**&lt; Read-write */</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/** Application data associated with the surface */</span></span><br><span class="line">    <span class="keyword">void</span> *userdata;             <span class="comment">/**&lt; Read-write */</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/** information needed for surfaces requiring locks */</span></span><br><span class="line">    <span class="keyword">int</span> locked;                 <span class="comment">/**&lt; Read-only */</span></span><br><span class="line">    <span class="keyword">void</span> *lock_data;            <span class="comment">/**&lt; Read-only */</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/** clipping information */</span></span><br><span class="line">    SDL_Rect clip_rect;         <span class="comment">/**&lt; Read-only */</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/** info for fast blit mapping to other surfaces */</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">SDL_BlitMap</span> *<span class="title">map</span>;</span>    <span class="comment">/**&lt; Private */</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/** Reference count -- used when freeing surface */</span></span><br><span class="line">    <span class="keyword">int</span> refcount;               <span class="comment">/**&lt; Read-mostly */</span></span><br><span class="line">&#125; SDL_Surface;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>我们需要关注其中的 w,h 和pixels<br>w h 分别是宽度和高度<br>而pixels是一个指向一块内存的指针 此处定义为<code>void * </code>实际使用时可转换为<code>uint32_t *</code><br>他对应着屏幕上任意一点处的像素的颜色值 颜色定义为ARGB<br>而(x,y)处的的像素获取方式为<code>(uint32_t *)pixels[x*w+y]</code><br>我们通过手动绘制来画一个100x100的方块 放置于(0,0)处</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">uint32_t</span> *p=(<span class="keyword">uint32_t</span> *)screen-&gt;pixels;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">100</span>;i++)&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;<span class="number">100</span>;j++)&#123;</span><br><span class="line">        p[i*screen-&gt;w+j]=<span class="number">0xff0000ff</span>;<span class="comment">//ARGB Blue 100%</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="SDL2事件循环"><a href="#SDL2事件循环" class="headerlink" title="SDL2事件循环"></a>SDL2事件循环</h1><p>SDL为事件处理提供了灵活的API，当收到来自设备的事件时，SDL会将其存入事件队列等待取出<br>在程序中，应当有一个循环来处理这些事件，每次循环时应从中取出事件并处理它<br>SDL 提供了 <code>SDL_PollEvent(SDL_Event *)</code>函数来提供取出事件的功能<br>如果对列中还有事件 则会取出事件存入SDL_Event类型的变量中 并返回一个非零值 否则返回零<br>轮询事件后，您可以在逻辑链中响应它。<br>为了方便阅读 通常会将循环抽出写成一个函数</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">eventloop</span><span class="params">()</span></span>&#123;</span><br><span class="line">    SDL_Event e;</span><br><span class="line">    <span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">        <span class="keyword">while</span>(SDL_PollEvent(&amp;e))&#123;</span><br><span class="line">            <span class="keyword">switch</span>(e.type)&#123;</span><br><span class="line">                <span class="keyword">case</span> SDL_QUIT:</span><br><span class="line">                    <span class="keyword">return</span>;</span><br><span class="line">                <span class="keyword">default</span>:</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<img src="/2021/01/26/SDL-DAY2/1.png" class="" title="运行效果">
+<p><a target="_blank" rel="noopener" href="https://github.com/2018-EPI-GROUP/2020Freshman/tree/%E9%80%9A%E5%B7%A52009-%E6%9C%B1%E5%BD%A6%E6%99%9F/SDL2/SDL2-02">代码</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://alexzhu2001.github.io/AlexZhu2001/2021/01/25/%E6%9E%84%E9%80%A0%E5%9B%9E%E6%96%87%E6%95%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="Alex Zhu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Alex's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/25/%E6%9E%84%E9%80%A0%E5%9B%9E%E6%96%87%E6%95%B0/" class="post-title-link" itemprop="url">构造回文数</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-01-25 21:01:08" itemprop="dateCreated datePublished" datetime="2021-01-25T21:01:08+08:00">2021-01-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-01-27 22:52:17" itemprop="dateModified" datetime="2021-01-27T22:52:17+08:00">2021-01-27</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>收集自他人提问</p>
+<p>回文数是一种很有趣的数，对于一个不是回文数的数，我们可以通过以下操作来将其变成回文数：<br>将数反转，加到原数上，重复这个过程，直到得到回文数为止</p>
+<h3 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a>输入格式</h3><p>输入1个数位不超过1000的正整数</p>
+<h3 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a>输出格式</h3><p>对每一个输入，输出将具变成回文数的过程。每一行按以下个数输出：<br><code> A + B = C</code><br>A是原数，B是反转数，C是和，重复这个过程，直到C是回文数为止。在最后一行输出<code>C is a palindromic number.</code><br>为了控制循环次数，我们规定，如果经过10次操作，还得不到回文数，那么停止，显示<code>Not found in 10 iterations.</code></p>
+<h3 id="样例"><a href="#样例" class="headerlink" title="样例"></a>样例</h3><h4 id="输入样例1"><a href="#输入样例1" class="headerlink" title="输入样例1"></a>输入样例1</h4><p>在这里给出一组输入。例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1234</span></span><br></pre></td></tr></table></figure>
+<h4 id="输出样例1"><a href="#输出样例1" class="headerlink" title="输出样例1"></a>输出样例1</h4><p>在这里给出相应的输出。例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1234</span> + <span class="number">4321</span> = <span class="number">5555</span></span><br><span class="line"><span class="number">5555</span> is a palindromic number</span><br></pre></td></tr></table></figure>
+<h4 id="输入样例2"><a href="#输入样例2" class="headerlink" title="输入样例2"></a>输入样例2</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1239102349120349</span></span><br></pre></td></tr></table></figure>
+<h4 id="输出样例2"><a href="#输出样例2" class="headerlink" title="输出样例2"></a>输出样例2</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1239102349120349</span> + <span class="number">9430219432019321</span> = <span class="number">10669321781139670</span></span><br><span class="line"><span class="number">10669321781139670</span> + <span class="number">07693118712396601</span> = <span class="number">18362440493536271</span></span><br><span class="line"><span class="number">18362440493536271</span> + <span class="number">17263539404426381</span> = <span class="number">35625979897962652</span></span><br><span class="line"><span class="number">35625979897962652</span> + <span class="number">25626979897952653</span> = <span class="number">61252959795915305</span></span><br><span class="line"><span class="number">61252959795915305</span> + <span class="number">50351959795925216</span> = <span class="number">111604919591840521</span></span><br><span class="line"><span class="number">111604919591840521</span> + <span class="number">125048195919406111</span> = <span class="number">236653115511246632</span></span><br><span class="line"><span class="number">236653115511246632</span> + <span class="number">236642115511356632</span> = <span class="number">473295231022603264</span></span><br><span class="line"><span class="number">473295231022603264</span> + <span class="number">462306220132592374</span> = <span class="number">935601451155195638</span></span><br><span class="line"><span class="number">935601451155195638</span> + <span class="number">836591551154106539</span> = <span class="number">1772193002309302177</span></span><br><span class="line"><span class="number">1772193002309302177</span> + <span class="number">7712039032003912771</span> = <span class="number">9484232034313214948</span></span><br><span class="line">Not found in <span class="number">10</span> iterations.</span><br></pre></td></tr></table></figure>
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>根据输入的格式，不能使用整数来存储输入值，此处采用字符数组存储，将数字直接看作字符串处理，编写对字符串的反转和求和函数，循环十次并判定和是否为回数。</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span>  MAX_COUNT 1050</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">char</span> num[MAX_COUNT]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line"><span class="keyword">char</span> rev[MAX_COUNT]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">reverse</span><span class="params">(<span class="keyword">char</span> *src,<span class="keyword">char</span> *dst,<span class="keyword">int</span> c)</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>,j=c<span class="number">-1</span>;i&lt;c;i++,j--)&#123;</span><br><span class="line">        dst[j]=src[i];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">char</span> *a,<span class="keyword">char</span> *b,<span class="keyword">int</span> c)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> flag=<span class="number">0</span>,num1,num2,sum;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=c<span class="number">-1</span>;i&gt;=<span class="number">0</span>;i--)&#123;</span><br><span class="line">        num1=a[i]-<span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">        num2=b[i]-<span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">        sum=num1+num2+(flag?<span class="number">1</span>:<span class="number">0</span>);</span><br><span class="line">        <span class="keyword">if</span>(sum&gt;<span class="number">9</span>)&#123;</span><br><span class="line">            sum-=<span class="number">10</span>;</span><br><span class="line">            flag=<span class="number">1</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            flag=<span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        a[i]=sum+<span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(flag)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=c;i&gt;<span class="number">0</span>;i--)&#123;</span><br><span class="line">            num[i]=num[i<span class="number">-1</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        num[<span class="number">0</span>]=<span class="string">&#x27;1&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">isCorrect</span><span class="params">(<span class="keyword">char</span> *num,<span class="keyword">int</span> c)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> l=<span class="number">0</span>,r=c<span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">while</span>(l&lt;r)&#123;</span><br><span class="line">        <span class="keyword">if</span>(num[l]!=num[r]) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        l++;</span><br><span class="line">        r--;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>,num);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">10</span>;i++)&#123;</span><br><span class="line">        reverse(num,rev,<span class="built_in">strlen</span>(num));</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%s + %s = &quot;</span>,num,rev);</span><br><span class="line">        add(num,rev,<span class="built_in">strlen</span>(num));</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>,num);</span><br><span class="line">        <span class="keyword">if</span>(isCorrect(num,<span class="built_in">strlen</span>(num)))&#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;%s is a palindromic number.&quot;</span>,num);</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Not found in 10 iterations.&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<a href="/2021/01/25/%E6%9E%84%E9%80%A0%E5%9B%9E%E6%96%87%E6%95%B0/BuildPalindromic.c" title="BuildPalindromic.c">BuildPalindromic.c</a>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://alexzhu2001.github.io/AlexZhu2001/2021/01/24/BinarySearch-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="Alex Zhu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Alex's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/24/BinarySearch-1/" class="post-title-link" itemprop="url">BinarySearch_1</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-01-24 16:49:35" itemprop="dateCreated datePublished" datetime="2021-01-24T16:49:35+08:00">2021-01-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-01-27 22:52:17" itemprop="dateModified" datetime="2021-01-27T22:52:17+08:00">2021-01-27</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="二分查找-1"><a href="#二分查找-1" class="headerlink" title="二分查找-1"></a>二分查找-1</h1><h2 id="思路-1：在循环体中查找元素"><a href="#思路-1：在循环体中查找元素" class="headerlink" title="思路 1：在循环体中查找元素"></a>思路 1：在循环体中查找元素</h2><h4 id="代码模板"><a href="#代码模板" class="headerlink" title="代码模板"></a>代码模板</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">bs</span><span class="params">(<span class="built_in">vector</span>&lt;T&gt; &amp;vec,<span class="keyword">int</span> target)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> l=<span class="number">0</span>,r=vec.size()<span class="number">-1</span>,mid;</span><br><span class="line">    <span class="keyword">while</span>(l&lt;=r)&#123;</span><br><span class="line">        mid=l+(r-l)/<span class="number">2</span>;</span><br><span class="line">        <span class="keyword">if</span>(vec[mid]==target)</span><br><span class="line">            <span class="keyword">return</span> mid;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(vec[mid]&lt;target)</span><br><span class="line">            l=mid+<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">else</span> </span><br><span class="line">            r=mid<span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="复杂度分析："><a href="#复杂度分析：" class="headerlink" title="复杂度分析："></a>复杂度分析：</h4><ul>
+<li>时间复杂度 二分查找的时间复杂度是 O(log⁡N) 这里N是输入数组的长度</li>
+<li>空间复杂度 由于二分查找算法在执行的过程中只使用到常数个临时变量 因此空间复杂度是 O(1)</li>
+</ul>
+<h4 id="细节"><a href="#细节" class="headerlink" title="细节"></a>细节</h4><ol>
+<li>循环可以继续的条件 <code>left&lt;=right</code> 表明区间仅剩一个元素时仍需继续查找 </li>
+<li>取中间值 <code>(l+r)/2</code>可能导致<code>l+r</code>发生溢出 所以使用<code>l+(r-l)/2</code>来防止溢出</li>
+<li>取中间值也可以向上取整</li>
+</ol>
+<h2 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h2><a href="/2021/01/24/BinarySearch-1/374.%E7%8C%9C%E6%95%B0%E5%AD%97%E5%A4%A7%E5%B0%8F.cpp" title="374.猜数字大小.cpp">374.猜数字大小.cpp</a>
+
+<a href="/2021/01/24/BinarySearch-1/704.%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE.cpp" title="704.二分查找.cpp">704.二分查找.cpp</a>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://alexzhu2001.github.io/AlexZhu2001/2021/01/22/SDL-DAY1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="Alex Zhu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Alex's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/22/SDL-DAY1/" class="post-title-link" itemprop="url">SDL_DAY1</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-01-22 18:42:16" itemprop="dateCreated datePublished" datetime="2021-01-22T18:42:16+08:00">2021-01-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-01-27 22:52:17" itemprop="dateModified" datetime="2021-01-27T22:52:17+08:00">2021-01-27</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id=""><a href="#" class="headerlink" title=""></a></h1><table>
+<thead>
+<tr>
+<th align="center">函数名</th>
+<th align="center">函数作用</th>
+<th align="center">备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">SDL_Init</td>
+<td align="center">初始化SDL2</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">SDL_CreateWindow</td>
+<td align="center">创建窗口</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">SDL_ShowWindow</td>
+<td align="center">显示窗口</td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;SDL2/SDL.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span>  WIDTH 400</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> HEIGHT 300</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(SDL_Init(SDL_INIT_VIDEO) != <span class="number">0</span>)&#123;</span><br><span class="line">        SDL_Log(<span class="string">&quot;Error,%s&quot;</span>,SDL_GetError());</span><br><span class="line">    &#125;</span><br><span class="line">    SDL_Window *win=SDL_CreateWindow(<span class="string">&quot;HelloWorld&quot;</span>,</span><br><span class="line">                                    SDL_WINDOWPOS_CENTERED,</span><br><span class="line">                                    SDL_WINDOWPOS_CENTERED,</span><br><span class="line">                                    WIDTH,HEIGHT,</span><br><span class="line">                                    SDL_WINDOW_SHOWN);</span><br><span class="line">    SDL_ShowWindow(win);</span><br><span class="line">    SDL_Delay(<span class="number">5000</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<img src="/2021/01/22/SDL-DAY1/1.png" class="" title="运行效果">
+<p><a target="_blank" rel="noopener" href="https://github.com/2018-EPI-GROUP/2020Freshman/tree/%E9%80%9A%E5%B7%A52009-%E6%9C%B1%E5%BD%A6%E6%99%9F/SDL2/SDL2-01">代码</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://alexzhu2001.github.io/AlexZhu2001/2021/01/21/Build-SDL2-by-VS2019/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="Alex Zhu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Alex's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/21/Build-SDL2-by-VS2019/" class="post-title-link" itemprop="url">Build SDL2 by VS2019</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-01-21 21:18:12" itemprop="dateCreated datePublished" datetime="2021-01-21T21:18:12+08:00">2021-01-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-01-27 22:52:17" itemprop="dateModified" datetime="2021-01-27T22:52:17+08:00">2021-01-27</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="使用CMake-GUI-完成SDL2的编译（MSVC2019）"><a href="#使用CMake-GUI-完成SDL2的编译（MSVC2019）" class="headerlink" title="使用CMake GUI 完成SDL2的编译（MSVC2019）"></a>使用CMake GUI 完成SDL2的编译（MSVC2019）</h1><hr>
+<h3 id="Step1-CMake设置"><a href="#Step1-CMake设置" class="headerlink" title="Step1.CMake设置"></a>Step1.CMake设置</h3><pre><code>打开CMake(GUI) 设置源码所在文件夹以及存放build文件的文件夹</code></pre>
+<img src="/2021/01/21/Build-SDL2-by-VS2019/1.png" class="" title="Settings1">
+<pre><code>点击Configure 选择 Visual Studio 16 2019 Finish</code></pre>
+<img src="/2021/01/21/Build-SDL2-by-VS2019/2.png" class="" title="Settings2">
+<pre><code>等待生成文件</code></pre>
+<h3 id="Step2-设置安装目录"><a href="#Step2-设置安装目录" class="headerlink" title="Step2.设置安装目录"></a>Step2.设置安装目录</h3><pre><code>修改 CMAKE_INSTALL_PREFIX 的变量值
+点击Generate</code></pre>
+<img src="/2021/01/21/Build-SDL2-by-VS2019/3.png" class="" title="Prefix Setting">
+
+<h3 id="Step3-开始编译"><a href="#Step3-开始编译" class="headerlink" title="Step3.开始编译"></a>Step3.开始编译</h3><pre><code>以管理员身份打开VS2019 打开设置的build存放目录下的SDL2.sln
+右击INSTALL 生成 等待编译和复制完成</code></pre>
+<img src="/2021/01/21/Build-SDL2-by-VS2019/4.png" class="" title="Build With VS2019">
+<img src="/2021/01/21/Build-SDL2-by-VS2019/5.png" class="" title="Build Success">
+
+
+
+
+
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://alexzhu2001.github.io/AlexZhu2001/2021/01/21/Post121/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="Alex Zhu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Alex's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/21/Post121/" class="post-title-link" itemprop="url">Post121</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-01-21 15:43:44" itemprop="dateCreated datePublished" datetime="2021-01-21T15:43:44+08:00">2021-01-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-01-27 22:52:17" itemprop="dateModified" datetime="2021-01-27T22:52:17+08:00">2021-01-27</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="TestPost"><a href="#TestPost" class="headerlink" title="TestPost"></a>TestPost</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;HelloWorld&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://alexzhu2001.github.io/AlexZhu2001/2021/01/19/%E5%AE%9E%E7%8E%B0log%E5%87%BD%E6%95%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="Alex Zhu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Alex's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/19/%E5%AE%9E%E7%8E%B0log%E5%87%BD%E6%95%B0/" class="post-title-link" itemprop="url">实现log函数</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-01-19 15:58:40" itemprop="dateCreated datePublished" datetime="2021-01-19T15:58:40+08:00">2021-01-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-01-27 22:52:17" itemprop="dateModified" datetime="2021-01-27T22:52:17+08:00">2021-01-27</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="实现一个log函数"><a href="#实现一个log函数" class="headerlink" title="实现一个log函数"></a>实现一个log函数</h1><p>首先 有换底公式 log<sub>a</sub>b=lnb/lna<br>由此 求log(b,a)可以转化为求lnb/lna</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">mylog</span><span class="params">(<span class="keyword">double</span> b,<span class="keyword">double</span> a)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> ln(b) / ln(a);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>接下来只需要编写ln函数<br>常用的方法是采用多项式展开（泰勒级数）<br>ln(1+x)展开后为</p>
+<img src="/2021/01/19/%E5%AE%9E%E7%8E%B0log%E5%87%BD%E6%95%B0/1.png" class="" title="ln(1+x)的泰勒展开">
+
+<p>所以 先将ln(t)中 t 化为 2^k*(1+f) 的形式<br>其中sqrt(2)/2 &lt; f &lt; sqrt(2)</p>
+<h3 id="定义常量"><a href="#定义常量" class="headerlink" title="定义常量"></a>定义常量</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SQRT2 1.4142135623730950488016887242097</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SQRT2D2 0.70710678118654752440084436210485</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LN2H 6.93147180369123816490e-01</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LN2L 1.90821492927058770002e-10</span></span><br></pre></td></tr></table></figure>
+<h3 id="参数化约"><a href="#参数化约" class="headerlink" title="参数化约"></a>参数化约</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> k=<span class="number">0</span>;</span><br><span class="line"><span class="keyword">if</span>(x&gt;SQRT2)&#123;</span><br><span class="line">    <span class="keyword">do</span></span><br><span class="line">    &#123;</span><br><span class="line">        x/=<span class="number">2</span>;</span><br><span class="line">        k++;</span><br><span class="line">    &#125; <span class="keyword">while</span> (x&gt;SQRT2);</span><br><span class="line">&#125;<span class="keyword">else</span> <span class="keyword">if</span>(x&lt;SQRT2D2)&#123;</span><br><span class="line">    <span class="keyword">do</span></span><br><span class="line">    &#123;</span><br><span class="line">        x*=<span class="number">2</span>;</span><br><span class="line">        k--;</span><br><span class="line">    &#125; <span class="keyword">while</span> (x&lt;SQRT2D2);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>此时 不难看出 ln(t)=ln(2^k*(1+f))=kln2+ln(1+f)<br>ln(2)在上方已经预先求出并定义</p>
+<p>此时只需求出ln(1+f)<br>为了保证泰勒展开计算的精确度，要使f尽可能接近1，做如下变换<br>s=f/(2+f)<br>则ln(1+f)=ln(1+s)-ln(1-s)<br>此时 做泰勒展开 可得<br>ln(1+f)=ln(1+s)-ln(1-s)<br>       =2(s-s^3/3+s^5/5+…)<br>做循环求出该多项式即可</p>
+<h3 id="求多项式"><a href="#求多项式" class="headerlink" title="求多项式"></a>求多项式</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;<span class="number">14</span>;i+=<span class="number">2</span>)&#123;</span><br><span class="line">    <span class="keyword">double</span> s=x;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> c=<span class="number">1</span>;c&lt;i;c++)&#123;</span><br><span class="line">        s*=x;</span><br><span class="line">    &#125;</span><br><span class="line">    res+=<span class="number">2</span>*s/i;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="测试用代码"><a href="#测试用代码" class="headerlink" title="测试用代码"></a>测试用代码</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;math.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SQRT2 1.4142135623730950488016887242097</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SQRT2D2 0.70710678118654752440084436210485</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LN2H 6.93147180369123816490e-01</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LN2L 1.90821492927058770002e-10</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">ln</span><span class="params">(<span class="keyword">double</span> x)</span></span>&#123;  </span><br><span class="line">    <span class="keyword">int</span> k=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span>(x&gt;SQRT2)&#123;</span><br><span class="line">        <span class="keyword">do</span></span><br><span class="line">        &#123;</span><br><span class="line">            x/=<span class="number">2</span>;</span><br><span class="line">            k++;</span><br><span class="line">        &#125; <span class="keyword">while</span> (x&gt;SQRT2);</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(x&lt;SQRT2D2)&#123;</span><br><span class="line">        <span class="keyword">do</span></span><br><span class="line">        &#123;</span><br><span class="line">            x*=<span class="number">2</span>;</span><br><span class="line">            k--;</span><br><span class="line">        &#125; <span class="keyword">while</span> (x&lt;SQRT2D2);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">double</span> res=k*LN2H+k*LN2L;</span><br><span class="line">    x-=<span class="number">1</span>;</span><br><span class="line">    x=x/(<span class="number">2</span>+x);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;<span class="number">14</span>;i+=<span class="number">2</span>)&#123;</span><br><span class="line">        <span class="keyword">double</span> s=x;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> c=<span class="number">1</span>;c&lt;i;c++)&#123;</span><br><span class="line">            s*=x;</span><br><span class="line">        &#125;</span><br><span class="line">        res+=<span class="number">2</span>*s/i;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">mylog</span><span class="params">(<span class="keyword">double</span> b,<span class="keyword">double</span> a)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> ln(b)/ln(a);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%lf %lf&quot;</span>,mylog(<span class="number">15</span>,<span class="number">2</span>),<span class="built_in">log</span>(<span class="number">15</span>)/<span class="built_in">log</span>(<span class="number">2</span>));</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="测试结果"><a href="#测试结果" class="headerlink" title="测试结果"></a>测试结果</h3><img src="/2021/01/19/%E5%AE%9E%E7%8E%B0log%E5%87%BD%E6%95%B0/2.png" class="" title="测试输出">
+<a href="/2021/01/19/%E5%AE%9E%E7%8E%B0log%E5%87%BD%E6%95%B0/log.c" title="下载源代码文件(log.c)">下载源代码文件(log.c)</a>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Alex Zhu"
+      src="/images/head.png">
+  <p class="site-author-name" itemprop="name">Alex Zhu</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/AlexZhu2001" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;AlexZhu2001" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=340 height=86 src="//music.163.com/outchain/player?type=2&id=1439814454&auto=0&height=66"></iframe>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Alex Zhu</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div><script color="0,0,255" opacity="0.5" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+    <script src="https://cdn.jsdelivr.net/gh/Sanarous/files@1.151/js/clicksocialvalue.js"></script>
+  
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":1},"log":false});</script></body>
+</html>
