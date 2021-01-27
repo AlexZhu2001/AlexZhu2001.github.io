@@ -1,0 +1,32 @@
+<script>
+jQuery(document).ready(function(){
+      window.mX=0;
+      window.mY=0;
+      window.dX=0;
+      window.dY=0;
+      window.isDown=false;
+      setTimeout(()=>{
+          $("#live2d-widget").css("pointer-events","auto");
+          $("#live2d-widget").mousedown(function(e){
+              window.mX=e.clientX;
+              window.mY=e.clientY;
+              window.dX=$("#live2d-widget").position().left;
+              window.dY=$("#live2d-widget").position().top;
+              window.isDown=true;
+          });
+          $("#live2d-widget").mouseup(function(e){
+              window.isDown=false;
+          });
+          $(document).mouseup(function(e){
+              window.isDown=false;
+          });
+          jQuery(document).mousemove(function(e){
+              x=e.clientX;
+              y=e.clientY;
+              if(window.isDown){
+                $("#live2d-widget").css({left:x-mX+dX,top:y-mY+dY})
+              };
+          });
+        },1000);
+      });
+</script>
