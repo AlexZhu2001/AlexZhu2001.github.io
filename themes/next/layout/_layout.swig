@@ -8,7 +8,6 @@
   {{ partial('_third-party/analytics/index.swig', {}, {cache: theme.cache.enable}) }}
   {{ partial('_scripts/noscript.swig', {}, {cache: theme.cache.enable}) }}
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  {{ partial('_scripts/l2d.swig', {}, {cache: theme.cache.enable}) }}
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -61,5 +60,10 @@
   {% if theme.clickFX %}
     <script src="https://cdn.jsdelivr.net/gh/Sanarous/files@1.151/js/clicksocialvalue.js"></script>
   {% endif %}
+  {%- if theme.enableLive2d -%}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css"/>
+    <script src="/live2d-widget/assets/jquery-ui.min.js"></script>
+    <script src="/live2d-widget/assets/autoload.js"></script>
+  {%- endif %}
 </body>
 </html>
