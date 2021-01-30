@@ -151,6 +151,166 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://alexzhu2001.github.io/AlexZhu2001/2021/01/30/BinarySearch-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="Alex Zhu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Alex's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/30/BinarySearch-2/" class="post-title-link" itemprop="url">BinarySearch-2</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-01-30 14:37:46 / 修改时间：14:58:46" itemprop="dateCreated datePublished" datetime="2021-01-30T14:37:46+08:00">2021-01-30</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="二分查找-2"><a href="#二分查找-2" class="headerlink" title="二分查找-2"></a>二分查找-2</h1><h2 id="思路二-在循环体中排除"><a href="#思路二-在循环体中排除" class="headerlink" title="思路二 在循环体中排除"></a>思路二 在循环体中排除</h2><h4 id="代码模板"><a href="#代码模板" class="headerlink" title="代码模板"></a>代码模板</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">bs</span><span class="params">(<span class="built_in">vector</span>&lt;T&gt; nums,T target)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> l=<span class="number">0</span>,r=nums.size()<span class="number">-1</span>,mid;</span><br><span class="line">    <span class="keyword">while</span>(l&lt;r)&#123;</span><br><span class="line">        mid=l+(r-l)/<span class="number">2</span>;</span><br><span class="line">        <span class="keyword">if</span>(nums[mid]&lt;target)</span><br><span class="line">            l=mid+<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">else</span> r=mid;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> l;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="细节分析"><a href="#细节分析" class="headerlink" title="细节分析"></a>细节分析</h2><ul>
+<li>循环退出条件<code>l&lt;r</code></li>
+<li>边界写法 <ul>
+<li><code>r = mid</code> 和 <code>l = mid + 1</code> 和 <code>int mid = l + (r - l) / 2;</code> 一定是配对出现的；</li>
+<li><code>r = mid - 1</code> 和 <code>l = mid</code> 和 <code>int mid = l + (r - l + 1) / 2;</code> 一定是配对出现的。</li>
+</ul>
+</li>
+</ul>
+<h2 id="适用范围"><a href="#适用范围" class="headerlink" title="适用范围"></a>适用范围</h2><p>这种二分查找的思路，对于查找边界问题，会使得思考的过程变得简单。</p>
+<h2 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h2><ol>
+<li><h3 id="搜索插入位置"><a href="#搜索插入位置" class="headerlink" title="搜索插入位置"></a>搜索插入位置</h3><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/search-insert-position/description/">题目描述</a><h4 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h4>首先 题目未说明数组是否为空 先判断是否为空<br>如果最后一个元素小于目标值 则应返回最后一个元素的下标加一 也即数组长度<br>其他情况可利用如上方法二分查找即可<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">searchInsert</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(nums.size()==<span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span>(nums[nums.size()<span class="number">-1</span>]&lt;target) <span class="keyword">return</span> nums.size();</span><br><span class="line">        <span class="keyword">int</span> l=<span class="number">0</span>,r=nums.size()<span class="number">-1</span>,mid;</span><br><span class="line">        <span class="keyword">while</span>(l&lt;r)&#123;</span><br><span class="line">            mid=l+(r-l)/<span class="number">2</span>;</span><br><span class="line">            <span class="keyword">if</span>(nums[mid]&lt;target)&#123;</span><br><span class="line">                l=mid+<span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span>&#123;</span><br><span class="line">                r=mid;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> l;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<a href="/2021/01/30/BinarySearch-2/35.%E6%90%9C%E7%B4%A2%E6%8F%92%E5%85%A5%E4%BD%8D%E7%BD%AE.cpp" title="35.搜索插入位置">35.搜索插入位置</a>
+</li>
+</ol>
+<hr>
+<p>2. </p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://alexzhu2001.github.io/AlexZhu2001/2021/01/30/validTicTacToe/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="Alex Zhu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Alex's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/30/validTicTacToe/" class="post-title-link" itemprop="url">validTicTacToe</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-01-30 14:00:59 / 修改时间：14:58:46" itemprop="dateCreated datePublished" datetime="2021-01-30T14:00:59+08:00">2021-01-30</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="LeetCode-794-有效的井字游戏"><a href="#LeetCode-794-有效的井字游戏" class="headerlink" title="LeetCode 794 有效的井字游戏"></a>LeetCode 794 有效的井字游戏</h1><h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>用字符串数组作为井字游戏的游戏板 board。当且仅当在井字游戏过程中，玩家有可能将字符放置成游戏板所显示的状态时，才返回 true。</p>
+<p>游戏该板是一个 3 x 3 数组，由字符 “ “，”X” 和 “O” 组成。字符 “ “ 代表一个空位。</p>
+<p>以下是井字游戏的规则：</p>
+<ul>
+<li>玩家轮流将字符放入空位（” “）中。</li>
+<li>第一个玩家总是放字符 “X”，且第二个玩家总是放字符 “O”。</li>
+<li>“X” 和 “O” 只允许放置在空位中，不允许对已放有字符的位置进行填充。</li>
+<li>当有 3 个相同（且非空）的字符填充任何行、列或对角线时，游戏结束。</li>
+<li>当所有位置非空时，也算为游戏结束。</li>
+<li>如果游戏结束，玩家不允许再放置字符。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">示例 <span class="number">1</span>:</span><br><span class="line">输入: board = [<span class="string">&quot;O  &quot;</span>, <span class="string">&quot;   &quot;</span>, <span class="string">&quot;   &quot;</span>]</span><br><span class="line">输出: false</span><br><span class="line">解释: 第一个玩家总是放置“X”。</span><br><span class="line"></span><br><span class="line">示例 <span class="number">2</span>:</span><br><span class="line">输入: board = [<span class="string">&quot;XOX&quot;</span>, <span class="string">&quot; X &quot;</span>, <span class="string">&quot;   &quot;</span>]</span><br><span class="line">输出: false</span><br><span class="line">解释: 玩家应该是轮流放置的。</span><br><span class="line"></span><br><span class="line">示例 <span class="number">3</span>:</span><br><span class="line">输入: board = [<span class="string">&quot;XXX&quot;</span>, <span class="string">&quot;   &quot;</span>, <span class="string">&quot;OOO&quot;</span>]</span><br><span class="line">输出: false</span><br><span class="line"></span><br><span class="line">示例 <span class="number">4</span>:</span><br><span class="line">输入: board = [<span class="string">&quot;XOX&quot;</span>, <span class="string">&quot;O O&quot;</span>, <span class="string">&quot;XOX&quot;</span>]</span><br><span class="line">输出: true</span><br></pre></td></tr></table></figure>
+<p>说明:</p>
+<ul>
+<li>游戏板 <code>board</code> 是长度为 3 的字符串数组，其中每个字符串 <code>board[i]</code> 的长度为 3。</li>
+<li><code>board[i][j]</code> 是集合 <code>&#123;&quot; &quot;, &quot;X&quot;, &quot;O&quot;&#125;</code> 中的一个字符。</li>
+</ul>
+<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p>首先 由于放置<code>X</code>先于<code>O</code> 则<code>X</code>的数量大于等于<code>O</code>的数量，且之多比<code>O</code>多一个</p>
+<p>如满足以上条件，分析可能的局面如下四种</p>
+<ul>
+<li>游戏结束后没有赢家</li>
+<li>执<code>X</code>者获胜 此时<code>X</code>数量比<code>O</code>多一个</li>
+<li>执<code>X</code>者获胜 此时<code>X</code>数量与<code>O</code>相等</li>
+<li>两个人都赢 此情况违背了规则</li>
+</ul>
+<p>所以可使用一个函数判断属于哪种局面，并得到结果</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">validTicTacToe</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&amp; board)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> x=<span class="number">0</span>,o=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span> i:board)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">auto</span> j:i)&#123;</span><br><span class="line">                <span class="keyword">if</span>(j==<span class="string">&#x27;X&#x27;</span>) x++;</span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">if</span>(j==<span class="string">&#x27;O&#x27;</span>) o++;       </span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(x-o&gt;<span class="number">1</span>||x-o&lt;<span class="number">0</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">int</span> res=winer(board);</span><br><span class="line">        <span class="keyword">switch</span> (res)</span><br><span class="line">        &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">            <span class="keyword">return</span> (x-o)==<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">            <span class="keyword">return</span> x==o;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">3</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">winer</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&amp; board)</span></span>&#123;</span><br><span class="line">        <span class="keyword">bool</span> xW=<span class="literal">false</span>,oW=<span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span> i : board)&#123;</span><br><span class="line">            <span class="keyword">if</span>(i==<span class="string">&quot;XXX&quot;</span>||i==<span class="string">&quot;OOO&quot;</span>)&#123;</span><br><span class="line">                i[<span class="number">0</span>]==<span class="string">&#x27;X&#x27;</span>?xW=<span class="literal">true</span>:oW=<span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">3</span>;i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(board[<span class="number">0</span>][i]==board[<span class="number">1</span>][i]&amp;&amp;board[<span class="number">1</span>][i]==board[<span class="number">2</span>][i]&amp;&amp;board[<span class="number">0</span>][i]!=<span class="string">&#x27; &#x27;</span>)</span><br><span class="line">                board[<span class="number">0</span>][i]==<span class="string">&#x27;X&#x27;</span>?xW=<span class="literal">true</span>:oW=<span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(board[<span class="number">0</span>][<span class="number">0</span>]==board[<span class="number">1</span>][<span class="number">1</span>]&amp;&amp;board[<span class="number">0</span>][<span class="number">0</span>]==board[<span class="number">2</span>][<span class="number">2</span>]&amp;&amp;board[<span class="number">0</span>][<span class="number">0</span>]!=<span class="string">&#x27; &#x27;</span>)&#123;</span><br><span class="line">            board[<span class="number">0</span>][<span class="number">0</span>]==<span class="string">&#x27;X&#x27;</span>?xW=<span class="literal">true</span>:oW=<span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(board[<span class="number">0</span>][<span class="number">2</span>]==board[<span class="number">1</span>][<span class="number">1</span>]&amp;&amp;board[<span class="number">1</span>][<span class="number">1</span>]==board[<span class="number">2</span>][<span class="number">0</span>]&amp;&amp;board[<span class="number">1</span>][<span class="number">1</span>]!=<span class="string">&#x27; &#x27;</span>)&#123;</span><br><span class="line">            board[<span class="number">1</span>][<span class="number">1</span>]==<span class="string">&#x27;X&#x27;</span>?xW=<span class="literal">true</span>:oW=<span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(oW&amp;&amp;xW) <span class="keyword">return</span> <span class="number">3</span>;</span><br><span class="line">        <span class="keyword">if</span>(!(oW||xW)) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">return</span> xW?<span class="number">1</span>:<span class="number">2</span>; </span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<a href="/2021/01/30/validTicTacToe/794.%E6%9C%89%E6%95%88%E7%9A%84%E4%BA%95%E5%AD%97%E6%B8%B8%E6%88%8F.cpp" title="794.有效的井字游戏.cpp">794.有效的井字游戏.cpp</a>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://alexzhu2001.github.io/AlexZhu2001/2021/01/26/SDL-DAY2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -182,7 +342,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-01-29 23:34:53" itemprop="dateModified" datetime="2021-01-29T23:34:53+08:00">2021-01-29</time>
+                <time title="修改时间：2021-01-30 14:58:46" itemprop="dateModified" datetime="2021-01-30T14:58:46+08:00">2021-01-30</time>
               </span>
 
           
@@ -272,7 +432,7 @@ SDL_Surface是一个结构体,其定义如下
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-01-29 23:34:53" itemprop="dateModified" datetime="2021-01-29T23:34:53+08:00">2021-01-29</time>
+                <time title="修改时间：2021-01-30 14:58:46" itemprop="dateModified" datetime="2021-01-30T14:58:46+08:00">2021-01-30</time>
               </span>
 
           
@@ -348,7 +508,7 @@ SDL_Surface是一个结构体,其定义如下
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-01-29 23:34:53" itemprop="dateModified" datetime="2021-01-29T23:34:53+08:00">2021-01-29</time>
+                <time title="修改时间：2021-01-30 14:58:46" itemprop="dateModified" datetime="2021-01-30T14:58:46+08:00">2021-01-30</time>
               </span>
 
           
@@ -362,7 +522,7 @@ SDL_Surface是一个结构体,其定义如下
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="二分查找-1"><a href="#二分查找-1" class="headerlink" title="二分查找-1"></a>二分查找-1</h1><h2 id="思路-1：在循环体中查找元素"><a href="#思路-1：在循环体中查找元素" class="headerlink" title="思路 1：在循环体中查找元素"></a>思路 1：在循环体中查找元素</h2><h4 id="代码模板"><a href="#代码模板" class="headerlink" title="代码模板"></a>代码模板</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">bs</span><span class="params">(<span class="built_in">vector</span>&lt;T&gt; &amp;vec,<span class="keyword">int</span> target)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> l=<span class="number">0</span>,r=vec.size()<span class="number">-1</span>,mid;</span><br><span class="line">    <span class="keyword">while</span>(l&lt;=r)&#123;</span><br><span class="line">        mid=l+(r-l)/<span class="number">2</span>;</span><br><span class="line">        <span class="keyword">if</span>(vec[mid]==target)</span><br><span class="line">            <span class="keyword">return</span> mid;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(vec[mid]&lt;target)</span><br><span class="line">            l=mid+<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">else</span> </span><br><span class="line">            r=mid<span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <h1 id="二分查找-1"><a href="#二分查找-1" class="headerlink" title="二分查找-1"></a>二分查找-1</h1><h2 id="思路-1：在循环体中查找元素"><a href="#思路-1：在循环体中查找元素" class="headerlink" title="思路 1：在循环体中查找元素"></a>思路 1：在循环体中查找元素</h2><h4 id="代码模板"><a href="#代码模板" class="headerlink" title="代码模板"></a>代码模板</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">bs</span><span class="params">(<span class="built_in">vector</span>&lt;T&gt; &amp;vec,T target)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> l=<span class="number">0</span>,r=vec.size()<span class="number">-1</span>,mid;</span><br><span class="line">    <span class="keyword">while</span>(l&lt;=r)&#123;</span><br><span class="line">        mid=l+(r-l)/<span class="number">2</span>;</span><br><span class="line">        <span class="keyword">if</span>(vec[mid]==target)</span><br><span class="line">            <span class="keyword">return</span> mid;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(vec[mid]&lt;target)</span><br><span class="line">            l=mid+<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">else</span> </span><br><span class="line">            r=mid<span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h4 id="复杂度分析："><a href="#复杂度分析：" class="headerlink" title="复杂度分析："></a>复杂度分析：</h4><ul>
 <li>时间复杂度 二分查找的时间复杂度是 O(log⁡N) 这里N是输入数组的长度</li>
 <li>空间复杂度 由于二分查找算法在执行的过程中只使用到常数个临时变量 因此空间复杂度是 O(1)</li>
@@ -425,7 +585,7 @@ SDL_Surface是一个结构体,其定义如下
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-01-29 23:34:53" itemprop="dateModified" datetime="2021-01-29T23:34:53+08:00">2021-01-29</time>
+                <time title="修改时间：2021-01-30 14:58:46" itemprop="dateModified" datetime="2021-01-30T14:58:46+08:00">2021-01-30</time>
               </span>
 
           
@@ -516,7 +676,7 @@ SDL_Surface是一个结构体,其定义如下
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-01-29 23:34:53" itemprop="dateModified" datetime="2021-01-29T23:34:53+08:00">2021-01-29</time>
+                <time title="修改时间：2021-01-30 14:58:46" itemprop="dateModified" datetime="2021-01-30T14:58:46+08:00">2021-01-30</time>
               </span>
 
           
@@ -600,7 +760,7 @@ SDL_Surface是一个结构体,其定义如下
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-01-29 23:34:53" itemprop="dateModified" datetime="2021-01-29T23:34:53+08:00">2021-01-29</time>
+                <time title="修改时间：2021-01-30 14:58:46" itemprop="dateModified" datetime="2021-01-30T14:58:46+08:00">2021-01-30</time>
               </span>
 
           
@@ -664,7 +824,7 @@ SDL_Surface是一个结构体,其定义如下
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-01-29 23:34:53" itemprop="dateModified" datetime="2021-01-29T23:34:53+08:00">2021-01-29</time>
+                <time title="修改时间：2021-01-30 14:58:46" itemprop="dateModified" datetime="2021-01-30T14:58:46+08:00">2021-01-30</time>
               </span>
 
           
@@ -775,7 +935,7 @@ SDL_Surface是一个结构体,其定义如下
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-count">9</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
