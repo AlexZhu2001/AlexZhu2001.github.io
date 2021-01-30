@@ -151,6 +151,191 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://alexzhu2001.github.io/AlexZhu2001/2021/01/30/Unix-Linux-who/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="Alex Zhu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Alex's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/30/Unix-Linux-who/" class="post-title-link" itemprop="url">Unix-Linux编程实践1-who命令的实现</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-01-30 15:01:58 / 修改时间：21:50:12" itemprop="dateCreated datePublished" datetime="2021-01-30T15:01:58+08:00">2021-01-30</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Unix-Linux编程实践1-who命令的实现"><a href="#Unix-Linux编程实践1-who命令的实现" class="headerlink" title="Unix-Linux编程实践1-who命令的实现"></a>Unix-Linux编程实践1-who命令的实现</h1><h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>在使用Unix/Linux系统时，常常需要知道有哪些用户正在使用系统，系统是否繁忙，为了回答这些问题，所有的多用户系统都会有这个命令 </p>
+<h2 id="关于who"><a href="#关于who" class="headerlink" title="关于who"></a>关于who</h2><p>我们将通过三个问题的解答来学习who命令</p>
+<h3 id="who能做什么"><a href="#who能做什么" class="headerlink" title="who能做什么"></a>who能做什么</h3><p>Unix/Linux who命令用于显示系统中有哪些使用者正在上面，显示的资料包含了使用者 ID、使用的终端机、从哪边连上来的、上线时间、呆滞时间、CPU 使用量、动作等等。</p>
+<p>使用权限：所有使用者都可使用。</p>
+<img src="/2021/01/30/Unix-Linux-who/1.png" class="" title="OpenBSD运行结果">
+<h3 id="who是如何工作的"><a href="#who是如何工作的" class="headerlink" title="who是如何工作的"></a>who是如何工作的</h3><p>通过命令<code>man who</code>可以打开who的帮助文档</p>
+<img src="/2021/01/30/Unix-Linux-who/2.png" class="" title="who的帮助文档">
+
+<p>从上文易知 已登陆用户信息存储在/var/run/utmp中，who通过读取该文件来获得信息<br>通过<code>man utmp</code>可以获得utmp文件记录的数据结构信息</p>
+<img src="/2021/01/30/Unix-Linux-who/3.png" class="" title="utmp文档">
+
+<p>所以<code>who</code>的工作原理可用以下流程完成</p>
+<div id="flowchart-0" class="flow-chart"></div>
+
+<h3 id="如何编写who"><a href="#如何编写who" class="headerlink" title="如何编写who"></a>如何编写who</h3><h5 id="如何读取文件"><a href="#如何读取文件" class="headerlink" title="如何读取文件"></a>如何读取文件</h5><p>通过搜索和read和file有关的文档</p>
+<img src="/2021/01/30/Unix-Linux-who/4.png" class="" title="man read file">
+<p>可以找到open(2)</p>
+<img src="/2021/01/30/Unix-Linux-who/5.png" class="" title="man 2 open">
+<p>通过open的文档可以找到其他的函数，分别是read close<br>open在打开文件时需要提供打开方式</p>
+<table>
+<thead>
+<tr>
+<th>open</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>target</td>
+<td>打开文件</td>
+</tr>
+<tr>
+<td>header</td>
+<td><code>#include &lt;fcntl.h&gt;</code></td>
+</tr>
+<tr>
+<td>definition</td>
+<td><code>int fd = open(const char *name,int flags)</code></td>
+</tr>
+<tr>
+<td>arguments</td>
+<td>name:文件名,flags:读取模式</td>
+</tr>
+<tr>
+<td>ret</td>
+<td>-1 error,int success</td>
+</tr>
+<tr>
+<td>其中 flags可以为O_RDONLY O_WRONLY O_RDWR</td>
+<td></td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>read</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>target</td>
+<td>读取文件</td>
+</tr>
+<tr>
+<td>header</td>
+<td><code>#include &lt;unistd.h&gt;</code></td>
+</tr>
+<tr>
+<td>definition</td>
+<td><code>ssize_t numread = read(int fd,void *buf,size_t qty)</code></td>
+</tr>
+<tr>
+<td>arguments</td>
+<td>fd:文件描述符,buf:缓冲区,qty:读取数量</td>
+</tr>
+<tr>
+<td>ret</td>
+<td>-1 error,numread success</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>close</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>target</td>
+<td>关闭文件</td>
+</tr>
+<tr>
+<td>header</td>
+<td><code>#include &lt;unistd.h&gt;</code></td>
+</tr>
+<tr>
+<td>definition</td>
+<td><code>int result = close(int fd)</code></td>
+</tr>
+<tr>
+<td>arguments</td>
+<td>fd:文件描述符</td>
+</tr>
+<tr>
+<td>ret</td>
+<td>-1 error,0 success</td>
+</tr>
+</tbody></table>
+<h3 id="编写who1-c"><a href="#编写who1-c" class="headerlink" title="编写who1.c"></a>编写who1.c</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment"> * who version1 </span></span><br><span class="line"><span class="comment"> * show who login this machine</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;utmp.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SHOW_HOSTS</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">show_info</span><span class="params">(struct utmp *utmpbuf)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc,<span class="keyword">char</span> *argv[])</span></span>&#123;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">utmp</span> <span class="title">rec</span>;</span></span><br><span class="line">	<span class="keyword">int</span> utmpfd;</span><br><span class="line">	<span class="keyword">int</span> reclen=<span class="keyword">sizeof</span>(rec);</span><br><span class="line">    utmpfd=open(_PATH_UTMP,O_RDONLY);</span><br><span class="line">	<span class="keyword">if</span>(utmpfd==<span class="number">-1</span>)&#123;</span><br><span class="line">		perror(_PATH_UTMP);</span><br><span class="line">		<span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">while</span>(read(utmpfd,&amp;rec,reclen) == reclen)&#123;</span><br><span class="line">		show_info(&amp;rec);</span><br><span class="line">	&#125;</span><br><span class="line">	close(utmpfd);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">show_info</span><span class="params">(struct utmp *utmpbuf)</span></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%-8.8s&quot;</span>,utmpbuf-&gt;ut_name);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot; &quot;</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%-8.8s&quot;</span>,utmpbuf-&gt;ut_line);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot; &quot;</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%10ld&quot;</span>,(<span class="keyword">long</span>)utmpbuf-&gt;ut_time);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot; &quot;</span>);</span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> SHOW_HOSTS</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;(%s)&quot;</span>,utmpbuf-&gt;ut_host);</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>编译who1<br><code>cc who1.c -o who1</code><br>执行<br><code>./who1</code></p>
+<img src="/2021/01/30/Unix-Linux-who/6.png" class="" title="who1">
+<p>可见 <code>who1</code>已经可以工作了，但是仍有很多可以完善</p>
+<ul>
+<li>消除空白记录</li>
+<li>正确显示时间</li>
+</ul>
+<h3 id="编写who2-c"><a href="#编写who2-c" class="headerlink" title="编写who2.c"></a>编写who2.c</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment"> * who version2 </span></span><br><span class="line"><span class="comment"> * show who login this machine</span></span><br><span class="line"><span class="comment"> * change time format</span></span><br><span class="line"><span class="comment"> * delete useless one</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> *          open utmp file</span></span><br><span class="line"><span class="comment"> *     +---&gt;read record-----&lt;is eof&gt;-----+</span></span><br><span class="line"><span class="comment"> *     |    print record--&lt;is empty&gt;--+  |                                </span></span><br><span class="line"><span class="comment"> *     |                              |  |</span></span><br><span class="line"><span class="comment"> *     +------------------------------+  |  </span></span><br><span class="line"><span class="comment"> *                                       |</span></span><br><span class="line"><span class="comment"> *          close utmp file&lt;-------------+</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;utmp.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;time.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SHOW_HOSTS</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">show_info</span><span class="params">(struct utmp *utmpbuf)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">show_time</span><span class="params">(<span class="keyword">time_t</span> time)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc,<span class="keyword">char</span> *argv[])</span></span>&#123;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">utmp</span> <span class="title">rec</span>;</span></span><br><span class="line">	<span class="keyword">int</span> utmpfd;</span><br><span class="line">	<span class="keyword">int</span> reclen=<span class="keyword">sizeof</span>(rec);</span><br><span class="line">    utmpfd=open(_PATH_UTMP,O_RDONLY);</span><br><span class="line">	<span class="keyword">if</span>(utmpfd==<span class="number">-1</span>)&#123;</span><br><span class="line">		perror(_PATH_UTMP);</span><br><span class="line">		<span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">while</span>(read(utmpfd,&amp;rec,reclen) == reclen)&#123;</span><br><span class="line">		show_info(&amp;rec);</span><br><span class="line">	&#125;</span><br><span class="line">	close(utmpfd);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">show_info</span><span class="params">(struct utmp *utmpbuf)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">strlen</span>(utmpbuf-&gt;ut_name)==<span class="number">0</span>) <span class="keyword">return</span>;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%-8.8s&quot;</span>,utmpbuf-&gt;ut_name);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot; &quot;</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%-8.8s&quot;</span>,utmpbuf-&gt;ut_line);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot; &quot;</span>);</span><br><span class="line">	<span class="comment">//printf(&quot;%10ld&quot;,(long)utmpbuf-&gt;ut_time);</span></span><br><span class="line">	show_time(utmpbuf-&gt;ut_time);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot; &quot;</span>);</span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> SHOW_HOSTS</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;(%s)&quot;</span>,utmpbuf-&gt;ut_host);</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">show_time</span><span class="params">(<span class="keyword">time_t</span> time)</span></span>&#123;</span><br><span class="line">    <span class="keyword">char</span> *str=ctime(&amp;time);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%12.12s&quot;</span>,str+<span class="number">4</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>编译并运行<br><code>cc who2.c -o who2&amp;&amp;./who2</code></p>
+<img src="/2021/01/30/Unix-Linux-who/7.png" class="" title="who2">
+<p>此时<code>who</code>已经可以按要求正常运行了</p>
+<a href="/2021/01/30/Unix-Linux-who/who1.c" title="who1.c">who1.c</a>
+<a href="/2021/01/30/Unix-Linux-who/who2.c" title="who2.c">who2.c</a><script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.6.5/flowchart.min.js"></script><textarea id="flowchart-0-code" style="display: none">open_utmp=>operation: 打开utmp
+read_rec=>operation: 读取记录
+show=>operation: 显示记录
+close_utmp=>operation: 关闭记录
+isFinished=>condition: 读取完了?
+open_utmp(right)->read_rec(right)->show->isFinished
+isFinished(yes)->close_utmp
+isFinished(no)->read_rec</textarea><textarea id="flowchart-0-options" style="display: none">{"scale":1,"line-width":2,"line-length":50,"text-margin":10,"font-size":12}</textarea><script>  var code = document.getElementById("flowchart-0-code").value;  var options = JSON.parse(decodeURIComponent(document.getElementById("flowchart-0-options").value));  var diagram = flowchart.parse(code);  diagram.drawSVG("flowchart-0", options);</script>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://alexzhu2001.github.io/AlexZhu2001/2021/01/30/BinarySearch-2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -176,7 +361,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-01-30 14:37:46 / 修改时间：14:58:46" itemprop="dateCreated datePublished" datetime="2021-01-30T14:37:46+08:00">2021-01-30</time>
+              <time title="创建时间：2021-01-30 14:37:46 / 修改时间：21:50:12" itemprop="dateCreated datePublished" datetime="2021-01-30T14:37:46+08:00">2021-01-30</time>
             </span>
 
           
@@ -251,7 +436,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-01-30 14:00:59 / 修改时间：14:58:46" itemprop="dateCreated datePublished" datetime="2021-01-30T14:00:59+08:00">2021-01-30</time>
+              <time title="创建时间：2021-01-30 14:00:59 / 修改时间：21:50:12" itemprop="dateCreated datePublished" datetime="2021-01-30T14:00:59+08:00">2021-01-30</time>
             </span>
 
           
@@ -342,7 +527,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-01-30 14:58:46" itemprop="dateModified" datetime="2021-01-30T14:58:46+08:00">2021-01-30</time>
+                <time title="修改时间：2021-01-30 21:50:12" itemprop="dateModified" datetime="2021-01-30T21:50:12+08:00">2021-01-30</time>
               </span>
 
           
@@ -432,7 +617,7 @@ SDL_Surface是一个结构体,其定义如下
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-01-30 14:58:46" itemprop="dateModified" datetime="2021-01-30T14:58:46+08:00">2021-01-30</time>
+                <time title="修改时间：2021-01-30 21:50:12" itemprop="dateModified" datetime="2021-01-30T21:50:12+08:00">2021-01-30</time>
               </span>
 
           
@@ -508,7 +693,7 @@ SDL_Surface是一个结构体,其定义如下
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-01-30 14:58:46" itemprop="dateModified" datetime="2021-01-30T14:58:46+08:00">2021-01-30</time>
+                <time title="修改时间：2021-01-30 21:50:12" itemprop="dateModified" datetime="2021-01-30T21:50:12+08:00">2021-01-30</time>
               </span>
 
           
@@ -585,7 +770,7 @@ SDL_Surface是一个结构体,其定义如下
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-01-30 14:58:46" itemprop="dateModified" datetime="2021-01-30T14:58:46+08:00">2021-01-30</time>
+                <time title="修改时间：2021-01-30 21:50:12" itemprop="dateModified" datetime="2021-01-30T21:50:12+08:00">2021-01-30</time>
               </span>
 
           
@@ -676,7 +861,7 @@ SDL_Surface是一个结构体,其定义如下
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-01-30 14:58:46" itemprop="dateModified" datetime="2021-01-30T14:58:46+08:00">2021-01-30</time>
+                <time title="修改时间：2021-01-30 21:50:12" itemprop="dateModified" datetime="2021-01-30T21:50:12+08:00">2021-01-30</time>
               </span>
 
           
@@ -760,7 +945,7 @@ SDL_Surface是一个结构体,其定义如下
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-01-30 14:58:46" itemprop="dateModified" datetime="2021-01-30T14:58:46+08:00">2021-01-30</time>
+                <time title="修改时间：2021-01-30 21:50:12" itemprop="dateModified" datetime="2021-01-30T21:50:12+08:00">2021-01-30</time>
               </span>
 
           
@@ -824,7 +1009,7 @@ SDL_Surface是一个结构体,其定义如下
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-01-30 14:58:46" itemprop="dateModified" datetime="2021-01-30T14:58:46+08:00">2021-01-30</time>
+                <time title="修改时间：2021-01-30 21:50:12" itemprop="dateModified" datetime="2021-01-30T21:50:12+08:00">2021-01-30</time>
               </span>
 
           
@@ -935,14 +1120,14 @@ SDL_Surface是一个结构体,其定义如下
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-count">10</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
