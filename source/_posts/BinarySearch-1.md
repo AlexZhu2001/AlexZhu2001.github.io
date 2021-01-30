@@ -10,7 +10,7 @@ tags:
 
 #### 代码模板
 ```cpp
-int bs(vector<T> &vec,int target){
+int bs(vector<T> &vec,T target){
     int l=0,r=vec.size()-1,mid;
     while(l<=r){
         mid=l+(r-l)/2;
