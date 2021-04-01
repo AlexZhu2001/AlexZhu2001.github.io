@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.3.0">
+<meta name="generator" content="Hexo 5.4.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/128x128.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/16x16.png">
@@ -72,7 +72,7 @@
   </style>
 </noscript>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -182,7 +182,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-31 07:36:16" itemprop="dateModified" datetime="2021-03-31T07:36:16+08:00">2021-03-31</time>
+                <time title="修改时间：2021-04-01 23:46:11" itemprop="dateModified" datetime="2021-04-01T23:46:11+08:00">2021-04-01</time>
               </span>
 
           
@@ -196,8 +196,64 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="层次分析法-AHP"><a href="#层次分析法-AHP" class="headerlink" title="层次分析法 AHP"></a>层次分析法 AHP</h3><h4 id="针对问题类型"><a href="#针对问题类型" class="headerlink" title="针对问题类型"></a>针对问题类型</h4><p>适用于解决评价类问题<br>可以使用打分法解决评价类问题</p>
-
+          <h1 id="层次分析法-AHP"><a href="#层次分析法-AHP" class="headerlink" title="层次分析法 AHP"></a>层次分析法 AHP</h1><h2 id="针对问题类型"><a href="#针对问题类型" class="headerlink" title="针对问题类型"></a>针对问题类型</h2><p>适用于解决评价类问题<br>可以使用打分法解决评价类问题<br><img src="/2021/03/30/AHP/pic1.png" class="" title="打分表"></p>
+<h2 id="如何解决评价类问题"><a href="#如何解决评价类问题" class="headerlink" title="如何解决评价类问题"></a>如何解决评价类问题</h2><p>明确三个问题</p>
+<ol>
+<li>我们评价的目标</li>
+<li>为了达到这个目标有几种方案</li>
+<li>评价的准则、指标</li>
+</ol>
+<hr>
+<h2 id="搜索文献地址"><a href="#搜索文献地址" class="headerlink" title="搜索文献地址"></a>搜索文献地址</h2><p><a target="_blank" rel="noopener" href="https://www.cnki.net/">知网</a><br><a target="_blank" rel="noopener" href="https://scholar.google.com/">Google学术</a><br><a target="_blank" rel="noopener" href="https://xueshu.baidu.com/">百度学术</a></p>
+<h2 id="如何确定指标权重及各项的分数"><a href="#如何确定指标权重及各项的分数" class="headerlink" title="如何确定指标权重及各项的分数"></a>如何确定指标权重及各项的分数</h2><p>分而治之:<br>一次性考虑这五个指标之间的关系,往往考虑不周<br>解决方法:<br>两个两个指标进行比较,最终根据两两比较的结果来推算出权重。<br><img src="/2021/03/30/AHP/pic2.png" class="" title="层次分析法重要性表格"></p>
+<h2 id="如何处理填写的数据"><a href="#如何处理填写的数据" class="headerlink" title="如何处理填写的数据"></a>如何处理填写的数据</h2><p>表可以转化成一个5x5的方阵 记该方阵为A 对应元素为$a_{ij}$</p>
+<ol>
+<li><script type="math/tex; mode=display">a_{ij}表示的意义是,与指标j相比,i的重要程度</script></li>
+<li><script type="math/tex; mode=display">当i=j时,两个指标相同,因此同等重要记为1,这就解释了主对角线元素为1</script></li>
+<li><script type="math/tex; mode=display">a_{ij}>0且满足a_{ij} \times a_{ji}=1 (我们称满足这一条件的矩阵为正互反矩阵)</script>该矩阵就是层次分析法的判断矩阵</li>
+</ol>
+<h2 id="一致矩阵"><a href="#一致矩阵" class="headerlink" title="一致矩阵"></a>一致矩阵</h2><p><strong> 判断矩阵可能存在Bug </strong></p>
+<h2 id=""><a href="#" class="headerlink" title=""></a><img src="/2021/03/30/AHP/pic4.png" class="" title="判断矩阵不一致的情况"></h2><p>若正互反矩阵满足</p>
+<script type="math/tex; mode=display">a_{ij} \times a{jk} = a_{ik}</script><p>则该矩阵为一致矩阵</p>
+<h2 id="注意-在使用判断矩阵求权重之前-必须对其进行一致性检验"><a href="#注意-在使用判断矩阵求权重之前-必须对其进行一致性检验" class="headerlink" title="注意:在使用判断矩阵求权重之前,必须对其进行一致性检验"></a><font color="#ff0000">注意:在使用判断矩阵求权重之前,必须对其进行一致性检验</font></h2><script type="math/tex; mode=display">
+\begin{bmatrix}
+a_{11} &a_{12} &\cdots &a_{1n} \\
+a_{21} &a_{22} &\cdots &a_{2n} \\
+\vdots &\vdots &\ddots &\vdots \\
+a_{n1} &a_{n2} &\cdots &a_{nn} \\
+\end{bmatrix}</script><p>为一致矩阵的充要条件是</p>
+<script type="math/tex; mode=display">
+\left\{
+    \begin{array}
+        \leftline 
+        a_{ij} > 0\\
+        a_{11}=a_{22}=\cdots=a_{nn}\\ 
+        \begin{bmatrix}
+            a_{i1},&a_{i2},&\cdots,&a_{in}
+        \end{bmatrix}=k
+        \begin{bmatrix}
+            a_{11},&a_{12},&\cdots,&a_{1n}
+        \end{bmatrix}
+    \end{array}
+\right .</script><hr>
+<p>引理:A为n阶方阵,且r(A)=1,则A有一个特征值为tr(A),其余特征值均为0<br>因为一致矩阵的各行成比例,所以一致矩阵的秩一定为1<br>由引理可知:一致矩阵有一个特征值为m,其余特征值均为0<br>容易得到,特征值为n时,对应的特征向量刚好为</p>
+<script type="math/tex; mode=display">
+k
+\begin{bmatrix}
+    \cfrac{1}{a_{11}},&\cfrac{1}{a_{12}},&\cdots,&\cfrac{1}{a_{1n}}
+\end{bmatrix}</script><hr>
+<p>引理:m阶正互反矩阵A为一致矩阵时当且仅当最大特征值入m=n<br>且当正互反矩阵A非一致时,一定满足入m&gt;n</p>
+<h2 id="一致性检验"><a href="#一致性检验" class="headerlink" title="一致性检验"></a>一致性检验</h2><ol>
+<li>计算一致性指标CI<script type="math/tex; mode=display">
+CI=\cfrac{\lambda_{max}-n}{n-1}</script></li>
+<li>查找对应的平均一致性指标RI<img src="/2021/03/30/AHP/pic5.png" class="" title="平均一致性指标"></li>
+<li>计算一致性比例CR<script type="math/tex; mode=display">
+CR=\frac{CI}{CR}</script></li>
+</ol>
+<p><strong> 如果CR&lt;0.1,则可认为判断矩阵的一致性可以接受;否则需要对判断矩阵进行修正 </strong></p>
+<h2 id="计算权重"><a href="#计算权重" class="headerlink" title="计算权重"></a>计算权重</h2><h3 id="一致矩阵-1"><a href="#一致矩阵-1" class="headerlink" title="一致矩阵"></a>一致矩阵</h3><p>取出其中一列数据计算即可,则每一位的权重</p>
+<script type="math/tex; mode=display">
+w_i=\frac{a_{i1}}{\sum\limits_{j=1}^na_{j1}}</script><h1>未完待续 37:53</h1>
       
     </div>
 
@@ -247,7 +303,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-31 07:36:16" itemprop="dateModified" datetime="2021-03-31T07:36:16+08:00">2021-03-31</time>
+                <time title="修改时间：2021-04-01 23:46:11" itemprop="dateModified" datetime="2021-04-01T23:46:11+08:00">2021-04-01</time>
               </span>
 
           
@@ -264,22 +320,16 @@
           <h1 id="Unix-Linux编程实践1-who命令的实现"><a href="#Unix-Linux编程实践1-who命令的实现" class="headerlink" title="Unix-Linux编程实践1-who命令的实现"></a>Unix-Linux编程实践1-who命令的实现</h1><h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>在使用Unix/Linux系统时，常常需要知道有哪些用户正在使用系统，系统是否繁忙，为了回答这些问题，所有的多用户系统都会有这个命令 </p>
 <h2 id="关于who"><a href="#关于who" class="headerlink" title="关于who"></a>关于who</h2><p>我们将通过三个问题的解答来学习who命令</p>
 <h3 id="who能做什么"><a href="#who能做什么" class="headerlink" title="who能做什么"></a>who能做什么</h3><p>Unix/Linux who命令用于显示系统中有哪些使用者正在上面，显示的资料包含了使用者 ID、使用的终端机、从哪边连上来的、上线时间、呆滞时间、CPU 使用量、动作等等。</p>
-<p>使用权限：所有使用者都可使用。</p>
-<img src="/2021/01/30/Unix-Linux-who/1.png" class="" title="OpenBSD运行结果">
+<p>使用权限：所有使用者都可使用。<br><img src="/2021/01/30/Unix-Linux-who/1.png" class="" title="OpenBSD运行结果"></p>
 <h3 id="who是如何工作的"><a href="#who是如何工作的" class="headerlink" title="who是如何工作的"></a>who是如何工作的</h3><p>通过命令<code>man who</code>可以打开who的帮助文档</p>
 <img src="/2021/01/30/Unix-Linux-who/2.png" class="" title="who的帮助文档">
-
 <p>从上文易知 已登陆用户信息存储在/var/run/utmp中，who通过读取该文件来获得信息<br>通过<code>man utmp</code>可以获得utmp文件记录的数据结构信息</p>
 <img src="/2021/01/30/Unix-Linux-who/3.png" class="" title="utmp文档">
-
 <p>所以<code>who</code>的工作原理可用以下流程完成</p>
 <div id="flowchart-0" class="flow-chart"></div>
 
-<h3 id="如何编写who"><a href="#如何编写who" class="headerlink" title="如何编写who"></a>如何编写who</h3><h5 id="如何读取文件"><a href="#如何读取文件" class="headerlink" title="如何读取文件"></a>如何读取文件</h5><p>通过搜索和read和file有关的文档</p>
-<img src="/2021/01/30/Unix-Linux-who/4.png" class="" title="man read file">
-<p>可以找到open(2)</p>
-<img src="/2021/01/30/Unix-Linux-who/5.png" class="" title="man 2 open">
-<p>通过open的文档可以找到其他的函数，分别是read close<br>open在打开文件时需要提供打开方式</p>
+<h3 id="如何编写who"><a href="#如何编写who" class="headerlink" title="如何编写who"></a>如何编写who</h3><h5 id="如何读取文件"><a href="#如何读取文件" class="headerlink" title="如何读取文件"></a>如何读取文件</h5><p>通过搜索和read和file有关的文档<br><img src="/2021/01/30/Unix-Linux-who/4.png" class="" title="man read file"><br>可以找到open(2)<br><img src="/2021/01/30/Unix-Linux-who/5.png" class="" title="man 2 open"><br>通过open的文档可以找到其他的函数，分别是read close<br>open在打开文件时需要提供打开方式</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -287,7 +337,8 @@
 <th></th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>target</td>
 <td>打开文件</td>
 </tr>
@@ -307,11 +358,11 @@
 <td>ret</td>
 <td>-1 error,int success</td>
 </tr>
-<tr>
-<td>其中 flags可以为O_RDONLY O_WRONLY O_RDWR</td>
-<td></td>
-</tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
+<p>其中 flags可以为O_RDONLY O_WRONLY O_RDWR</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -319,7 +370,8 @@
 <th></th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>target</td>
 <td>读取文件</td>
 </tr>
@@ -339,7 +391,10 @@
 <td>ret</td>
 <td>-1 error,numread success</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -347,7 +402,8 @@
 <th></th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>target</td>
 <td>关闭文件</td>
 </tr>
@@ -367,11 +423,11 @@
 <td>ret</td>
 <td>-1 error,0 success</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <h3 id="编写who1-c"><a href="#编写who1-c" class="headerlink" title="编写who1.c"></a>编写who1.c</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment"> * who version1 </span></span><br><span class="line"><span class="comment"> * show who login this machine</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;utmp.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SHOW_HOSTS</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">show_info</span><span class="params">(struct utmp *utmpbuf)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc,<span class="keyword">char</span> *argv[])</span></span>&#123;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">utmp</span> <span class="title">rec</span>;</span></span><br><span class="line">	<span class="keyword">int</span> utmpfd;</span><br><span class="line">	<span class="keyword">int</span> reclen=<span class="keyword">sizeof</span>(rec);</span><br><span class="line">    utmpfd=open(_PATH_UTMP,O_RDONLY);</span><br><span class="line">	<span class="keyword">if</span>(utmpfd==<span class="number">-1</span>)&#123;</span><br><span class="line">		perror(_PATH_UTMP);</span><br><span class="line">		<span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">while</span>(read(utmpfd,&amp;rec,reclen) == reclen)&#123;</span><br><span class="line">		show_info(&amp;rec);</span><br><span class="line">	&#125;</span><br><span class="line">	close(utmpfd);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">show_info</span><span class="params">(struct utmp *utmpbuf)</span></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%-8.8s&quot;</span>,utmpbuf-&gt;ut_name);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot; &quot;</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%-8.8s&quot;</span>,utmpbuf-&gt;ut_line);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot; &quot;</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%10ld&quot;</span>,(<span class="keyword">long</span>)utmpbuf-&gt;ut_time);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot; &quot;</span>);</span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> SHOW_HOSTS</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;(%s)&quot;</span>,utmpbuf-&gt;ut_host);</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>编译who1<br><code>cc who1.c -o who1</code><br>执行<br><code>./who1</code></p>
-<img src="/2021/01/30/Unix-Linux-who/6.png" class="" title="who1">
-<p>可见 <code>who1</code>已经可以工作了，但是仍有很多可以完善</p>
+<p>编译who1<br><code>cc who1.c -o who1</code><br>执行<br><code>./who1</code><br><img src="/2021/01/30/Unix-Linux-who/6.png" class="" title="who1"><br>可见 <code>who1</code>已经可以工作了，但是仍有很多可以完善</p>
 <ul>
 <li>消除空白记录</li>
 <li>正确显示时间</li>
@@ -438,7 +494,7 @@ isFinished(no)->read_rec</textarea><textarea id="flowchart-0-options" style="dis
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-31 07:36:16" itemprop="dateModified" datetime="2021-03-31T07:36:16+08:00">2021-03-31</time>
+                <time title="修改时间：2021-04-01 23:46:11" itemprop="dateModified" datetime="2021-04-01T23:46:11+08:00">2021-04-01</time>
               </span>
 
           
@@ -452,7 +508,7 @@ isFinished(no)->read_rec</textarea><textarea id="flowchart-0-options" style="dis
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="二分查找-2"><a href="#二分查找-2" class="headerlink" title="二分查找-2"></a>二分查找-2</h1><h2 id="思路二-在循环体中排除"><a href="#思路二-在循环体中排除" class="headerlink" title="思路二 在循环体中排除"></a>思路二 在循环体中排除</h2><h4 id="代码模板"><a href="#代码模板" class="headerlink" title="代码模板"></a>代码模板</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">bs</span><span class="params">(<span class="built_in">vector</span>&lt;T&gt; nums,T target)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> l=<span class="number">0</span>,r=nums.size()<span class="number">-1</span>,mid;</span><br><span class="line">    <span class="keyword">while</span>(l&lt;r)&#123;</span><br><span class="line">        mid=l+(r-l)/<span class="number">2</span>;</span><br><span class="line">        <span class="keyword">if</span>(nums[mid]&lt;target)</span><br><span class="line">            l=mid+<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">else</span> r=mid;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> l;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <h1 id="二分查找-2"><a href="#二分查找-2" class="headerlink" title="二分查找-2"></a>二分查找-2</h1><h2 id="思路二-在循环体中排除"><a href="#思路二-在循环体中排除" class="headerlink" title="思路二 在循环体中排除"></a>思路二 在循环体中排除</h2><h4 id="代码模板"><a href="#代码模板" class="headerlink" title="代码模板"></a>代码模板</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">bs</span><span class="params">(vector&lt;T&gt; nums,T target)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> l=<span class="number">0</span>,r=nums.<span class="built_in">size</span>()<span class="number">-1</span>,mid;</span><br><span class="line">    <span class="keyword">while</span>(l&lt;r)&#123;</span><br><span class="line">        mid=l+(r-l)/<span class="number">2</span>;</span><br><span class="line">        <span class="keyword">if</span>(nums[mid]&lt;target)</span><br><span class="line">            l=mid+<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">else</span> r=mid;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> l;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="细节分析"><a href="#细节分析" class="headerlink" title="细节分析"></a>细节分析</h2><ul>
 <li>循环退出条件<code>l&lt;r</code></li>
 <li>边界写法 <ul>
@@ -463,7 +519,7 @@ isFinished(no)->read_rec</textarea><textarea id="flowchart-0-options" style="dis
 </ul>
 <h2 id="适用范围"><a href="#适用范围" class="headerlink" title="适用范围"></a>适用范围</h2><p>这种二分查找的思路，对于查找边界问题，会使得思考的过程变得简单。</p>
 <h2 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h2><ol>
-<li><h3 id="搜索插入位置"><a href="#搜索插入位置" class="headerlink" title="搜索插入位置"></a>搜索插入位置</h3><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/search-insert-position/description/">题目描述</a><h4 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h4>首先 题目未说明数组是否为空 先判断是否为空<br>如果最后一个元素小于目标值 则应返回最后一个元素的下标加一 也即数组长度<br>其他情况可利用如上方法二分查找即可<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">searchInsert</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(nums.size()==<span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span>(nums[nums.size()<span class="number">-1</span>]&lt;target) <span class="keyword">return</span> nums.size();</span><br><span class="line">        <span class="keyword">int</span> l=<span class="number">0</span>,r=nums.size()<span class="number">-1</span>,mid;</span><br><span class="line">        <span class="keyword">while</span>(l&lt;r)&#123;</span><br><span class="line">            mid=l+(r-l)/<span class="number">2</span>;</span><br><span class="line">            <span class="keyword">if</span>(nums[mid]&lt;target)&#123;</span><br><span class="line">                l=mid+<span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span>&#123;</span><br><span class="line">                r=mid;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> l;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<li><h3 id="搜索插入位置"><a href="#搜索插入位置" class="headerlink" title="搜索插入位置"></a>搜索插入位置</h3><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/search-insert-position/description/">题目描述</a><h4 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h4>首先 题目未说明数组是否为空 先判断是否为空<br>如果最后一个元素小于目标值 则应返回最后一个元素的下标加一 也即数组长度<br>其他情况可利用如上方法二分查找即可<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">searchInsert</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(nums.<span class="built_in">size</span>()==<span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span>(nums[nums.<span class="built_in">size</span>()<span class="number">-1</span>]&lt;target) <span class="keyword">return</span> nums.<span class="built_in">size</span>();</span><br><span class="line">        <span class="keyword">int</span> l=<span class="number">0</span>,r=nums.<span class="built_in">size</span>()<span class="number">-1</span>,mid;</span><br><span class="line">        <span class="keyword">while</span>(l&lt;r)&#123;</span><br><span class="line">            mid=l+(r-l)/<span class="number">2</span>;</span><br><span class="line">            <span class="keyword">if</span>(nums[mid]&lt;target)&#123;</span><br><span class="line">                l=mid+<span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span>&#123;</span><br><span class="line">                r=mid;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> l;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <a href="/2021/01/30/BinarySearch-2/35.%E6%90%9C%E7%B4%A2%E6%8F%92%E5%85%A5%E4%BD%8D%E7%BD%AE.cpp" title="35.搜索插入位置">35.搜索插入位置</a>
 </li>
 </ol>
@@ -519,7 +575,7 @@ isFinished(no)->read_rec</textarea><textarea id="flowchart-0-options" style="dis
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-31 07:36:16" itemprop="dateModified" datetime="2021-03-31T07:36:16+08:00">2021-03-31</time>
+                <time title="修改时间：2021-04-01 23:46:11" itemprop="dateModified" datetime="2021-04-01T23:46:11+08:00">2021-04-01</time>
               </span>
 
           
@@ -559,7 +615,7 @@ isFinished(no)->read_rec</textarea><textarea id="flowchart-0-options" style="dis
 <li>两个人都赢 此情况违背了规则</li>
 </ul>
 <p>所以可使用一个函数判断属于哪种局面，并得到结果</p>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">validTicTacToe</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&amp; board)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> x=<span class="number">0</span>,o=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span> i:board)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">auto</span> j:i)&#123;</span><br><span class="line">                <span class="keyword">if</span>(j==<span class="string">&#x27;X&#x27;</span>) x++;</span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">if</span>(j==<span class="string">&#x27;O&#x27;</span>) o++;       </span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(x-o&gt;<span class="number">1</span>||x-o&lt;<span class="number">0</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">int</span> res=winer(board);</span><br><span class="line">        <span class="keyword">switch</span> (res)</span><br><span class="line">        &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">            <span class="keyword">return</span> (x-o)==<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">            <span class="keyword">return</span> x==o;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">3</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">winer</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&amp; board)</span></span>&#123;</span><br><span class="line">        <span class="keyword">bool</span> xW=<span class="literal">false</span>,oW=<span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span> i : board)&#123;</span><br><span class="line">            <span class="keyword">if</span>(i==<span class="string">&quot;XXX&quot;</span>||i==<span class="string">&quot;OOO&quot;</span>)&#123;</span><br><span class="line">                i[<span class="number">0</span>]==<span class="string">&#x27;X&#x27;</span>?xW=<span class="literal">true</span>:oW=<span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">3</span>;i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(board[<span class="number">0</span>][i]==board[<span class="number">1</span>][i]&amp;&amp;board[<span class="number">1</span>][i]==board[<span class="number">2</span>][i]&amp;&amp;board[<span class="number">0</span>][i]!=<span class="string">&#x27; &#x27;</span>)</span><br><span class="line">                board[<span class="number">0</span>][i]==<span class="string">&#x27;X&#x27;</span>?xW=<span class="literal">true</span>:oW=<span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(board[<span class="number">0</span>][<span class="number">0</span>]==board[<span class="number">1</span>][<span class="number">1</span>]&amp;&amp;board[<span class="number">0</span>][<span class="number">0</span>]==board[<span class="number">2</span>][<span class="number">2</span>]&amp;&amp;board[<span class="number">0</span>][<span class="number">0</span>]!=<span class="string">&#x27; &#x27;</span>)&#123;</span><br><span class="line">            board[<span class="number">0</span>][<span class="number">0</span>]==<span class="string">&#x27;X&#x27;</span>?xW=<span class="literal">true</span>:oW=<span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(board[<span class="number">0</span>][<span class="number">2</span>]==board[<span class="number">1</span>][<span class="number">1</span>]&amp;&amp;board[<span class="number">1</span>][<span class="number">1</span>]==board[<span class="number">2</span>][<span class="number">0</span>]&amp;&amp;board[<span class="number">1</span>][<span class="number">1</span>]!=<span class="string">&#x27; &#x27;</span>)&#123;</span><br><span class="line">            board[<span class="number">1</span>][<span class="number">1</span>]==<span class="string">&#x27;X&#x27;</span>?xW=<span class="literal">true</span>:oW=<span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(oW&amp;&amp;xW) <span class="keyword">return</span> <span class="number">3</span>;</span><br><span class="line">        <span class="keyword">if</span>(!(oW||xW)) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">return</span> xW?<span class="number">1</span>:<span class="number">2</span>; </span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">validTicTacToe</span><span class="params">(vector&lt;string&gt;&amp; board)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> x=<span class="number">0</span>,o=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span> i:board)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">auto</span> j:i)&#123;</span><br><span class="line">                <span class="keyword">if</span>(j==<span class="string">&#x27;X&#x27;</span>) x++;</span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">if</span>(j==<span class="string">&#x27;O&#x27;</span>) o++;       </span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(x-o&gt;<span class="number">1</span>||x-o&lt;<span class="number">0</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">int</span> res=<span class="built_in">winer</span>(board);</span><br><span class="line">        <span class="built_in"><span class="keyword">switch</span></span> (res)</span><br><span class="line">        &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">            <span class="keyword">return</span> (x-o)==<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">            <span class="keyword">return</span> x==o;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">3</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">winer</span><span class="params">(vector&lt;string&gt;&amp; board)</span></span>&#123;</span><br><span class="line">        <span class="keyword">bool</span> xW=<span class="literal">false</span>,oW=<span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span> i : board)&#123;</span><br><span class="line">            <span class="keyword">if</span>(i==<span class="string">&quot;XXX&quot;</span>||i==<span class="string">&quot;OOO&quot;</span>)&#123;</span><br><span class="line">                i[<span class="number">0</span>]==<span class="string">&#x27;X&#x27;</span>?xW=<span class="literal">true</span>:oW=<span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">3</span>;i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(board[<span class="number">0</span>][i]==board[<span class="number">1</span>][i]&amp;&amp;board[<span class="number">1</span>][i]==board[<span class="number">2</span>][i]&amp;&amp;board[<span class="number">0</span>][i]!=<span class="string">&#x27; &#x27;</span>)</span><br><span class="line">                board[<span class="number">0</span>][i]==<span class="string">&#x27;X&#x27;</span>?xW=<span class="literal">true</span>:oW=<span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(board[<span class="number">0</span>][<span class="number">0</span>]==board[<span class="number">1</span>][<span class="number">1</span>]&amp;&amp;board[<span class="number">0</span>][<span class="number">0</span>]==board[<span class="number">2</span>][<span class="number">2</span>]&amp;&amp;board[<span class="number">0</span>][<span class="number">0</span>]!=<span class="string">&#x27; &#x27;</span>)&#123;</span><br><span class="line">            board[<span class="number">0</span>][<span class="number">0</span>]==<span class="string">&#x27;X&#x27;</span>?xW=<span class="literal">true</span>:oW=<span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(board[<span class="number">0</span>][<span class="number">2</span>]==board[<span class="number">1</span>][<span class="number">1</span>]&amp;&amp;board[<span class="number">1</span>][<span class="number">1</span>]==board[<span class="number">2</span>][<span class="number">0</span>]&amp;&amp;board[<span class="number">1</span>][<span class="number">1</span>]!=<span class="string">&#x27; &#x27;</span>)&#123;</span><br><span class="line">            board[<span class="number">1</span>][<span class="number">1</span>]==<span class="string">&#x27;X&#x27;</span>?xW=<span class="literal">true</span>:oW=<span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(oW&amp;&amp;xW) <span class="keyword">return</span> <span class="number">3</span>;</span><br><span class="line">        <span class="keyword">if</span>(!(oW||xW)) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">return</span> xW?<span class="number">1</span>:<span class="number">2</span>; </span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <a href="/2021/01/30/validTicTacToe/794.%E6%9C%89%E6%95%88%E7%9A%84%E4%BA%95%E5%AD%97%E6%B8%B8%E6%88%8F.cpp" title="794.有效的井字游戏.cpp">794.有效的井字游戏.cpp</a>
       
     </div>
@@ -610,7 +666,7 @@ isFinished(no)->read_rec</textarea><textarea id="flowchart-0-options" style="dis
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-31 07:36:16" itemprop="dateModified" datetime="2021-03-31T07:36:16+08:00">2021-03-31</time>
+                <time title="修改时间：2021-04-01 23:46:11" itemprop="dateModified" datetime="2021-04-01T23:46:11+08:00">2021-04-01</time>
               </span>
 
           
@@ -624,32 +680,17 @@ isFinished(no)->read_rec</textarea><textarea id="flowchart-0-options" style="dis
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="SDL绘制"><a href="#SDL绘制" class="headerlink" title="SDL绘制"></a>SDL绘制</h1><p>要在SDL的窗口中绘图 需要先获得 SDL_Surface<br>SDL提供了<code>SDL_GetWindowSurface(SDL_Window *)</code>来获得客户区的SDL_Surface</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SDL_Window *win=SDL_CreateWindow(<span class="string">&quot;HelloWorld&quot;</span>,</span><br><span class="line">                                SDL_WINDOWPOS_CENTERED,</span><br><span class="line">                                SDL_WINDOWPOS_CENTERED,</span><br><span class="line">                                WIDTH,HEIGHT,</span><br><span class="line">                                SDL_WINDOW_SHOWN);</span><br><span class="line">SDL_Surface *screen=SDL_GetWindowsSurface(win);</span><br></pre></td></tr></table></figure>
-<p>获得了SDL_Surface之后 我们有两种方法可以绘制客户区</p>
+          <h1 id="SDL绘制"><a href="#SDL绘制" class="headerlink" title="SDL绘制"></a>SDL绘制</h1><p>要在SDL的窗口中绘图 需要先获得 SDL_Surface<br>SDL提供了<code>SDL_GetWindowSurface(SDL_Window *)</code>来获得客户区的SDL_Surface<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SDL_Window *win=SDL_CreateWindow(<span class="string">&quot;HelloWorld&quot;</span>,</span><br><span class="line">                                SDL_WINDOWPOS_CENTERED,</span><br><span class="line">                                SDL_WINDOWPOS_CENTERED,</span><br><span class="line">                                WIDTH,HEIGHT,</span><br><span class="line">                                SDL_WINDOW_SHOWN);</span><br><span class="line">SDL_Surface *screen=SDL_GetWindowsSurface(win);</span><br></pre></td></tr></table></figure><br>获得了SDL_Surface之后 我们有两种方法可以绘制客户区</p>
 <ul>
-<li><h4>利用SDL提供的函数</h4>
-SDL提供了一些函数来方便绘制
-例如 `SDL_FillRect(SDL_Surface *s,SDL_Rect *r,uint32_t color)`
-其中 第三个参数是颜色值 按照ARGB顺序排列 每个值为八位
-我们可以利用这个函数将客户区涂成白色
-
-</li>
+<li><h4>利用SDL提供的函数</h4><br>SDL提供了一些函数来方便绘制<br>例如 <code>SDL_FillRect(SDL_Surface *s,SDL_Rect *r,uint32_t color)</code><br>其中 第三个参数是颜色值 按照ARGB顺序排列 每个值为八位<br>我们可以利用这个函数将客户区涂成白色</li>
 </ul>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SDL_Rect r=&#123;<span class="number">0</span>,<span class="number">0</span>,WIDTH,HEIGHT&#125;;</span><br><span class="line">SDL_FillRect(screen,&amp;r,<span class="number">0xffffffff</span>);</span><br></pre></td></tr></table></figure>
 <ul>
-<li><h4>手动绘制</h4>
-SDL_Surface是一个结构体,其定义如下
-
-</li>
+<li><h4>手动绘制</h4><br>SDL_Surface是一个结构体,其定义如下</li>
 </ul>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">SDL_Surface</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    Uint32 flags;               <span class="comment">/**&lt; Read-only */</span></span><br><span class="line">    SDL_PixelFormat *format;    <span class="comment">/**&lt; Read-only */</span></span><br><span class="line">    <span class="keyword">int</span> w, h;                   <span class="comment">/**&lt; Read-only */</span></span><br><span class="line">    <span class="keyword">int</span> pitch;                  <span class="comment">/**&lt; Read-only */</span></span><br><span class="line">    <span class="keyword">void</span> *pixels;               <span class="comment">/**&lt; Read-write */</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/** Application data associated with the surface */</span></span><br><span class="line">    <span class="keyword">void</span> *userdata;             <span class="comment">/**&lt; Read-write */</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/** information needed for surfaces requiring locks */</span></span><br><span class="line">    <span class="keyword">int</span> locked;                 <span class="comment">/**&lt; Read-only */</span></span><br><span class="line">    <span class="keyword">void</span> *lock_data;            <span class="comment">/**&lt; Read-only */</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/** clipping information */</span></span><br><span class="line">    SDL_Rect clip_rect;         <span class="comment">/**&lt; Read-only */</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/** info for fast blit mapping to other surfaces */</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">SDL_BlitMap</span> *<span class="title">map</span>;</span>    <span class="comment">/**&lt; Private */</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/** Reference count -- used when freeing surface */</span></span><br><span class="line">    <span class="keyword">int</span> refcount;               <span class="comment">/**&lt; Read-mostly */</span></span><br><span class="line">&#125; SDL_Surface;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>我们需要关注其中的 w,h 和pixels<br>w h 分别是宽度和高度<br>而pixels是一个指向一块内存的指针 此处定义为<code>void * </code>实际使用时可转换为<code>uint32_t *</code><br>他对应着屏幕上任意一点处的像素的颜色值 颜色定义为ARGB<br>而(x,y)处的的像素获取方式为<code>(uint32_t *)pixels[x*w+y]</code><br>我们通过手动绘制来画一个100x100的方块 放置于(0,0)处</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">uint32_t</span> *p=(<span class="keyword">uint32_t</span> *)screen-&gt;pixels;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">100</span>;i++)&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;<span class="number">100</span>;j++)&#123;</span><br><span class="line">        p[i*screen-&gt;w+j]=<span class="number">0xff0000ff</span>;<span class="comment">//ARGB Blue 100%</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="SDL2事件循环"><a href="#SDL2事件循环" class="headerlink" title="SDL2事件循环"></a>SDL2事件循环</h1><p>SDL为事件处理提供了灵活的API，当收到来自设备的事件时，SDL会将其存入事件队列等待取出<br>在程序中，应当有一个循环来处理这些事件，每次循环时应从中取出事件并处理它<br>SDL 提供了 <code>SDL_PollEvent(SDL_Event *)</code>函数来提供取出事件的功能<br>如果对列中还有事件 则会取出事件存入SDL_Event类型的变量中 并返回一个非零值 否则返回零<br>轮询事件后，您可以在逻辑链中响应它。<br>为了方便阅读 通常会将循环抽出写成一个函数</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">eventloop</span><span class="params">()</span></span>&#123;</span><br><span class="line">    SDL_Event e;</span><br><span class="line">    <span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">        <span class="keyword">while</span>(SDL_PollEvent(&amp;e))&#123;</span><br><span class="line">            <span class="keyword">switch</span>(e.type)&#123;</span><br><span class="line">                <span class="keyword">case</span> SDL_QUIT:</span><br><span class="line">                    <span class="keyword">return</span>;</span><br><span class="line">                <span class="keyword">default</span>:</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<img src="/2021/01/26/SDL-DAY2/1.png" class="" title="运行效果">
-<p><a target="_blank" rel="noopener" href="https://github.com/2018-EPI-GROUP/2020Freshman/tree/%E9%80%9A%E5%B7%A52009-%E6%9C%B1%E5%BD%A6%E6%99%9F/SDL2/SDL2-02">代码</a></p>
+<p>我们需要关注其中的 w,h 和pixels<br>w h 分别是宽度和高度<br>而pixels是一个指向一块内存的指针 此处定义为<code>void *</code>实际使用时可转换为<code>uint32_t *</code><br>他对应着屏幕上任意一点处的像素的颜色值 颜色定义为ARGB<br>而(x,y)处的的像素获取方式为<code>(uint32_t *)pixels[x*w+y]</code><br>我们通过手动绘制来画一个100x100的方块 放置于(0,0)处<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">uint32_t</span> *p=(<span class="keyword">uint32_t</span> *)screen-&gt;pixels;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">100</span>;i++)&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;<span class="number">100</span>;j++)&#123;</span><br><span class="line">        p[i*screen-&gt;w+j]=<span class="number">0xff0000ff</span>;<span class="comment">//ARGB Blue 100%</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="SDL2事件循环"><a href="#SDL2事件循环" class="headerlink" title="SDL2事件循环"></a>SDL2事件循环</h1><p>SDL为事件处理提供了灵活的API，当收到来自设备的事件时，SDL会将其存入事件队列等待取出<br>在程序中，应当有一个循环来处理这些事件，每次循环时应从中取出事件并处理它<br>SDL 提供了 <code>SDL_PollEvent(SDL_Event *)</code>函数来提供取出事件的功能<br>如果对列中还有事件 则会取出事件存入SDL_Event类型的变量中 并返回一个非零值 否则返回零<br>轮询事件后，您可以在逻辑链中响应它。<br>为了方便阅读 通常会将循环抽出写成一个函数<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">eventloop</span><span class="params">()</span></span>&#123;</span><br><span class="line">    SDL_Event e;</span><br><span class="line">    <span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">        <span class="keyword">while</span>(SDL_PollEvent(&amp;e))&#123;</span><br><span class="line">            <span class="keyword">switch</span>(e.type)&#123;</span><br><span class="line">                <span class="keyword">case</span> SDL_QUIT:</span><br><span class="line">                    <span class="keyword">return</span>;</span><br><span class="line">                <span class="keyword">default</span>:</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br><img src="/2021/01/26/SDL-DAY2/1.png" class="" title="运行效果"><br><a target="_blank" rel="noopener" href="https://github.com/2018-EPI-GROUP/2020Freshman/tree/%E9%80%9A%E5%B7%A52009-%E6%9C%B1%E5%BD%A6%E6%99%9F/SDL2/SDL2-02">代码</a></p>
 
       
     </div>
@@ -700,7 +741,7 @@ SDL_Surface是一个结构体,其定义如下
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-31 07:36:16" itemprop="dateModified" datetime="2021-03-31T07:36:16+08:00">2021-03-31</time>
+                <time title="修改时间：2021-04-01 23:46:11" itemprop="dateModified" datetime="2021-04-01T23:46:11+08:00">2021-04-01</time>
               </span>
 
           
@@ -717,11 +758,9 @@ SDL_Surface是一个结构体,其定义如下
           <p>收集自他人提问</p>
 <p>回文数是一种很有趣的数，对于一个不是回文数的数，我们可以通过以下操作来将其变成回文数：<br>将数反转，加到原数上，重复这个过程，直到得到回文数为止</p>
 <h3 id="输入格式"><a href="#输入格式" class="headerlink" title="输入格式"></a>输入格式</h3><p>输入1个数位不超过1000的正整数</p>
-<h3 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a>输出格式</h3><p>对每一个输入，输出将具变成回文数的过程。每一行按以下个数输出：<br><code> A + B = C</code><br>A是原数，B是反转数，C是和，重复这个过程，直到C是回文数为止。在最后一行输出<code>C is a palindromic number.</code><br>为了控制循环次数，我们规定，如果经过10次操作，还得不到回文数，那么停止，显示<code>Not found in 10 iterations.</code></p>
-<h3 id="样例"><a href="#样例" class="headerlink" title="样例"></a>样例</h3><h4 id="输入样例1"><a href="#输入样例1" class="headerlink" title="输入样例1"></a>输入样例1</h4><p>在这里给出一组输入。例如：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1234</span></span><br></pre></td></tr></table></figure>
-<h4 id="输出样例1"><a href="#输出样例1" class="headerlink" title="输出样例1"></a>输出样例1</h4><p>在这里给出相应的输出。例如：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1234</span> + <span class="number">4321</span> = <span class="number">5555</span></span><br><span class="line"><span class="number">5555</span> is a palindromic number</span><br></pre></td></tr></table></figure>
+<h3 id="输出格式"><a href="#输出格式" class="headerlink" title="输出格式"></a>输出格式</h3><p>对每一个输入，输出将具变成回文数的过程。每一行按以下个数输出：<br><code>A + B = C</code><br>A是原数，B是反转数，C是和，重复这个过程，直到C是回文数为止。在最后一行输出<code>C is a palindromic number.</code><br>为了控制循环次数，我们规定，如果经过10次操作，还得不到回文数，那么停止，显示<code>Not found in 10 iterations.</code></p>
+<h3 id="样例"><a href="#样例" class="headerlink" title="样例"></a>样例</h3><h4 id="输入样例1"><a href="#输入样例1" class="headerlink" title="输入样例1"></a>输入样例1</h4><p>在这里给出一组输入。例如：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1234</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="输出样例1"><a href="#输出样例1" class="headerlink" title="输出样例1"></a>输出样例1</h4><p>在这里给出相应的输出。例如：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1234</span> + <span class="number">4321</span> = <span class="number">5555</span></span><br><span class="line"><span class="number">5555</span> is a palindromic number</span><br></pre></td></tr></table></figure></p>
 <h4 id="输入样例2"><a href="#输入样例2" class="headerlink" title="输入样例2"></a>输入样例2</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1239102349120349</span></span><br></pre></td></tr></table></figure>
 <h4 id="输出样例2"><a href="#输出样例2" class="headerlink" title="输出样例2"></a>输出样例2</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1239102349120349</span> + <span class="number">9430219432019321</span> = <span class="number">10669321781139670</span></span><br><span class="line"><span class="number">10669321781139670</span> + <span class="number">07693118712396601</span> = <span class="number">18362440493536271</span></span><br><span class="line"><span class="number">18362440493536271</span> + <span class="number">17263539404426381</span> = <span class="number">35625979897962652</span></span><br><span class="line"><span class="number">35625979897962652</span> + <span class="number">25626979897952653</span> = <span class="number">61252959795915305</span></span><br><span class="line"><span class="number">61252959795915305</span> + <span class="number">50351959795925216</span> = <span class="number">111604919591840521</span></span><br><span class="line"><span class="number">111604919591840521</span> + <span class="number">125048195919406111</span> = <span class="number">236653115511246632</span></span><br><span class="line"><span class="number">236653115511246632</span> + <span class="number">236642115511356632</span> = <span class="number">473295231022603264</span></span><br><span class="line"><span class="number">473295231022603264</span> + <span class="number">462306220132592374</span> = <span class="number">935601451155195638</span></span><br><span class="line"><span class="number">935601451155195638</span> + <span class="number">836591551154106539</span> = <span class="number">1772193002309302177</span></span><br><span class="line"><span class="number">1772193002309302177</span> + <span class="number">7712039032003912771</span> = <span class="number">9484232034313214948</span></span><br><span class="line">Not found in <span class="number">10</span> iterations.</span><br></pre></td></tr></table></figure>
 <h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>根据输入的格式，不能使用整数来存储输入值，此处采用字符数组存储，将数字直接看作字符串处理，编写对字符串的反转和求和函数，循环十次并判定和是否为回数。</p>
@@ -776,7 +815,7 @@ SDL_Surface是一个结构体,其定义如下
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-31 07:36:16" itemprop="dateModified" datetime="2021-03-31T07:36:16+08:00">2021-03-31</time>
+                <time title="修改时间：2021-04-01 23:46:11" itemprop="dateModified" datetime="2021-04-01T23:46:11+08:00">2021-04-01</time>
               </span>
 
           
@@ -790,7 +829,7 @@ SDL_Surface是一个结构体,其定义如下
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="二分查找-1"><a href="#二分查找-1" class="headerlink" title="二分查找-1"></a>二分查找-1</h1><h2 id="思路-1：在循环体中查找元素"><a href="#思路-1：在循环体中查找元素" class="headerlink" title="思路 1：在循环体中查找元素"></a>思路 1：在循环体中查找元素</h2><h4 id="代码模板"><a href="#代码模板" class="headerlink" title="代码模板"></a>代码模板</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">bs</span><span class="params">(<span class="built_in">vector</span>&lt;T&gt; &amp;vec,T target)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> l=<span class="number">0</span>,r=vec.size()<span class="number">-1</span>,mid;</span><br><span class="line">    <span class="keyword">while</span>(l&lt;=r)&#123;</span><br><span class="line">        mid=l+(r-l)/<span class="number">2</span>;</span><br><span class="line">        <span class="keyword">if</span>(vec[mid]==target)</span><br><span class="line">            <span class="keyword">return</span> mid;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(vec[mid]&lt;target)</span><br><span class="line">            l=mid+<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">else</span> </span><br><span class="line">            r=mid<span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <h1 id="二分查找-1"><a href="#二分查找-1" class="headerlink" title="二分查找-1"></a>二分查找-1</h1><h2 id="思路-1：在循环体中查找元素"><a href="#思路-1：在循环体中查找元素" class="headerlink" title="思路 1：在循环体中查找元素"></a>思路 1：在循环体中查找元素</h2><h4 id="代码模板"><a href="#代码模板" class="headerlink" title="代码模板"></a>代码模板</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">bs</span><span class="params">(vector&lt;T&gt; &amp;vec,T target)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> l=<span class="number">0</span>,r=vec.<span class="built_in">size</span>()<span class="number">-1</span>,mid;</span><br><span class="line">    <span class="keyword">while</span>(l&lt;=r)&#123;</span><br><span class="line">        mid=l+(r-l)/<span class="number">2</span>;</span><br><span class="line">        <span class="keyword">if</span>(vec[mid]==target)</span><br><span class="line">            <span class="keyword">return</span> mid;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(vec[mid]&lt;target)</span><br><span class="line">            l=mid+<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">else</span> </span><br><span class="line">            r=mid<span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h4 id="复杂度分析："><a href="#复杂度分析：" class="headerlink" title="复杂度分析："></a>复杂度分析：</h4><ul>
 <li>时间复杂度 二分查找的时间复杂度是 O(log⁡N) 这里N是输入数组的长度</li>
 <li>空间复杂度 由于二分查找算法在执行的过程中只使用到常数个临时变量 因此空间复杂度是 O(1)</li>
@@ -801,7 +840,6 @@ SDL_Surface是一个结构体,其定义如下
 <li>取中间值也可以向上取整</li>
 </ol>
 <h2 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h2><a href="/2021/01/24/BinarySearch-1/374.%E7%8C%9C%E6%95%B0%E5%AD%97%E5%A4%A7%E5%B0%8F.cpp" title="374.猜数字大小.cpp">374.猜数字大小.cpp</a>
-
 <a href="/2021/01/24/BinarySearch-1/704.%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE.cpp" title="704.二分查找.cpp">704.二分查找.cpp</a>
 
       
@@ -853,7 +891,7 @@ SDL_Surface是一个结构体,其定义如下
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-31 07:36:16" itemprop="dateModified" datetime="2021-03-31T07:36:16+08:00">2021-03-31</time>
+                <time title="修改时间：2021-04-01 23:46:11" itemprop="dateModified" datetime="2021-04-01T23:46:11+08:00">2021-04-01</time>
               </span>
 
           
@@ -867,30 +905,7 @@ SDL_Surface是一个结构体,其定义如下
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id=""><a href="#" class="headerlink" title=""></a></h1><table>
-<thead>
-<tr>
-<th align="center">函数名</th>
-<th align="center">函数作用</th>
-<th align="center">备注</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">SDL_Init</td>
-<td align="center">初始化SDL2</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">SDL_CreateWindow</td>
-<td align="center">创建窗口</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">SDL_ShowWindow</td>
-<td align="center">显示窗口</td>
-<td align="center"></td>
-</tr>
-</tbody></table>
+          <p>#<br>|函数名|函数作用|备注|<br>|:—-:|:—-:|:—-:|<br>|SDL_Init|初始化SDL2||<br>|SDL_CreateWindow|创建窗口||<br>|SDL_ShowWindow|显示窗口||</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;SDL2/SDL.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span>  WIDTH 400</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> HEIGHT 300</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(SDL_Init(SDL_INIT_VIDEO) != <span class="number">0</span>)&#123;</span><br><span class="line">        SDL_Log(<span class="string">&quot;Error,%s&quot;</span>,SDL_GetError());</span><br><span class="line">    &#125;</span><br><span class="line">    SDL_Window *win=SDL_CreateWindow(<span class="string">&quot;HelloWorld&quot;</span>,</span><br><span class="line">                                    SDL_WINDOWPOS_CENTERED,</span><br><span class="line">                                    SDL_WINDOWPOS_CENTERED,</span><br><span class="line">                                    WIDTH,HEIGHT,</span><br><span class="line">                                    SDL_WINDOW_SHOWN);</span><br><span class="line">    SDL_ShowWindow(win);</span><br><span class="line">    SDL_Delay(<span class="number">5000</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <img src="/2021/01/22/SDL-DAY1/1.png" class="" title="运行效果">
 <p><a target="_blank" rel="noopener" href="https://github.com/2018-EPI-GROUP/2020Freshman/tree/%E9%80%9A%E5%B7%A52009-%E6%9C%B1%E5%BD%A6%E6%99%9F/SDL2/SDL2-01">代码</a></p>
@@ -944,7 +959,7 @@ SDL_Surface是一个结构体,其定义如下
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-31 07:36:16" itemprop="dateModified" datetime="2021-03-31T07:36:16+08:00">2021-03-31</time>
+                <time title="修改时间：2021-04-01 23:46:11" itemprop="dateModified" datetime="2021-04-01T23:46:11+08:00">2021-04-01</time>
               </span>
 
           
@@ -959,25 +974,18 @@ SDL_Surface是一个结构体,其定义如下
 
       
           <h1 id="使用CMake-GUI-完成SDL2的编译（MSVC2019）"><a href="#使用CMake-GUI-完成SDL2的编译（MSVC2019）" class="headerlink" title="使用CMake GUI 完成SDL2的编译（MSVC2019）"></a>使用CMake GUI 完成SDL2的编译（MSVC2019）</h1><hr>
-<h3 id="Step1-CMake设置"><a href="#Step1-CMake设置" class="headerlink" title="Step1.CMake设置"></a>Step1.CMake设置</h3><pre><code>打开CMake(GUI) 设置源码所在文件夹以及存放build文件的文件夹</code></pre>
-<img src="/2021/01/21/Build-SDL2-by-VS2019/1.png" class="" title="Settings1">
-<pre><code>点击Configure 选择 Visual Studio 16 2019 Finish</code></pre>
-<img src="/2021/01/21/Build-SDL2-by-VS2019/2.png" class="" title="Settings2">
-<pre><code>等待生成文件</code></pre>
-<h3 id="Step2-设置安装目录"><a href="#Step2-设置安装目录" class="headerlink" title="Step2.设置安装目录"></a>Step2.设置安装目录</h3><pre><code>修改 CMAKE_INSTALL_PREFIX 的变量值
-点击Generate</code></pre>
-<img src="/2021/01/21/Build-SDL2-by-VS2019/3.png" class="" title="Prefix Setting">
-
+<h3 id="Step1-CMake设置"><a href="#Step1-CMake设置" class="headerlink" title="Step1.CMake设置"></a>Step1.CMake设置</h3><pre><code>打开CMake(GUI) 设置源码所在文件夹以及存放build文件的文件夹
+</code></pre><img src="/2021/01/21/Build-SDL2-by-VS2019/1.png" class="" title="Settings1">
+<pre><code>点击Configure 选择 Visual Studio 16 2019 Finish
+</code></pre><img src="/2021/01/21/Build-SDL2-by-VS2019/2.png" class="" title="Settings2">
+<pre><code>等待生成文件
+</code></pre><h3 id="Step2-设置安装目录"><a href="#Step2-设置安装目录" class="headerlink" title="Step2.设置安装目录"></a>Step2.设置安装目录</h3><pre><code>修改 CMAKE_INSTALL_PREFIX 的变量值
+点击Generate
+</code></pre><img src="/2021/01/21/Build-SDL2-by-VS2019/3.png" class="" title="Prefix Setting">
 <h3 id="Step3-开始编译"><a href="#Step3-开始编译" class="headerlink" title="Step3.开始编译"></a>Step3.开始编译</h3><pre><code>以管理员身份打开VS2019 打开设置的build存放目录下的SDL2.sln
-右击INSTALL 生成 等待编译和复制完成</code></pre>
-<img src="/2021/01/21/Build-SDL2-by-VS2019/4.png" class="" title="Build With VS2019">
+右击INSTALL 生成 等待编译和复制完成
+</code></pre><img src="/2021/01/21/Build-SDL2-by-VS2019/4.png" class="" title="Build With VS2019">
 <img src="/2021/01/21/Build-SDL2-by-VS2019/5.png" class="" title="Build Success">
-
-
-
-
-
-
 
       
     </div>
@@ -1028,7 +1036,7 @@ SDL_Surface是一个结构体,其定义如下
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-31 07:36:16" itemprop="dateModified" datetime="2021-03-31T07:36:16+08:00">2021-03-31</time>
+                <time title="修改时间：2021-04-01 23:46:11" itemprop="dateModified" datetime="2021-04-01T23:46:11+08:00">2021-04-01</time>
               </span>
 
           
@@ -1043,6 +1051,7 @@ SDL_Surface是一个结构体,其定义如下
 
       
           <h1 id="TestPost"><a href="#TestPost" class="headerlink" title="TestPost"></a>TestPost</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;HelloWorld&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
       
     </div>
 
@@ -1238,6 +1247,61 @@ SDL_Surface是一个结构体,其定义如下
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

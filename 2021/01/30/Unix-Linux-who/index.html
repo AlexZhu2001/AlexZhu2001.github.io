@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.3.0">
+<meta name="generator" content="Hexo 5.4.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/128x128.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/16x16.png">
@@ -35,7 +35,7 @@
 <meta property="og:image" content="https://alexzhu2001.github.io/2021/01/30/Unix-Linux-who/6.png">
 <meta property="og:image" content="https://alexzhu2001.github.io/2021/01/30/Unix-Linux-who/7.png">
 <meta property="article:published_time" content="2021-01-30T07:01:58.000Z">
-<meta property="article:modified_time" content="2021-03-30T23:36:16.089Z">
+<meta property="article:modified_time" content="2021-04-01T15:46:11.121Z">
 <meta property="article:author" content="Alex Zhu">
 <meta property="article:tag" content="Unix">
 <meta property="article:tag" content="Linux">
@@ -86,7 +86,7 @@
   </style>
 </noscript>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -196,7 +196,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-31 07:36:16" itemprop="dateModified" datetime="2021-03-31T07:36:16+08:00">2021-03-31</time>
+                <time title="修改时间：2021-04-01 23:46:11" itemprop="dateModified" datetime="2021-04-01T23:46:11+08:00">2021-04-01</time>
               </span>
 
           
@@ -213,22 +213,16 @@
         <h1 id="Unix-Linux编程实践1-who命令的实现"><a href="#Unix-Linux编程实践1-who命令的实现" class="headerlink" title="Unix-Linux编程实践1-who命令的实现"></a>Unix-Linux编程实践1-who命令的实现</h1><h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>在使用Unix/Linux系统时，常常需要知道有哪些用户正在使用系统，系统是否繁忙，为了回答这些问题，所有的多用户系统都会有这个命令 </p>
 <h2 id="关于who"><a href="#关于who" class="headerlink" title="关于who"></a>关于who</h2><p>我们将通过三个问题的解答来学习who命令</p>
 <h3 id="who能做什么"><a href="#who能做什么" class="headerlink" title="who能做什么"></a>who能做什么</h3><p>Unix/Linux who命令用于显示系统中有哪些使用者正在上面，显示的资料包含了使用者 ID、使用的终端机、从哪边连上来的、上线时间、呆滞时间、CPU 使用量、动作等等。</p>
-<p>使用权限：所有使用者都可使用。</p>
-<img src="/2021/01/30/Unix-Linux-who/1.png" class="" title="OpenBSD运行结果">
+<p>使用权限：所有使用者都可使用。<br><img src="/2021/01/30/Unix-Linux-who/1.png" class="" title="OpenBSD运行结果"></p>
 <h3 id="who是如何工作的"><a href="#who是如何工作的" class="headerlink" title="who是如何工作的"></a>who是如何工作的</h3><p>通过命令<code>man who</code>可以打开who的帮助文档</p>
 <img src="/2021/01/30/Unix-Linux-who/2.png" class="" title="who的帮助文档">
-
 <p>从上文易知 已登陆用户信息存储在/var/run/utmp中，who通过读取该文件来获得信息<br>通过<code>man utmp</code>可以获得utmp文件记录的数据结构信息</p>
 <img src="/2021/01/30/Unix-Linux-who/3.png" class="" title="utmp文档">
-
 <p>所以<code>who</code>的工作原理可用以下流程完成</p>
 <div id="flowchart-0" class="flow-chart"></div>
 
-<h3 id="如何编写who"><a href="#如何编写who" class="headerlink" title="如何编写who"></a>如何编写who</h3><h5 id="如何读取文件"><a href="#如何读取文件" class="headerlink" title="如何读取文件"></a>如何读取文件</h5><p>通过搜索和read和file有关的文档</p>
-<img src="/2021/01/30/Unix-Linux-who/4.png" class="" title="man read file">
-<p>可以找到open(2)</p>
-<img src="/2021/01/30/Unix-Linux-who/5.png" class="" title="man 2 open">
-<p>通过open的文档可以找到其他的函数，分别是read close<br>open在打开文件时需要提供打开方式</p>
+<h3 id="如何编写who"><a href="#如何编写who" class="headerlink" title="如何编写who"></a>如何编写who</h3><h5 id="如何读取文件"><a href="#如何读取文件" class="headerlink" title="如何读取文件"></a>如何读取文件</h5><p>通过搜索和read和file有关的文档<br><img src="/2021/01/30/Unix-Linux-who/4.png" class="" title="man read file"><br>可以找到open(2)<br><img src="/2021/01/30/Unix-Linux-who/5.png" class="" title="man 2 open"><br>通过open的文档可以找到其他的函数，分别是read close<br>open在打开文件时需要提供打开方式</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -236,7 +230,8 @@
 <th></th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>target</td>
 <td>打开文件</td>
 </tr>
@@ -256,11 +251,11 @@
 <td>ret</td>
 <td>-1 error,int success</td>
 </tr>
-<tr>
-<td>其中 flags可以为O_RDONLY O_WRONLY O_RDWR</td>
-<td></td>
-</tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
+<p>其中 flags可以为O_RDONLY O_WRONLY O_RDWR</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -268,7 +263,8 @@
 <th></th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>target</td>
 <td>读取文件</td>
 </tr>
@@ -288,7 +284,10 @@
 <td>ret</td>
 <td>-1 error,numread success</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -296,7 +295,8 @@
 <th></th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>target</td>
 <td>关闭文件</td>
 </tr>
@@ -316,11 +316,11 @@
 <td>ret</td>
 <td>-1 error,0 success</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <h3 id="编写who1-c"><a href="#编写who1-c" class="headerlink" title="编写who1.c"></a>编写who1.c</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment"> * who version1 </span></span><br><span class="line"><span class="comment"> * show who login this machine</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;utmp.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SHOW_HOSTS</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">show_info</span><span class="params">(struct utmp *utmpbuf)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc,<span class="keyword">char</span> *argv[])</span></span>&#123;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">utmp</span> <span class="title">rec</span>;</span></span><br><span class="line">	<span class="keyword">int</span> utmpfd;</span><br><span class="line">	<span class="keyword">int</span> reclen=<span class="keyword">sizeof</span>(rec);</span><br><span class="line">    utmpfd=open(_PATH_UTMP,O_RDONLY);</span><br><span class="line">	<span class="keyword">if</span>(utmpfd==<span class="number">-1</span>)&#123;</span><br><span class="line">		perror(_PATH_UTMP);</span><br><span class="line">		<span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">while</span>(read(utmpfd,&amp;rec,reclen) == reclen)&#123;</span><br><span class="line">		show_info(&amp;rec);</span><br><span class="line">	&#125;</span><br><span class="line">	close(utmpfd);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">show_info</span><span class="params">(struct utmp *utmpbuf)</span></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%-8.8s&quot;</span>,utmpbuf-&gt;ut_name);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot; &quot;</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%-8.8s&quot;</span>,utmpbuf-&gt;ut_line);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot; &quot;</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%10ld&quot;</span>,(<span class="keyword">long</span>)utmpbuf-&gt;ut_time);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot; &quot;</span>);</span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> SHOW_HOSTS</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;(%s)&quot;</span>,utmpbuf-&gt;ut_host);</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>编译who1<br><code>cc who1.c -o who1</code><br>执行<br><code>./who1</code></p>
-<img src="/2021/01/30/Unix-Linux-who/6.png" class="" title="who1">
-<p>可见 <code>who1</code>已经可以工作了，但是仍有很多可以完善</p>
+<p>编译who1<br><code>cc who1.c -o who1</code><br>执行<br><code>./who1</code><br><img src="/2021/01/30/Unix-Linux-who/6.png" class="" title="who1"><br>可见 <code>who1</code>已经可以工作了，但是仍有很多可以完善</p>
 <ul>
 <li>消除空白记录</li>
 <li>正确显示时间</li>
@@ -545,6 +545,8 @@ isFinished(no)->read_rec</textarea><textarea id="flowchart-0-options" style="dis
 
 
 
+
+  
 
   
 
