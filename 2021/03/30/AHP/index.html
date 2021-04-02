@@ -32,7 +32,7 @@
 <meta property="og:image" content="https://alexzhu2001.github.io/2021/03/30/AHP/pic4.png">
 <meta property="og:image" content="https://alexzhu2001.github.io/2021/03/30/AHP/pic5.png">
 <meta property="article:published_time" content="2021-03-30T13:52:34.000Z">
-<meta property="article:modified_time" content="2021-04-01T15:51:09.921Z">
+<meta property="article:modified_time" content="2021-04-02T15:03:44.120Z">
 <meta property="article:author" content="Alex Zhu">
 <meta property="article:tag" content="Math">
 <meta name="twitter:card" content="summary">
@@ -192,7 +192,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-01 23:51:09" itemprop="dateModified" datetime="2021-04-01T23:51:09+08:00">2021-04-01</time>
+                <time title="修改时间：2021-04-02 23:03:44" itemprop="dateModified" datetime="2021-04-02T23:03:44+08:00">2021-04-02</time>
               </span>
 
           
@@ -263,7 +263,26 @@ CR=\frac{CI}{CR}</script></li>
 <p><strong> 如果CR&lt;0.1,则可认为判断矩阵的一致性可以接受;否则需要对判断矩阵进行修正 </strong></p>
 <h2 id="计算权重"><a href="#计算权重" class="headerlink" title="计算权重"></a>计算权重</h2><h3 id="一致矩阵-1"><a href="#一致矩阵-1" class="headerlink" title="一致矩阵"></a>一致矩阵</h3><p>取出其中一列数据计算即可,则每一位的权重</p>
 <script type="math/tex; mode=display">
-w_i=\frac{a_{i1}}{\sum\limits_{j=1}^na_{j1}}</script><h1>未完待续 37:53</h1>
+w_i=\frac{a_{i1}}{\sum\limits_{j=1}^na_{j1}}</script><h3 id="非一致判断矩阵矩阵"><a href="#非一致判断矩阵矩阵" class="headerlink" title="非一致判断矩阵矩阵"></a>非一致判断矩阵矩阵</h3><h4 id="1-算术平均法求权重"><a href="#1-算术平均法求权重" class="headerlink" title="1. 算术平均法求权重"></a>1. 算术平均法求权重</h4><ol>
+<li>将判断矩阵按列归一化，即每个元素除以其所在列的和</li>
+<li>将归一化的各列相加（按行求和）</li>
+<li>将相加后向量中每个元素除以n即可得到权重向量<script type="math/tex; mode=display">
+w_i=\cfrac{1}{n}\sum\limits_{j=1}^{n}{\cfrac{a_{ij}}{\sum\limits_{k=1}^{n}a_{kj}}},
+(i=1,2,\cdots,n)</script><h4 id="2-几何平均法"><a href="#2-几何平均法" class="headerlink" title="2. 几何平均法"></a>2. 几何平均法</h4></li>
+<li>将判断矩阵的元素按照行相乘得到一个新的列向量</li>
+<li>将新的向量的每个分量开n次方</li>
+<li>对该列向量进行归一化即可得到权重向量<script type="math/tex; mode=display">
+w_i=\cfrac{(\prod\limits_{j=1}^{n}a_{ij})^{\frac{1}{n}}}{\sum\limits_{k=1}^{n}{(\prod\limits_{j=1}^{n}a_{kj})^{\frac{1}{n}}}}</script><h4 id="3-特征值法"><a href="#3-特征值法" class="headerlink" title="3.特征值法"></a>3.特征值法</h4></li>
+<li>求出矩阵A的最大特征值以及其对应的特征向量</li>
+<li>对求出的特征向量进行归一化即可得到我们的权重</li>
+</ol>
+<h2 id="如何修正判断矩阵"><a href="#如何修正判断矩阵" class="headerlink" title="如何修正判断矩阵"></a>如何修正判断矩阵</h2><p>如果$CR&gt;0.1$,需要判断矩阵进行修正<br>向一致矩阵调整 使各列尽量成比例</p>
+<h2 id="计算各层元素对目标的权重"><a href="#计算各层元素对目标的权重" class="headerlink" title="计算各层元素对目标的权重"></a>计算各层元素对目标的权重</h2><p>计算各层元素对目标的权重,并进行排序</p>
+<h2 id="局限性"><a href="#局限性" class="headerlink" title="局限性"></a>局限性</h2><ol>
+<li>评价的决策层不能太多,太多的话n会很大,判断矩阵和一致矩阵差异</li>
+<li>如果决策层中指标的数据是已知的,那么我们如何利用这些数据来使评价的更加准确呢?</li>
+</ol>
+
     </div>
 
     
@@ -343,7 +362,7 @@ w_i=\frac{a_{i1}}{\sum\limits_{j=1}^na_{j1}}</script><h1>未完待续 37:53</h1>
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B1%82%E6%AC%A1%E5%88%86%E6%9E%90%E6%B3%95-AHP"><span class="nav-number">1.</span> <span class="nav-text">层次分析法 AHP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%92%88%E5%AF%B9%E9%97%AE%E9%A2%98%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.1.</span> <span class="nav-text">针对问题类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E8%AF%84%E4%BB%B7%E7%B1%BB%E9%97%AE%E9%A2%98"><span class="nav-number">1.2.</span> <span class="nav-text">如何解决评价类问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%90%9C%E7%B4%A2%E6%96%87%E7%8C%AE%E5%9C%B0%E5%9D%80"><span class="nav-number">1.3.</span> <span class="nav-text">搜索文献地址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E7%A1%AE%E5%AE%9A%E6%8C%87%E6%A0%87%E6%9D%83%E9%87%8D%E5%8F%8A%E5%90%84%E9%A1%B9%E7%9A%84%E5%88%86%E6%95%B0"><span class="nav-number">1.4.</span> <span class="nav-text">如何确定指标权重及各项的分数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%E5%A1%AB%E5%86%99%E7%9A%84%E6%95%B0%E6%8D%AE"><span class="nav-number">1.5.</span> <span class="nav-text">如何处理填写的数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E8%87%B4%E7%9F%A9%E9%98%B5"><span class="nav-number">1.6.</span> <span class="nav-text">一致矩阵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.7.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F-%E5%9C%A8%E4%BD%BF%E7%94%A8%E5%88%A4%E6%96%AD%E7%9F%A9%E9%98%B5%E6%B1%82%E6%9D%83%E9%87%8D%E4%B9%8B%E5%89%8D-%E5%BF%85%E9%A1%BB%E5%AF%B9%E5%85%B6%E8%BF%9B%E8%A1%8C%E4%B8%80%E8%87%B4%E6%80%A7%E6%A3%80%E9%AA%8C"><span class="nav-number">1.8.</span> <span class="nav-text">注意:在使用判断矩阵求权重之前,必须对其进行一致性检验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E8%87%B4%E6%80%A7%E6%A3%80%E9%AA%8C"><span class="nav-number">1.9.</span> <span class="nav-text">一致性检验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%9D%83%E9%87%8D"><span class="nav-number">1.10.</span> <span class="nav-text">计算权重</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E8%87%B4%E7%9F%A9%E9%98%B5-1"><span class="nav-number">1.10.1.</span> <span class="nav-text">一致矩阵</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">未完待续 37:53</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B1%82%E6%AC%A1%E5%88%86%E6%9E%90%E6%B3%95-AHP"><span class="nav-number">1.</span> <span class="nav-text">层次分析法 AHP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%92%88%E5%AF%B9%E9%97%AE%E9%A2%98%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.1.</span> <span class="nav-text">针对问题类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E8%AF%84%E4%BB%B7%E7%B1%BB%E9%97%AE%E9%A2%98"><span class="nav-number">1.2.</span> <span class="nav-text">如何解决评价类问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%90%9C%E7%B4%A2%E6%96%87%E7%8C%AE%E5%9C%B0%E5%9D%80"><span class="nav-number">1.3.</span> <span class="nav-text">搜索文献地址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E7%A1%AE%E5%AE%9A%E6%8C%87%E6%A0%87%E6%9D%83%E9%87%8D%E5%8F%8A%E5%90%84%E9%A1%B9%E7%9A%84%E5%88%86%E6%95%B0"><span class="nav-number">1.4.</span> <span class="nav-text">如何确定指标权重及各项的分数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%E5%A1%AB%E5%86%99%E7%9A%84%E6%95%B0%E6%8D%AE"><span class="nav-number">1.5.</span> <span class="nav-text">如何处理填写的数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E8%87%B4%E7%9F%A9%E9%98%B5"><span class="nav-number">1.6.</span> <span class="nav-text">一致矩阵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.7.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F-%E5%9C%A8%E4%BD%BF%E7%94%A8%E5%88%A4%E6%96%AD%E7%9F%A9%E9%98%B5%E6%B1%82%E6%9D%83%E9%87%8D%E4%B9%8B%E5%89%8D-%E5%BF%85%E9%A1%BB%E5%AF%B9%E5%85%B6%E8%BF%9B%E8%A1%8C%E4%B8%80%E8%87%B4%E6%80%A7%E6%A3%80%E9%AA%8C"><span class="nav-number">1.8.</span> <span class="nav-text">注意:在使用判断矩阵求权重之前,必须对其进行一致性检验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E8%87%B4%E6%80%A7%E6%A3%80%E9%AA%8C"><span class="nav-number">1.9.</span> <span class="nav-text">一致性检验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%9D%83%E9%87%8D"><span class="nav-number">1.10.</span> <span class="nav-text">计算权重</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E8%87%B4%E7%9F%A9%E9%98%B5-1"><span class="nav-number">1.10.1.</span> <span class="nav-text">一致矩阵</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%9E%E4%B8%80%E8%87%B4%E5%88%A4%E6%96%AD%E7%9F%A9%E9%98%B5%E7%9F%A9%E9%98%B5"><span class="nav-number">1.10.2.</span> <span class="nav-text">非一致判断矩阵矩阵</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E7%AE%97%E6%9C%AF%E5%B9%B3%E5%9D%87%E6%B3%95%E6%B1%82%E6%9D%83%E9%87%8D"><span class="nav-number">1.10.2.1.</span> <span class="nav-text">1. 算术平均法求权重</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E5%87%A0%E4%BD%95%E5%B9%B3%E5%9D%87%E6%B3%95"><span class="nav-number">1.10.2.2.</span> <span class="nav-text">2. 几何平均法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E7%89%B9%E5%BE%81%E5%80%BC%E6%B3%95"><span class="nav-number">1.10.2.3.</span> <span class="nav-text">3.特征值法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E4%BF%AE%E6%AD%A3%E5%88%A4%E6%96%AD%E7%9F%A9%E9%98%B5"><span class="nav-number">1.11.</span> <span class="nav-text">如何修正判断矩阵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E5%90%84%E5%B1%82%E5%85%83%E7%B4%A0%E5%AF%B9%E7%9B%AE%E6%A0%87%E7%9A%84%E6%9D%83%E9%87%8D"><span class="nav-number">1.12.</span> <span class="nav-text">计算各层元素对目标的权重</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B1%80%E9%99%90%E6%80%A7"><span class="nav-number">1.13.</span> <span class="nav-text">局限性</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
