@@ -20,21 +20,20 @@
     var CONFIG = {"hostname":"alexzhu2001.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="二分查找-1思路 1：在循环体中查找元素代码模板12345678910111213int bs(vector&lt;T&gt; &amp;vec,T target)&amp;#123;    int l&#x3D;0,r&#x3D;vec.size()-1,mid;    while(l&lt;&#x3D;r)&amp;#123;        mid&#x3D;l+(r-l)&#x2F;2;        if(vec[mid]&#x3D;&#x3D;target)">
+  <meta name="description" content="栈的最小值题目描述请设计一个栈，除了常规栈支持的pop与push函数以外，还支持min函数，该函数返回栈元素中的最小值。执行push、pop和min操作的时间复杂度必须为O(1)。 实例12345678MinStack minStack &#x3D; new MinStack();minStack.push(-2);minStack.push(0);minStack.push(-3);minStack.ge">
 <meta property="og:type" content="article">
-<meta property="og:title" content="BinarySearch_1">
-<meta property="og:url" content="https://alexzhu2001.github.io/AlexZhu2001/2021/01/24/BinarySearch-1/index.html">
+<meta property="og:title" content="LeetCode.栈的最小值">
+<meta property="og:url" content="https://alexzhu2001.github.io/AlexZhu2001/2021/04/15/LeetCode-%E6%A0%88%E7%9A%84%E6%9C%80%E5%B0%8F%E5%80%BC/index.html">
 <meta property="og:site_name" content="Alex&#39;s Blog">
-<meta property="og:description" content="二分查找-1思路 1：在循环体中查找元素代码模板12345678910111213int bs(vector&lt;T&gt; &amp;vec,T target)&amp;#123;    int l&#x3D;0,r&#x3D;vec.size()-1,mid;    while(l&lt;&#x3D;r)&amp;#123;        mid&#x3D;l+(r-l)&#x2F;2;        if(vec[mid]&#x3D;&#x3D;target)">
+<meta property="og:description" content="栈的最小值题目描述请设计一个栈，除了常规栈支持的pop与push函数以外，还支持min函数，该函数返回栈元素中的最小值。执行push、pop和min操作的时间复杂度必须为O(1)。 实例12345678MinStack minStack &#x3D; new MinStack();minStack.push(-2);minStack.push(0);minStack.push(-3);minStack.ge">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-01-24T08:49:35.000Z">
+<meta property="article:published_time" content="2021-04-15T05:48:14.000Z">
 <meta property="article:modified_time" content="2021-04-15T06:26:22.252Z">
 <meta property="article:author" content="Alex Zhu">
 <meta property="article:tag" content="算法">
-<meta property="article:tag" content="BinarySearch">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://alexzhu2001.github.io/AlexZhu2001/2021/01/24/BinarySearch-1/">
+<link rel="canonical" href="https://alexzhu2001.github.io/AlexZhu2001/2021/04/15/LeetCode-%E6%A0%88%E7%9A%84%E6%9C%80%E5%B0%8F%E5%80%BC/">
 
 
 <script id="page-configurations">
@@ -47,7 +46,7 @@
   };
 </script>
 
-  <title>BinarySearch_1 | Alex's Blog</title>
+  <title>LeetCode.栈的最小值 | Alex's Blog</title>
   
 
 
@@ -158,7 +157,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://alexzhu2001.github.io/AlexZhu2001/2021/01/24/BinarySearch-1/">
+    <link itemprop="mainEntityOfPage" href="https://alexzhu2001.github.io/AlexZhu2001/2021/04/15/LeetCode-%E6%A0%88%E7%9A%84%E6%9C%80%E5%B0%8F%E5%80%BC/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/head.png">
@@ -171,7 +170,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          BinarySearch_1
+          LeetCode.栈的最小值
         </h1>
 
         <div class="post-meta">
@@ -180,16 +179,10 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2021-01-24 16:49:35" itemprop="dateCreated datePublished" datetime="2021-01-24T16:49:35+08:00">2021-01-24</time>
+              <time title="创建时间：2021-04-15 13:48:14 / 修改时间：14:26:22" itemprop="dateCreated datePublished" datetime="2021-04-15T13:48:14+08:00">2021-04-15</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-15 14:26:22" itemprop="dateModified" datetime="2021-04-15T14:26:22+08:00">2021-04-15</time>
-              </span>
 
           
 
@@ -202,18 +195,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="二分查找-1"><a href="#二分查找-1" class="headerlink" title="二分查找-1"></a>二分查找-1</h1><h2 id="思路-1：在循环体中查找元素"><a href="#思路-1：在循环体中查找元素" class="headerlink" title="思路 1：在循环体中查找元素"></a>思路 1：在循环体中查找元素</h2><h4 id="代码模板"><a href="#代码模板" class="headerlink" title="代码模板"></a>代码模板</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">bs</span><span class="params">(vector&lt;T&gt; &amp;vec,T target)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> l=<span class="number">0</span>,r=vec.<span class="built_in">size</span>()<span class="number">-1</span>,mid;</span><br><span class="line">    <span class="keyword">while</span>(l&lt;=r)&#123;</span><br><span class="line">        mid=l+(r-l)/<span class="number">2</span>;</span><br><span class="line">        <span class="keyword">if</span>(vec[mid]==target)</span><br><span class="line">            <span class="keyword">return</span> mid;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(vec[mid]&lt;target)</span><br><span class="line">            l=mid+<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">else</span> </span><br><span class="line">            r=mid<span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="复杂度分析："><a href="#复杂度分析：" class="headerlink" title="复杂度分析："></a>复杂度分析：</h4><ul>
-<li>时间复杂度 二分查找的时间复杂度是 O(log⁡N) 这里N是输入数组的长度</li>
-<li>空间复杂度 由于二分查找算法在执行的过程中只使用到常数个临时变量 因此空间复杂度是 O(1)</li>
-</ul>
-<h4 id="细节"><a href="#细节" class="headerlink" title="细节"></a>细节</h4><ol>
-<li>循环可以继续的条件 <code>left&lt;=right</code> 表明区间仅剩一个元素时仍需继续查找 </li>
-<li>取中间值 <code>(l+r)/2</code>可能导致<code>l+r</code>发生溢出 所以使用<code>l+(r-l)/2</code>来防止溢出</li>
-<li>取中间值也可以向上取整</li>
-</ol>
-<h2 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h2><a href="/2021/01/24/BinarySearch-1/374.%E7%8C%9C%E6%95%B0%E5%AD%97%E5%A4%A7%E5%B0%8F.cpp" title="374.猜数字大小.cpp">374.猜数字大小.cpp</a>
-<a href="/2021/01/24/BinarySearch-1/704.%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE.cpp" title="704.二分查找.cpp">704.二分查找.cpp</a>
+        <h1 id="栈的最小值"><a href="#栈的最小值" class="headerlink" title="栈的最小值"></a>栈的最小值</h1><h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>请设计一个栈，除了常规栈支持的pop与push函数以外，还支持min函数，该函数返回栈元素中的最小值。执行push、pop和min操作的时间复杂度必须为O(1)。</p>
+<h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">MinStack minStack = <span class="keyword">new</span> MinStack();</span><br><span class="line">minStack.push(<span class="number">-2</span>);</span><br><span class="line">minStack.push(<span class="number">0</span>);</span><br><span class="line">minStack.push(<span class="number">-3</span>);</span><br><span class="line">minStack.getMin();   --&gt; 返回 <span class="number">-3.</span></span><br><span class="line">minStack.pop();</span><br><span class="line">minStack.top();      --&gt; 返回 <span class="number">0.</span></span><br><span class="line">minStack.getMin();   --&gt; 返回 <span class="number">-2.</span></span><br></pre></td></tr></table></figure>
+<h2 id="解题方法"><a href="#解题方法" class="headerlink" title="解题方法"></a>解题方法</h2><p>维护两个栈 一个存放数据 一个存放当前最小值</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MinStack</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">/** initialize your data structure here. */</span></span><br><span class="line">    vector&lt;<span class="keyword">int</span>&gt; min;</span><br><span class="line">    vector&lt;<span class="keyword">int</span>&gt; vec;</span><br><span class="line">    <span class="built_in">MinStack</span>() &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">push</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">        vec.<span class="built_in">push_back</span>(x);</span><br><span class="line">        <span class="keyword">if</span>(min.<span class="built_in">size</span>()==<span class="number">0</span>) min.<span class="built_in">push_back</span>(x);</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">int</span> l=min.<span class="built_in">at</span>(min.<span class="built_in">size</span>()<span class="number">-1</span>);</span><br><span class="line">            min.<span class="built_in">push_back</span>(l&gt;x?x:l);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">pop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        vec.<span class="built_in">pop_back</span>();</span><br><span class="line">        min.<span class="built_in">pop_back</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">top</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> x=vec.<span class="built_in">at</span>(vec.<span class="built_in">size</span>()<span class="number">-1</span>);</span><br><span class="line">        <span class="keyword">return</span> x;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">getMin</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> *(min.<span class="built_in">end</span>()<span class="number">-1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Your MinStack object will be instantiated and called as such:</span></span><br><span class="line"><span class="comment"> * MinStack* obj = new MinStack();</span></span><br><span class="line"><span class="comment"> * obj-&gt;push(x);</span></span><br><span class="line"><span class="comment"> * obj-&gt;pop();</span></span><br><span class="line"><span class="comment"> * int param_3 = obj-&gt;top();</span></span><br><span class="line"><span class="comment"> * int param_4 = obj-&gt;getMin();</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -224,7 +209,6 @@
       <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/%E7%AE%97%E6%B3%95/" rel="tag"># 算法</a>
-              <a href="/tags/BinarySearch/" rel="tag"># BinarySearch</a>
           </div>
 
         
@@ -233,13 +217,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/01/22/SDL-DAY1/" rel="prev" title="SDL_DAY1">
-      <i class="fa fa-chevron-left"></i> SDL_DAY1
+    <a href="/2021/03/30/AHP/" rel="prev" title="AHP">
+      <i class="fa fa-chevron-left"></i> AHP
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2021/01/25/%E6%9E%84%E9%80%A0%E5%9B%9E%E6%96%87%E6%95%B0/" rel="next" title="构造回文数">
-      构造回文数 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -298,7 +279,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE-1"><span class="nav-number">1.</span> <span class="nav-text">二分查找-1</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF-1%EF%BC%9A%E5%9C%A8%E5%BE%AA%E7%8E%AF%E4%BD%93%E4%B8%AD%E6%9F%A5%E6%89%BE%E5%85%83%E7%B4%A0"><span class="nav-number">1.1.</span> <span class="nav-text">思路 1：在循环体中查找元素</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E6%A8%A1%E6%9D%BF"><span class="nav-number">1.1.0.1.</span> <span class="nav-text">代码模板</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%88%86%E6%9E%90%EF%BC%9A"><span class="nav-number">1.1.0.2.</span> <span class="nav-text">复杂度分析：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%86%E8%8A%82"><span class="nav-number">1.1.0.3.</span> <span class="nav-text">细节</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%83%E4%B9%A0"><span class="nav-number">1.2.</span> <span class="nav-text">练习</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A0%88%E7%9A%84%E6%9C%80%E5%B0%8F%E5%80%BC"><span class="nav-number">1.</span> <span class="nav-text">栈的最小值</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0"><span class="nav-number">1.1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E4%BE%8B"><span class="nav-number">1.2.</span> <span class="nav-text">实例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E9%A2%98%E6%96%B9%E6%B3%95"><span class="nav-number">1.3.</span> <span class="nav-text">解题方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-number">1.4.</span> <span class="nav-text">代码</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
