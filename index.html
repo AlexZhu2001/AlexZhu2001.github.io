@@ -151,6 +151,93 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://alexzhu2001.github.io/AlexZhu2001/2021/04/16/LeetCode87-%E6%89%B0%E4%B9%B1%E5%AD%97%E7%AC%A6%E4%B8%B2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="Alex Zhu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Alex's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/04/16/LeetCode87-%E6%89%B0%E4%B9%B1%E5%AD%97%E7%AC%A6%E4%B8%B2/" class="post-title-link" itemprop="url">LeetCode87.扰乱字符串</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-04-16 12:20:29 / 修改时间：13:12:13" itemprop="dateCreated datePublished" datetime="2021-04-16T12:20:29+08:00">2021-04-16</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="LeetCode87-扰乱字符串"><a href="#LeetCode87-扰乱字符串" class="headerlink" title="LeetCode87.扰乱字符串"></a>LeetCode87.扰乱字符串</h1><h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>使用下面描述的算法可以扰乱字符串 s 得到字符串 t :</p>
+<ol>
+<li>如果字符串的长度为 1 ,算法停止</li>
+<li>如果字符串的长度 &gt; 1 ,执行下述步骤：<ol>
+<li>在一个随机下标处将字符串分割成两个非空的子字符串。即，如果已知字符串 s ，则可以将其分成两个子字符串 x 和 y ，且满足 s = x + y 。</li>
+<li>随机 决定是要「交换两个子字符串」还是要「保持这两个子字符串的顺序不变」。即，在执行这一步骤之后，s 可能是 s = x + y 或者 s = y + x 。</li>
+<li>在 x 和 y 这两个子字符串上继续从步骤 1 开始递归执行此算法.</li>
+</ol>
+</li>
+</ol>
+<p>给你两个 长度相等 的字符串 s1 和 s2，判断 s2 是否是 s1 的扰乱字符串。如果是，返回 true ；否则，返回 false .</p>
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><p><strong>示例一</strong><br><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">输入：<span class="built_in">s1</span> = <span class="string">&quot;great&quot;</span>, <span class="built_in">s2</span> = <span class="string">&quot;rgeat&quot;</span></span><br><span class="line">输出：true</span><br><span class="line">解释：<span class="built_in">s1</span> 上可能发生的一种情形是：</span><br><span class="line"><span class="string">&quot;great&quot;</span> --&gt; <span class="string">&quot;gr/eat&quot;</span> <span class="comment">// 在一个随机下标处分割得到两个子字符串</span></span><br><span class="line"><span class="string">&quot;gr/eat&quot;</span> --&gt; <span class="string">&quot;gr/eat&quot;</span> <span class="comment">// 随机决定：「保持这两个子字符串的顺序不变」</span></span><br><span class="line"><span class="string">&quot;gr/eat&quot;</span> --&gt; <span class="string">&quot;g/r / e/at&quot;</span> <span class="comment">// 在子字符串上递归执行此算法。两个子字符串分别在随机下标处进行一轮分割</span></span><br><span class="line"><span class="string">&quot;g/r / e/at&quot;</span> --&gt; <span class="string">&quot;r/g / e/at&quot;</span> <span class="comment">// 随机决定：第一组「交换两个子字符串」，第二组「保持这两个子字符串的顺序不变」</span></span><br><span class="line"><span class="string">&quot;r/g / e/at&quot;</span> --&gt; <span class="string">&quot;r/g / e/ a/t&quot;</span> <span class="comment">// 继续递归执行此算法，将 &quot;at&quot; 分割得到 &quot;a/t&quot;</span></span><br><span class="line"><span class="string">&quot;r/g / e/ a/t&quot;</span> --&gt; <span class="string">&quot;r/g / e/ a/t&quot;</span> <span class="comment">// 随机决定：「保持这两个子字符串的顺序不变」</span></span><br><span class="line">算法终止，结果字符串和 <span class="built_in">s2</span> 相同，都是 <span class="string">&quot;rgeat&quot;</span></span><br><span class="line">这是一种能够扰乱 <span class="built_in">s1</span> 得到 <span class="built_in">s2</span> 的情形，可以认为 <span class="built_in">s2</span> 是 <span class="built_in">s1</span> 的扰乱字符串，返回 true</span><br></pre></td></tr></table></figure><br><strong>示例二</strong><br><figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：<span class="attr">s1</span> = <span class="string">&quot;abcde&quot;</span>, <span class="attr">s2</span> = <span class="string">&quot;caebd&quot;</span></span><br><span class="line">输出：<span class="literal">false</span></span><br></pre></td></tr></table></figure><br><strong>示例三</strong><br><figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：<span class="attr">s1</span> = <span class="string">&quot;a&quot;</span>, <span class="attr">s2</span> = <span class="string">&quot;a&quot;</span></span><br><span class="line">输出：<span class="literal">true</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="思路与方法"><a href="#思路与方法" class="headerlink" title="思路与方法"></a>思路与方法</h2><p>显然 若s和t长度不同 则必不能由s变化为t<br>若长度相同 则存在一个分割点<code>i1</code>,使<code>s</code>分割为<code>s1</code>和<code>s2</code>,一个分割点<code>i2</code>,使<code>t</code>分割为<code>t1</code>和<code>t2</code></p>
+<p>满足 </p>
+<ul>
+<li>没交换 s1-&gt;t1 s2-&gt;t2</li>
+<li>交换了 s2-&gt;t1 s1-&gt;t2</li>
+</ul>
+<p><strong>子问题</strong></p>
+<p>分别讨论两种情况<br><img src="https://assets.leetcode-cn.com/solution-static/87/1.png" alt=""></p>
+<p><strong>记忆化搜索数组</strong><br>可先设记忆化搜索数组为<code>mem[i][j][k][h]</code><br>又因为s和t长度的关系 <code>j-i=h-k</code><br>则可将数组降低为三维 <code>mem[i][j][l]</code><br>表示从字符串 <code>s</code> 中 <code>i</code> 开始长度为 <code>l</code> 的字符串是否能变换为从字符串 <code>t</code> 中 <code>j</code> 开始长度为 <code>l</code> 的字符串</p>
+<p><strong>状态转移方程</strong></p>
+<script type="math/tex; mode=display">
+\begin{align*}
+&dp[i][j][l]=\\\\
+&\mathop{V}\limits_{w=1}\limits^{l-1}{(dp[i][j][w]\&\&dp[i+w][j+w][l-w])} || \\\\
+&\mathop{V}\limits_{w=1}\limits^{l-1}{(dp[i][j+l-w][w]\&\&dp[i+w][j][l-w])}
+\end{align*}</script><p><strong>初始条件</strong><br>对于长度为1的串 只有相等才能变换得到 相等为 <code>true</code> 不相等为 <code>false</code></p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">int</span> mem[<span class="number">30</span>][<span class="number">30</span>][<span class="number">31</span>];</span><br><span class="line">    string s1,s2;</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">check</span><span class="params">(<span class="keyword">int</span> i1,<span class="keyword">int</span> i2,<span class="keyword">int</span> l)</span></span>&#123;</span><br><span class="line">        unordered_map&lt;<span class="keyword">char</span>,<span class="keyword">int</span>&gt; freq;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=i1;i&lt;i1+l;i++)&#123;</span><br><span class="line">            freq[s1[i]]+=<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=i2;i&lt;i2+l;i++)&#123;</span><br><span class="line">            freq[s2[i]]-=<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span> it=freq.<span class="built_in">begin</span>();it!=freq.<span class="built_in">end</span>();it++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(it-&gt;second!=<span class="number">0</span>)<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> i1,<span class="keyword">int</span> i2,<span class="keyword">int</span> l)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(mem[i1][i2][l])</span><br><span class="line">            <span class="keyword">return</span> mem[i1][i2][l]==<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span>(s1.<span class="built_in">substr</span>(i1,l)==s2.<span class="built_in">substr</span>(i2,l))&#123;</span><br><span class="line">            mem[i1][i2][l]=<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(!<span class="built_in">check</span>(i1,i2,l))&#123;</span><br><span class="line">            mem[i1][i2][l]=<span class="number">-1</span>;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;l;i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(<span class="built_in">dfs</span>(i1,i2,i)&amp;&amp;<span class="built_in">dfs</span>(i1+i,i2+i,l-i))&#123;</span><br><span class="line">                mem[i1][i2][l]=<span class="number">1</span>;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(<span class="built_in">dfs</span>(i1,i2+l-i,i)&amp;&amp;<span class="built_in">dfs</span>(i1+i,i2,l-i))&#123;</span><br><span class="line">                mem[i1][i2][l]=<span class="number">1</span>;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        mem[i1][i2][l]=<span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isScramble</span><span class="params">(string s1, string s2)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">memset</span>(mem,<span class="number">0</span>,<span class="built_in"><span class="keyword">sizeof</span></span>(mem));</span><br><span class="line">        <span class="keyword">this</span>-&gt;s1=s1;</span><br><span class="line">        <span class="keyword">this</span>-&gt;s2=s2;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">dfs</span>(<span class="number">0</span>,<span class="number">0</span>,s1.<span class="built_in">size</span>());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://alexzhu2001.github.io/AlexZhu2001/2021/04/15/LeetCode-%E6%A0%88%E7%9A%84%E6%9C%80%E5%B0%8F%E5%80%BC/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -174,10 +261,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-04-15 13:48:14 / 修改时间：14:26:22" itemprop="dateCreated datePublished" datetime="2021-04-15T13:48:14+08:00">2021-04-15</time>
+              <time title="创建时间：2021-04-15 13:48:14" itemprop="dateCreated datePublished" datetime="2021-04-15T13:48:14+08:00">2021-04-15</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-04-16 13:12:13" itemprop="dateModified" datetime="2021-04-16T13:12:13+08:00">2021-04-16</time>
+              </span>
 
           
 
@@ -244,7 +337,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-15 14:26:22" itemprop="dateModified" datetime="2021-04-15T14:26:22+08:00">2021-04-15</time>
+                <time title="修改时间：2021-04-16 13:12:13" itemprop="dateModified" datetime="2021-04-16T13:12:13+08:00">2021-04-16</time>
               </span>
 
           
@@ -384,7 +477,7 @@ w_i=\cfrac{(\prod\limits_{j=1}^{n}a_{ij})^{\frac{1}{n}}}{\sum\limits_{k=1}^{n}{(
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-15 14:26:22" itemprop="dateModified" datetime="2021-04-15T14:26:22+08:00">2021-04-15</time>
+                <time title="修改时间：2021-04-16 13:12:13" itemprop="dateModified" datetime="2021-04-16T13:12:13+08:00">2021-04-16</time>
               </span>
 
           
@@ -575,7 +668,7 @@ isFinished(no)->read_rec</textarea><textarea id="flowchart-0-options" style="dis
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-15 14:26:22" itemprop="dateModified" datetime="2021-04-15T14:26:22+08:00">2021-04-15</time>
+                <time title="修改时间：2021-04-16 13:12:13" itemprop="dateModified" datetime="2021-04-16T13:12:13+08:00">2021-04-16</time>
               </span>
 
           
@@ -656,7 +749,7 @@ isFinished(no)->read_rec</textarea><textarea id="flowchart-0-options" style="dis
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-15 14:26:22" itemprop="dateModified" datetime="2021-04-15T14:26:22+08:00">2021-04-15</time>
+                <time title="修改时间：2021-04-16 13:12:13" itemprop="dateModified" datetime="2021-04-16T13:12:13+08:00">2021-04-16</time>
               </span>
 
           
@@ -747,7 +840,7 @@ isFinished(no)->read_rec</textarea><textarea id="flowchart-0-options" style="dis
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-15 14:26:22" itemprop="dateModified" datetime="2021-04-15T14:26:22+08:00">2021-04-15</time>
+                <time title="修改时间：2021-04-16 13:12:13" itemprop="dateModified" datetime="2021-04-16T13:12:13+08:00">2021-04-16</time>
               </span>
 
           
@@ -822,7 +915,7 @@ isFinished(no)->read_rec</textarea><textarea id="flowchart-0-options" style="dis
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-15 14:26:22" itemprop="dateModified" datetime="2021-04-15T14:26:22+08:00">2021-04-15</time>
+                <time title="修改时间：2021-04-16 13:12:13" itemprop="dateModified" datetime="2021-04-16T13:12:13+08:00">2021-04-16</time>
               </span>
 
           
@@ -896,7 +989,7 @@ isFinished(no)->read_rec</textarea><textarea id="flowchart-0-options" style="dis
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-15 14:26:22" itemprop="dateModified" datetime="2021-04-15T14:26:22+08:00">2021-04-15</time>
+                <time title="修改时间：2021-04-16 13:12:13" itemprop="dateModified" datetime="2021-04-16T13:12:13+08:00">2021-04-16</time>
               </span>
 
           
@@ -972,7 +1065,7 @@ isFinished(no)->read_rec</textarea><textarea id="flowchart-0-options" style="dis
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-15 14:26:22" itemprop="dateModified" datetime="2021-04-15T14:26:22+08:00">2021-04-15</time>
+                <time title="修改时间：2021-04-16 13:12:13" itemprop="dateModified" datetime="2021-04-16T13:12:13+08:00">2021-04-16</time>
               </span>
 
           
@@ -990,83 +1083,6 @@ isFinished(no)->read_rec</textarea><textarea id="flowchart-0-options" style="dis
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;SDL2/SDL.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span>  WIDTH 400</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> HEIGHT 300</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(SDL_Init(SDL_INIT_VIDEO) != <span class="number">0</span>)&#123;</span><br><span class="line">        SDL_Log(<span class="string">&quot;Error,%s&quot;</span>,SDL_GetError());</span><br><span class="line">    &#125;</span><br><span class="line">    SDL_Window *win=SDL_CreateWindow(<span class="string">&quot;HelloWorld&quot;</span>,</span><br><span class="line">                                    SDL_WINDOWPOS_CENTERED,</span><br><span class="line">                                    SDL_WINDOWPOS_CENTERED,</span><br><span class="line">                                    WIDTH,HEIGHT,</span><br><span class="line">                                    SDL_WINDOW_SHOWN);</span><br><span class="line">    SDL_ShowWindow(win);</span><br><span class="line">    SDL_Delay(<span class="number">5000</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <img src="/2021/01/22/SDL-DAY1/1.png" class="" title="运行效果">
 <p><a target="_blank" rel="noopener" href="https://github.com/2018-EPI-GROUP/2020Freshman/tree/%E9%80%9A%E5%B7%A52009-%E6%9C%B1%E5%BD%A6%E6%99%9F/SDL2/SDL2-01">代码</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://alexzhu2001.github.io/AlexZhu2001/2021/01/21/Build-SDL2-by-VS2019/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head.png">
-      <meta itemprop="name" content="Alex Zhu">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Alex's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/01/21/Build-SDL2-by-VS2019/" class="post-title-link" itemprop="url">Build SDL2 by VS2019</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-01-21 21:18:12" itemprop="dateCreated datePublished" datetime="2021-01-21T21:18:12+08:00">2021-01-21</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-15 14:26:22" itemprop="dateModified" datetime="2021-04-15T14:26:22+08:00">2021-04-15</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="使用CMake-GUI-完成SDL2的编译（MSVC2019）"><a href="#使用CMake-GUI-完成SDL2的编译（MSVC2019）" class="headerlink" title="使用CMake GUI 完成SDL2的编译（MSVC2019）"></a>使用CMake GUI 完成SDL2的编译（MSVC2019）</h1><hr>
-<h3 id="Step1-CMake设置"><a href="#Step1-CMake设置" class="headerlink" title="Step1.CMake设置"></a>Step1.CMake设置</h3><pre><code>打开CMake(GUI) 设置源码所在文件夹以及存放build文件的文件夹
-</code></pre><img src="/2021/01/21/Build-SDL2-by-VS2019/1.png" class="" title="Settings1">
-<pre><code>点击Configure 选择 Visual Studio 16 2019 Finish
-</code></pre><img src="/2021/01/21/Build-SDL2-by-VS2019/2.png" class="" title="Settings2">
-<pre><code>等待生成文件
-</code></pre><h3 id="Step2-设置安装目录"><a href="#Step2-设置安装目录" class="headerlink" title="Step2.设置安装目录"></a>Step2.设置安装目录</h3><pre><code>修改 CMAKE_INSTALL_PREFIX 的变量值
-点击Generate
-</code></pre><img src="/2021/01/21/Build-SDL2-by-VS2019/3.png" class="" title="Prefix Setting">
-<h3 id="Step3-开始编译"><a href="#Step3-开始编译" class="headerlink" title="Step3.开始编译"></a>Step3.开始编译</h3><pre><code>以管理员身份打开VS2019 打开设置的build存放目录下的SDL2.sln
-右击INSTALL 生成 等待编译和复制完成
-</code></pre><img src="/2021/01/21/Build-SDL2-by-VS2019/4.png" class="" title="Build With VS2019">
-<img src="/2021/01/21/Build-SDL2-by-VS2019/5.png" class="" title="Build Success">
 
       
     </div>
@@ -1153,7 +1169,7 @@ isFinished(no)->read_rec</textarea><textarea id="flowchart-0-options" style="dis
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-count">13</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1181,7 +1197,7 @@ isFinished(no)->read_rec</textarea><textarea id="flowchart-0-options" style="dis
             <h3 class="widget-title">Tag Cloud</h3>
             <div id="myCanvasContainer" class="widget tagcloud">
                 <canvas width="250" height="250" id="resCanvas" style="width=100%">
-                    <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/BinarySearch/" rel="tag">BinarySearch</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BuildForWindows/" rel="tag">BuildForWindows</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CMake/" rel="tag">CMake</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/" rel="tag">Math</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SDL2/" rel="tag">SDL2</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TestPost/" rel="tag">TestPost</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unix/" rel="tag">Unix</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VS2019/" rel="tag">VS2019</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a><span class="tag-list-count">6</span></li></ul>
+                    <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/BinarySearch/" rel="tag">BinarySearch</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BuildForWindows/" rel="tag">BuildForWindows</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CMake/" rel="tag">CMake</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/" rel="tag">Math</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SDL2/" rel="tag">SDL2</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TestPost/" rel="tag">TestPost</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unix/" rel="tag">Unix</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VS2019/" rel="tag">VS2019</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a><span class="tag-list-count">7</span></li></ul>
                 </canvas>
             </div>
         </div>
