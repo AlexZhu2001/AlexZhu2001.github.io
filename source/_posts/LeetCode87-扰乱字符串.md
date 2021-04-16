@@ -5,6 +5,12 @@ tags: 算法
 mathjax: true
 ---
 # LeetCode87.扰乱字符串
+<div style="font-size:small">
+部分转载自以下链接:
+[LeetCode-Solution](https://leetcode-cn.com/problems/scramble-string/solution/rao-luan-zi-fu-chuan-by-leetcode-solutio-8r9t/)
+[jerry_nju](https://leetcode-cn.com/problems/scramble-string/solution/miao-dong-de-qu-jian-xing-dpsi-lu-by-sha-yu-la-jia/)
+</div>
+---
 ## 题目描述
 使用下面描述的算法可以扰乱字符串 s 得到字符串 t :
 1. 如果字符串的长度为 1 ,算法停止
