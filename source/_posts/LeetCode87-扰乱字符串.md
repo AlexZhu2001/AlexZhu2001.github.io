@@ -1,7 +1,9 @@
 ---
 title: LeetCode87.扰乱字符串
 date: 2021-04-16 12:20:29
-tags: 算法
+tags: 
+    - 算法 
+    - 动态规划
 mathjax: true
 ---
 # LeetCode87.扰乱字符串
