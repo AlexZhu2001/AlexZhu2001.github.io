@@ -7,11 +7,13 @@ tags:
 mathjax: true
 ---
 # LeetCode87.扰乱字符串
-<div style="font-size:small">
-部分转载自以下链接:
-[LeetCode-Solution](https://leetcode-cn.com/problems/scramble-string/solution/rao-luan-zi-fu-chuan-by-leetcode-solutio-8r9t/)
-[jerry_nju](https://leetcode-cn.com/problems/scramble-string/solution/miao-dong-de-qu-jian-xing-dpsi-lu-by-sha-yu-la-jia/)
+
+<div style="font-size:small">  
+部分转载自以下链接:</br>
+<a href="https://leetcode-cn.com/problems/scramble-string/solution/rao-luan-zi-fu-chuan-by-leetcode-solutio-8r9t/">LeetCode-Solution</a></br>
+<a href="https://leetcode-cn.com/problems/scramble-string/solution/miao-dong-de-qu-jian-xing-dpsi-lu-by-sha-yu-la-jia/">jerry_nju</a></br>
 </div>
+
 ---
 ## 题目描述
 使用下面描述的算法可以扰乱字符串 s 得到字符串 t :
@@ -60,7 +62,7 @@ mathjax: true
 **子问题**
 
 分别讨论两种情况 
-![](https://assets.leetcode-cn.com/solution-static/87/1.png)
+{% asset_img 1.png pic %}
 
 **记忆化搜索数组**
 可先设记忆化搜索数组为`mem[i][j][k][h]`
