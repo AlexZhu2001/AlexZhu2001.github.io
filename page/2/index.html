@@ -151,6 +151,82 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://alexzhu2001.github.io/AlexZhu2001/2021/01/24/BinarySearch-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.png">
+      <meta itemprop="name" content="Alex Zhu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Alex's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/24/BinarySearch-1/" class="post-title-link" itemprop="url">BinarySearch_1</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-01-24 16:49:35" itemprop="dateCreated datePublished" datetime="2021-01-24T16:49:35+08:00">2021-01-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-04-20 23:18:35" itemprop="dateModified" datetime="2021-04-20T23:18:35+08:00">2021-04-20</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="二分查找-1"><a href="#二分查找-1" class="headerlink" title="二分查找-1"></a>二分查找-1</h1><h2 id="思路-1：在循环体中查找元素"><a href="#思路-1：在循环体中查找元素" class="headerlink" title="思路 1：在循环体中查找元素"></a>思路 1：在循环体中查找元素</h2><h4 id="代码模板"><a href="#代码模板" class="headerlink" title="代码模板"></a>代码模板</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">bs</span><span class="params">(vector&lt;T&gt; &amp;vec,T target)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> l=<span class="number">0</span>,r=vec.<span class="built_in">size</span>()<span class="number">-1</span>,mid;</span><br><span class="line">    <span class="keyword">while</span>(l&lt;=r)&#123;</span><br><span class="line">        mid=l+(r-l)/<span class="number">2</span>;</span><br><span class="line">        <span class="keyword">if</span>(vec[mid]==target)</span><br><span class="line">            <span class="keyword">return</span> mid;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(vec[mid]&lt;target)</span><br><span class="line">            l=mid+<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">else</span> </span><br><span class="line">            r=mid<span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="复杂度分析："><a href="#复杂度分析：" class="headerlink" title="复杂度分析："></a>复杂度分析：</h4><ul>
+<li>时间复杂度 二分查找的时间复杂度是 O(log⁡N) 这里N是输入数组的长度</li>
+<li>空间复杂度 由于二分查找算法在执行的过程中只使用到常数个临时变量 因此空间复杂度是 O(1)</li>
+</ul>
+<h4 id="细节"><a href="#细节" class="headerlink" title="细节"></a>细节</h4><ol>
+<li>循环可以继续的条件 <code>left&lt;=right</code> 表明区间仅剩一个元素时仍需继续查找 </li>
+<li>取中间值 <code>(l+r)/2</code>可能导致<code>l+r</code>发生溢出 所以使用<code>l+(r-l)/2</code>来防止溢出</li>
+<li>取中间值也可以向上取整</li>
+</ol>
+<h2 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h2><a href="/2021/01/24/BinarySearch-1/374.%E7%8C%9C%E6%95%B0%E5%AD%97%E5%A4%A7%E5%B0%8F.cpp" title="374.猜数字大小.cpp">374.猜数字大小.cpp</a>
+<a href="/2021/01/24/BinarySearch-1/704.%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE.cpp" title="704.二分查找.cpp">704.二分查找.cpp</a>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://alexzhu2001.github.io/AlexZhu2001/2021/01/22/SDL-DAY1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -182,7 +258,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-18 14:33:58" itemprop="dateModified" datetime="2021-04-18T14:33:58+08:00">2021-04-18</time>
+                <time title="修改时间：2021-04-20 23:18:35" itemprop="dateModified" datetime="2021-04-20T23:18:35+08:00">2021-04-20</time>
               </span>
 
           
@@ -250,7 +326,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-18 14:33:58" itemprop="dateModified" datetime="2021-04-18T14:33:58+08:00">2021-04-18</time>
+                <time title="修改时间：2021-04-20 23:18:35" itemprop="dateModified" datetime="2021-04-20T23:18:35+08:00">2021-04-20</time>
               </span>
 
           
@@ -327,7 +403,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-18 14:33:58" itemprop="dateModified" datetime="2021-04-18T14:33:58+08:00">2021-04-18</time>
+                <time title="修改时间：2021-04-20 23:18:35" itemprop="dateModified" datetime="2021-04-20T23:18:35+08:00">2021-04-20</time>
               </span>
 
           
@@ -392,7 +468,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-18 14:33:58" itemprop="dateModified" datetime="2021-04-18T14:33:58+08:00">2021-04-18</time>
+                <time title="修改时间：2021-04-20 23:18:35" itemprop="dateModified" datetime="2021-04-20T23:18:35+08:00">2021-04-20</time>
               </span>
 
           
@@ -503,14 +579,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-count">15</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-count">13</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -531,7 +607,7 @@
             <h3 class="widget-title">Tag Cloud</h3>
             <div id="myCanvasContainer" class="widget tagcloud">
                 <canvas width="250" height="250" id="resCanvas" style="width=100%">
-                    <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/BinarySearch/" rel="tag">BinarySearch</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BuildForWindows/" rel="tag">BuildForWindows</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CMake/" rel="tag">CMake</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/" rel="tag">Math</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SDL2/" rel="tag">SDL2</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TestPost/" rel="tag">TestPost</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unix/" rel="tag">Unix</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VS2019/" rel="tag">VS2019</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" rel="tag">动态规划</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%88/" rel="tag">栈</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a><span class="tag-list-count">8</span></li></ul>
+                    <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/BinarySearch/" rel="tag">BinarySearch</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BuildForWindows/" rel="tag">BuildForWindows</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CMake/" rel="tag">CMake</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Math/" rel="tag">Math</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SDL2/" rel="tag">SDL2</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TestPost/" rel="tag">TestPost</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unix/" rel="tag">Unix</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VS2019/" rel="tag">VS2019</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" rel="tag">动态规划</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E7%BB%84/" rel="tag">数组</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%88/" rel="tag">栈</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a><span class="tag-list-count">9</span></li></ul>
                 </canvas>
             </div>
         </div>
