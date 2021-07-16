@@ -105,4 +105,109 @@ cat tcp.txt | grep sec | head -n 10 | tr "-" " " | awk '{print $4,$8} > a'
 * `set output "a.gif"` 设置保存的文件名为`a.gif`
 * `replot` 修改设置后重绘或者可以保存文件
 
-{% asset_img a.gif 绘图效果 %}
+{% asset_img 2-1.gif 绘图效果 %}
+
+## 3.  使用Mininet脚本创建简单网络拓扑
+### 1. 最简单的路由结构
+h1 ---- h2
+
+```python 1.py
+#!/usr/bin/env python
+from mininet.cli import CLI
+from mininet.net import Mininet
+from mininet.link import Link,TCLink
+
+if '__main__' == __name__:
+	net = Mininet(link=TCLink) # 创建一个Mininet对象 连接方式为TCLink
+    # 添加两个host
+	h1 = net.addHost('h1')  
+	h2 = net.addHost('h2')
+    # 链接两个host
+	Link(h1,h2)
+    # 对网络执行构建操作
+	net.build()
+    # 启动CLI(CommandLine Interface)
+	CLI(net)
+    # 释放网络结构
+	net.stop()
+```
+
+### 2. 含一个路由的结构
+h1 ---- r ---- h2 
+```python 2.py
+#!/usr/bin/env python
+from mininet.cli import CLI
+from mininet.net import Mininet
+from mininet.link import Link,TCLink
+
+if '__main__' == __name__:
+	net = Mininet(link=TCLink)
+	h1 = net.addHost('h1')
+	h2 = net.addHost('h2')
+    # 这是作为路由器的设备
+	r = net.addHost('r')
+    # 建立到路由的链接
+	Link(h1,r)
+	Link(h2,r)
+	net.build()
+	CLI(net)
+	net.stop()
+```
+
+此时网络拓扑结构如下
+{% asset_img 3-1.png 拓扑 %}
+此时h1和h2是不连通的 需要配置路由使其联通
+规划如下：
+* h1 使用 192.168.1.1/24 
+* h2 使用 192.168.2.1/24 
+* h1 使用 192.168.1.254 与 r 连接
+* h2 使用 192.168.2.254 与 r 连接
+步骤如下：
+* h1 使用 ifconfig h1-eth0 0 清空分配的地址
+* h1 使用 ifconfig h1-eth0 192.168.1.1/24 分配地址
+* h2 使用 ifconfig h2-eth0 0 清空分配的地址
+* h2 使用 ifconfig h2-eth0 192.168.2.1/24 分配地址
+* h1 使用 ip route add default via 192.168.1.254 设定默认路由
+* h2 使用 ip route add default via 192.168.2.254 设定默认路由
+* r 使用 ifconfig r-eth0 0 清空分配的地址
+* r 使用 ifconfig r-eth0 192.168.1.254/24 分配地址
+* r 使用 ifconfig r-eth1 0 清空分配的地址
+* r 使用 ifconfig r-eth1 192.168.2.254/24 分配地址
+此时两台host已经互通
+{% asset_img 3-2.png 互通 %}
+
+### 3. 使用脚本自动建立路由
+```python
+#!/usr/bin/env python
+from mininet.cli import CLI
+from mininet.net import Mininet
+from mininet.link import Link,TCLink
+
+if '__main__' == __name__:
+	net = Mininet(link=TCLink)
+	h1 = net.addHost('h1')
+	h2 = net.addHost('h2')
+
+	r = net.addHost('r')
+
+	Link(h1,r)
+	Link(h2,r)
+	net.build()
+
+	# build route
+	h1.cmd("ifconfig h1-eth0 0")
+	h1.cmd("ifconfig h1-eth0 192.168.1.1/24")
+	h1.cmd("ip route add default via 192.168.1.254")
+	h2.cmd("ifconfig h2-eth0 0")
+	h2.cmd("ifconfig h2-eth0 192.168.2.1/24")
+	h2.cmd("ip route add default via 192.168.2.254")
+	r.cmd("ifconfig r-eth0 0")
+	r.cmd("ifconfig r-eth0 192.168.1.254/24")
+	r.cmd("ifconfig r-eth1 0")
+	r.cmd("ifconfig r-eth1 192.168.2.254/24")
+	r.cmd("echo 1 > /proc/sys/net/ipv4/ip_forward")
+
+	CLI(net)
+	net.stop()
+
+```
