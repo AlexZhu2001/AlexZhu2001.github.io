@@ -27,12 +27,14 @@
 <meta property="og:site_name" content="Alex&#39;s Blog">
 <meta property="og:description" content="SDN1. Mininet 基本使用Mininet指令net查看拓扑链接情况 xtermxterm [hosts]打开对应主机终端 pingall测试所有设备联通性 在对应主机执行指令[host] &amp;#123;command&amp;#125; iperf指令1234567iperf     -c [ip] 客户端IP 与-s互斥    -s 服务器 与-c互斥    -t [seconds] 测量时间">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://alexzhu2001.github.io/2021/07/15/SDN/a.gif">
 <meta property="article:published_time" content="2021-07-15T12:06:26.000Z">
-<meta property="article:modified_time" content="2021-07-15T12:09:48.416Z">
+<meta property="article:modified_time" content="2021-07-16T06:35:51.484Z">
 <meta property="article:author" content="Alex Zhu">
 <meta property="article:tag" content="SDN">
 <meta property="article:tag" content="Network">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://alexzhu2001.github.io/2021/07/15/SDN/a.gif">
 
 <link rel="canonical" href="https://alexzhu2001.github.io/AlexZhu2001/2021/07/15/SDN/">
 
@@ -180,10 +182,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-07-15 20:06:26 / 修改时间：20:09:48" itemprop="dateCreated datePublished" datetime="2021-07-15T20:06:26+08:00">2021-07-15</time>
+              <time title="创建时间：2021-07-15 20:06:26" itemprop="dateCreated datePublished" datetime="2021-07-15T20:06:26+08:00">2021-07-15</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-07-16 14:35:51" itemprop="dateModified" datetime="2021-07-16T14:35:51+08:00">2021-07-16</time>
+              </span>
 
           
 
@@ -201,7 +209,33 @@
 <h4 id="pingall"><a href="#pingall" class="headerlink" title="pingall"></a>pingall</h4><p>测试所有设备联通性</p>
 <h4 id="在对应主机执行指令"><a href="#在对应主机执行指令" class="headerlink" title="在对应主机执行指令"></a>在对应主机执行指令</h4><p><code>[host] &#123;command&#125;</code></p>
 <h3 id="iperf指令"><a href="#iperf指令" class="headerlink" title="iperf指令"></a>iperf指令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">iperf </span><br><span class="line">    -c [ip] 客户端IP 与-s互斥</span><br><span class="line">    -s 服务器 与-c互斥</span><br><span class="line">    -t [seconds] 测量时间</span><br><span class="line">    -i [seconds] 测量报告次数</span><br><span class="line">    -p [port] 端口</span><br><span class="line">    -u 使用UDP</span><br></pre></td></tr></table></figure>
-
+<h2 id="2-链路性能参数设置及iperf数据绘图"><a href="#2-链路性能参数设置及iperf数据绘图" class="headerlink" title="2. 链路性能参数设置及iperf数据绘图"></a>2. 链路性能参数设置及iperf数据绘图</h2><h3 id="链路性能设置"><a href="#链路性能设置" class="headerlink" title="链路性能设置"></a>链路性能设置</h3><p><code>mn --link=tc,loss=[loss_rate],bw=[band_width],delay=&#39;[delay]&#39;</code></p>
+<p>loss -&gt; 每条链路的丢包率<br>bw -&gt; 链路带宽<br>delay -&gt; 每条链路的延迟</p>
+<h3 id="iperf结果绘图"><a href="#iperf结果绘图" class="headerlink" title="iperf结果绘图"></a>iperf结果绘图</h3><p>在服务器端使用 <code>iperf -s -i 1 | tee tcp.txt</code><br>将结果通过管道存放到文件</p>
+<p>效果如下<br><figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">------------------------------------------------------------</span><br><span class="line">Server listening on TCP port 5001</span><br><span class="line">TCP window size: 85.3 KByte (default)</span><br><span class="line">------------------------------------------------------------</span><br><span class="line">[ 14] local 10.0.0.2 port 5001 connected with 10.0.0.1 port 60150</span><br><span class="line">[ ID] Interval       Transfer     Bandwidth</span><br><span class="line">[ 14]  0.0- 1.0 sec  1.08 MBytes  9.09 Mbits/sec</span><br><span class="line">[ 14]  1.0- 2.0 sec  1.14 MBytes  9.56 Mbits/sec</span><br><span class="line">[ 14]  2.0- 3.0 sec  1.14 MBytes  9.57 Mbits/sec</span><br><span class="line">[ 14]  3.0- 4.0 sec  1.14 MBytes  9.56 Mbits/sec</span><br><span class="line">[ 14]  4.0- 5.0 sec  1.14 MBytes  9.57 Mbits/sec</span><br><span class="line">[ 14]  5.0- 6.0 sec  1.14 MBytes  9.57 Mbits/sec</span><br><span class="line">[ 14]  6.0- 7.0 sec  1.14 MBytes  9.56 Mbits/sec</span><br><span class="line">[ 14]  7.0- 8.0 sec  1.14 MBytes  9.57 Mbits/sec</span><br><span class="line">[ 14]  8.0- 9.0 sec  1.14 MBytes  9.55 Mbits/sec</span><br><span class="line">[ 14]  9.0-10.0 sec  1.14 MBytes  9.58 Mbits/sec</span><br><span class="line">[ 14] 10.0-11.0 sec  1.14 MBytes  9.57 Mbits/sec</span><br><span class="line">[ 14] 11.0-12.0 sec  1.14 MBytes  9.55 Mbits/sec</span><br><span class="line">[ 14] 12.0-13.0 sec  1.14 MBytes  9.58 Mbits/sec</span><br><span class="line">[ 14]  0.0-13.1 sec  14.9 MBytes  9.53 Mbits/sec</span><br></pre></td></tr></table></figure></p>
+<p>然后 使用</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat tcp.txt | grep sec | head -n 10 | tr <span class="string">&quot;-&quot;</span> <span class="string">&quot; &quot;</span> | awk <span class="string">&#x27;&#123;print $4,$8&#125; &gt; a&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>其中 </p>
+<ul>
+<li><code>cat tcp.txt</code>读取文件并显示 </li>
+<li><code>grep sec</code> 会标记出含有sec的列</li>
+<li><code>head -n 10</code> 取出前十行</li>
+<li><code>tr &quot;-&quot; &quot; &quot;</code> 会将<code>-</code>替换为空格</li>
+<li><code>awk &#39;&#123;print $4,$8&#125;&#39;</code> 会取出第四列和第八列</li>
+</ul>
+<p>效果如下<br><figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">1.0 9.09</span><br><span class="line">2.0 9.56</span><br><span class="line">3.0 9.57</span><br><span class="line">4.0 9.56</span><br><span class="line">5.0 9.57</span><br><span class="line">6.0 9.57</span><br><span class="line">7.0 9.56</span><br><span class="line">8.0 9.57</span><br><span class="line">9.0 9.55</span><br><span class="line">10.0 9.58</span><br></pre></td></tr></table></figure><br>然后我们使用<code>gnuplot</code>绘图</p>
+<ul>
+<li>输入<code>gnuplot</code> 回车 进入gnuplot</li>
+<li>输入<code>plot &quot;a&quot; title &quot;tcp&quot; with linespoints</code> 绘图,<code>&quot;a&quot;</code> 为文件名,<code>title &quot;tcp&quot;</code>设置标题,<code>with linespoints</code>设置为带点直线</li>
+<li><code>set xrange[0:10]</code>和<code>set yrange[0:10]</code>设置x、y轴范围 0 ~ 10</li>
+<li><code>set xtics 0,1,10</code>和<code>set ytics 0,1,10</code>设置x、y轴刻度 0开始 10结束 1步进</li>
+<li><code>set xlabel &quot;time(sec)&quot;</code>和<code>set ylabel &quot;Throughput(Mbps)&quot;</code>设置x、y轴标记文字</li>
+<li><code>set title &quot;Tcp&quot;</code> 设置图标标题为Tcp</li>
+<li><code>set terminal gif</code> 设置保存格式为gif</li>
+<li><code>set output &quot;a.gif&quot;</code> 设置保存的文件名为<code>a.gif</code></li>
+<li><code>replot</code> 修改设置后重绘或者可以保存文件</li>
+</ul>
+<img src="/2021/07/15/SDN/a.gif" class="" title="绘图效果">
     </div>
 
     
@@ -282,7 +316,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SDN"><span class="nav-number">1.</span> <span class="nav-text">SDN</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Mininet-%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="nav-number">1.1.</span> <span class="nav-text">1. Mininet 基本使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Mininet%E6%8C%87%E4%BB%A4"><span class="nav-number">1.1.1.</span> <span class="nav-text">Mininet指令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#net"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">net</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#xterm"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">xterm</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pingall"><span class="nav-number">1.1.1.3.</span> <span class="nav-text">pingall</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9C%A8%E5%AF%B9%E5%BA%94%E4%B8%BB%E6%9C%BA%E6%89%A7%E8%A1%8C%E6%8C%87%E4%BB%A4"><span class="nav-number">1.1.1.4.</span> <span class="nav-text">在对应主机执行指令</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#iperf%E6%8C%87%E4%BB%A4"><span class="nav-number">1.1.2.</span> <span class="nav-text">iperf指令</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#SDN"><span class="nav-number">1.</span> <span class="nav-text">SDN</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Mininet-%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="nav-number">1.1.</span> <span class="nav-text">1. Mininet 基本使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Mininet%E6%8C%87%E4%BB%A4"><span class="nav-number">1.1.1.</span> <span class="nav-text">Mininet指令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#net"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">net</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#xterm"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">xterm</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pingall"><span class="nav-number">1.1.1.3.</span> <span class="nav-text">pingall</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9C%A8%E5%AF%B9%E5%BA%94%E4%B8%BB%E6%9C%BA%E6%89%A7%E8%A1%8C%E6%8C%87%E4%BB%A4"><span class="nav-number">1.1.1.4.</span> <span class="nav-text">在对应主机执行指令</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#iperf%E6%8C%87%E4%BB%A4"><span class="nav-number">1.1.2.</span> <span class="nav-text">iperf指令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E9%93%BE%E8%B7%AF%E6%80%A7%E8%83%BD%E5%8F%82%E6%95%B0%E8%AE%BE%E7%BD%AE%E5%8F%8Aiperf%E6%95%B0%E6%8D%AE%E7%BB%98%E5%9B%BE"><span class="nav-number">1.2.</span> <span class="nav-text">2. 链路性能参数设置及iperf数据绘图</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%93%BE%E8%B7%AF%E6%80%A7%E8%83%BD%E8%AE%BE%E7%BD%AE"><span class="nav-number">1.2.1.</span> <span class="nav-text">链路性能设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#iperf%E7%BB%93%E6%9E%9C%E7%BB%98%E5%9B%BE"><span class="nav-number">1.2.2.</span> <span class="nav-text">iperf结果绘图</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
