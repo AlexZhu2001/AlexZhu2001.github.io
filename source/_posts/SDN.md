@@ -211,3 +211,100 @@ if '__main__' == __name__:
 	net.stop()
 
 ```
+
+## 4.  使用Mininet脚本创建复杂网络拓扑
+### 1. 两个路由器
+```python
+#!/usr/bin/env python
+from mininet.cli import CLI
+from mininet.net import Mininet
+from mininet.link import Link, TCLink
+
+if '__main__' == __name__:
+    net = Mininet(link=TCLink)
+    h1 = net.addHost('h1')
+    h2 = net.addHost('h2')
+    r1 = net.addHost('r1')
+    r2 = net.addHost('r2')
+
+    Link(h1,r1)
+    Link(h2,r2)
+    Link(r1,r2)
+    net.build()
+
+    # build route
+    h1.cmd("ifconfig h1-eth0 0")
+    h1.cmd("ifconfig h1-eth0 192.168.1.1/24")
+    h1.cmd("ip route add default via 192.168.1.254")
+    h2.cmd("ifconfig h2-eth0 0")
+    h2.cmd("ifconfig h2-eth0 192.168.2.1/24")
+    h2.cmd("ip route add default via 192.168.2.254")
+    r1.cmd("ifconfig r1-eth0 0")
+    r1.cmd("ifconfig r1-eth0 192.168.1.254/24")
+    r1.cmd("ifconfig r1-eth1 0")
+    r1.cmd("ifconfig r1-eth1 10.0.0.1/24")
+    r1.cmd("echo 1 > /proc/sys/net/ipv4/ip_forward")
+    r1.cmd("ip route add 192.168.2.0/24 via 10.0.0.2")
+    r2.cmd("ifconfig r2-eth0 0")
+    r2.cmd("ifconfig r2-eth0 192.168.2.254/24")
+    r2.cmd("ifconfig r2-eth1 0")
+    r2.cmd("ifconfig r2-eth1 10.0.0.2/24")
+    r2.cmd("echo 1 > /proc/sys/net/ipv4/ip_forward")
+    r2.cmd("ip route add 192.168.1.0/24 via 10.0.0.1")
+    CLI(net)
+    net.stop()
+```
+拓扑结构如下：
+h1 h1-eth0:r1-eth0
+h2 h2-eth0:r2-eth0
+r1 r1-eth0:h1-eth0 r1-eth1:r2-eth1
+r2 r2-eth0:h2-eth0 r2-eth1:r1-eth1
+
+### 2.NAT地址转换
+```python
+#!/usr/bin/env python
+from mininet.cli import CLI
+from mininet.net import Mininet
+from mininet.link import Link, TCLink
+
+if '__main__' == __name__:
+    net = Mininet(link=TCLink)
+    h1 = net.addHost('h1')
+    h2 = net.addHost('h2')
+    r1 = net.addHost('r1')
+    r2 = net.addHost('r2')
+
+    Link(h1,r1)
+    Link(h2,r2)
+    Link(r1,r2)
+    net.build()
+
+    # build route
+    h1.cmd("ifconfig h1-eth0 0")
+    h1.cmd("ifconfig h1-eth0 192.168.1.1/24")
+    h1.cmd("ip route add default via 192.168.1.254")
+    h2.cmd("ifconfig h2-eth0 0")
+    h2.cmd("ifconfig h2-eth0 22.1.1.1/24")
+    h2.cmd("ip route add default via 22.1.1.254")
+    r1.cmd("ifconfig r1-eth0 0")
+    r1.cmd("ifconfig r1-eth1 0")
+    r1.cmd("ifconfig r1-eth0 192.168.1.254/24")
+    r1.cmd("ifconfig r1-eth1 12.1.1.1/24")
+    r1.cmd("ip route add default via 12.1.1.2")
+    r1.cmd("echo 1 > /proc/sys/net/ipv4/ip_forward")
+    r1.cmd("iptables -t nat -A POSTROUTING -o r1-eth1 -s 192.168.1.0/24 -j MASQUERADE")
+    r2.cmd("ifconfig r2-eth0 0")
+    r2.cmd("ifconfig r2-eth0 22.1.1.254/24")
+    r2.cmd("ifconfig r2-eth1 0")
+    r2.cmd("ifconfig r2-eth1 12.1.1.2/24")
+    r2.cmd("echo 1 > /proc/sys/net/ipv4/ip_forward")
+    CLI(net)
+    net.stop()
+```
+
+其中 `iptables -t nat -A POSTROUTING -o r1-eth1 -s 192.168.1.0/24 -j MASQUERADE` 起到了启动NAT的作用
+`-t`指定了表名为`NAT`
+`-A`指定了在`POSTROUTING`末尾插入规则
+`-o`匹配流出网卡为`r1-eth1`
+`-s`匹配源地址为`192.168.1.0/24`网段
+`-j`使用`MASQUERADE`选项进行地址伪装 可以自动匹配当前流出网卡的ip地址无需手动指定
