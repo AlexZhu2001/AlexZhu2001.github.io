@@ -14,10 +14,11 @@
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"alexzhu2001.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"alexzhu2001.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
   <meta property="og:type" content="website">
@@ -182,7 +183,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-18 16:04:58" itemprop="dateModified" datetime="2021-07-18T16:04:58+08:00">2021-07-18</time>
+                <time title="修改时间：2021-07-18 21:17:06" itemprop="dateModified" datetime="2021-07-18T21:17:06+08:00">2021-07-18</time>
               </span>
 
           
@@ -269,6 +270,11 @@
 </ol>
 </li>
 </ul>
+<h2 id="6-Mininet-VLAN-配置"><a href="#6-Mininet-VLAN-配置" class="headerlink" title="6. Mininet VLAN 配置"></a>6. Mininet VLAN 配置</h2><p>虚拟局域网（VLAN）是一组逻辑上的设备和用户，这些设备和用户并不受物理位置的限制，可以根据功能、部门及应用等因素将它们组织起来，相互之间的通信就好像它们在同一个网段中一样，由此得名虚拟局域网</p>
+<p>通过添加vlan 减少一个网桥</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">              r1</span><br><span class="line">              |  eth0.10</span><br><span class="line">              |  eth0.20</span><br><span class="line">              |            </span><br><span class="line">      +-------+------+</span><br><span class="line">br1:  | eth4.10      | eth4.20</span><br><span class="line">  +---|--------------|----+</span><br><span class="line">  |          mybr1        |</span><br><span class="line">  +---|--------------|----+</span><br><span class="line">      |              |</span><br><span class="line">   +--+--+        +--+--+</span><br><span class="line">   |     |        |     |</span><br><span class="line">   h1    h2       h3    h4</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="keyword">from</span> mininet.cli <span class="keyword">import</span> CLI</span><br><span class="line"><span class="keyword">from</span> mininet.net <span class="keyword">import</span> Mininet</span><br><span class="line"><span class="keyword">from</span> mininet.link <span class="keyword">import</span> Link,TCLink</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> <span class="string">&#x27;__main__&#x27;</span> == __name__:</span><br><span class="line">    net = Mininet(link=TCLink) <span class="comment"># Get a mininet object with TCLink</span></span><br><span class="line">    <span class="comment"># add hosts to net object</span></span><br><span class="line">    h1 = net.addHost(<span class="string">&#x27;h1&#x27;</span>)  </span><br><span class="line">    h2 = net.addHost(<span class="string">&#x27;h2&#x27;</span>)</span><br><span class="line">    h3 = net.addHost(<span class="string">&#x27;h3&#x27;</span>)</span><br><span class="line">    h4 = net.addHost(<span class="string">&#x27;h4&#x27;</span>)</span><br><span class="line">    br1 = net.addHost(<span class="string">&#x27;br1&#x27;</span>)</span><br><span class="line">    r1 = net.addHost(<span class="string">&#x27;r1&#x27;</span>)</span><br><span class="line">    <span class="comment"># create link between to hosts</span></span><br><span class="line">    net.addLink(h1,br1)</span><br><span class="line">    net.addLink(h2,br1)</span><br><span class="line">    net.addLink(h3,br1)</span><br><span class="line">    net.addLink(h4,br1)</span><br><span class="line">    net.addLink(br1,r1)</span><br><span class="line">    <span class="comment"># build net structure</span></span><br><span class="line">    net.build()</span><br><span class="line">    <span class="comment"># clear ip addr</span></span><br><span class="line">    h1.cmd(<span class="string">&quot;ifconfig h1-eth0 0&quot;</span>)</span><br><span class="line">    h2.cmd(<span class="string">&quot;ifconfig h2-eth0 0&quot;</span>)</span><br><span class="line">    h3.cmd(<span class="string">&quot;ifconfig h3-eth0 0&quot;</span>)</span><br><span class="line">    h4.cmd(<span class="string">&quot;ifconfig h4-eth0 0&quot;</span>)</span><br><span class="line">    r1.cmd(<span class="string">&quot;ifconfig r1-eth0 0&quot;</span>)</span><br><span class="line">    br1.cmd(<span class="string">&quot;ifconfig br1-eth0 0&quot;</span>)</span><br><span class="line">    br1.cmd(<span class="string">&quot;ifconfig br1-eth1 0&quot;</span>)</span><br><span class="line">    br1.cmd(<span class="string">&quot;ifconfig br1-eth2 0&quot;</span>)</span><br><span class="line">    br1.cmd(<span class="string">&quot;ifconfig br1-eth3 0&quot;</span>)</span><br><span class="line">    br1.cmd(<span class="string">&quot;ifconfig br1-eth4 0&quot;</span>)</span><br><span class="line">    <span class="comment"># config vlan</span></span><br><span class="line">    br1.cmd(<span class="string">&quot;vconfig add br1-eth4 10&quot;</span>) <span class="comment"># vlan br1-eth4.10</span></span><br><span class="line">    br1.cmd(<span class="string">&quot;vconfig add br1-eth4 20&quot;</span>) <span class="comment"># vlan br1-eth4.20</span></span><br><span class="line">    r1.cmd(<span class="string">&quot;vconfig add r1-eth0 10&quot;</span>) <span class="comment"># vlan r1-eth4.10</span></span><br><span class="line">    r1.cmd(<span class="string">&quot;vconfig add r1-eth0 20&quot;</span>) <span class="comment"># vlan r1-eth4.20</span></span><br><span class="line">    <span class="comment"># add bridge</span></span><br><span class="line">    br1.cmd(<span class="string">&quot;brctl addbr mybr10&quot;</span>)</span><br><span class="line">    br1.cmd(<span class="string">&quot;brctl addbr mybr20&quot;</span>)</span><br><span class="line">    <span class="comment"># add interface to bridge</span></span><br><span class="line">    br1.cmd(<span class="string">&quot;brctl addif mybr10 br1-eth0&quot;</span>)</span><br><span class="line">    br1.cmd(<span class="string">&quot;brctl addif mybr10 br1-eth1&quot;</span>)</span><br><span class="line">    br1.cmd(<span class="string">&quot;brctl addif mybr10 br1-eth4.10&quot;</span>)</span><br><span class="line">    br1.cmd(<span class="string">&quot;brctl addif mybr20 br1-eth2&quot;</span>)</span><br><span class="line">    br1.cmd(<span class="string">&quot;brctl addif mybr20 br1-eth3&quot;</span>)</span><br><span class="line">    br1.cmd(<span class="string">&quot;brctl addif mybr20 br1-eth4.20&quot;</span>)</span><br><span class="line">    <span class="comment"># set bridge and vlan up</span></span><br><span class="line">    br1.cmd(<span class="string">&quot;ifconfig br1-eth4.10 up&quot;</span>)</span><br><span class="line">    br1.cmd(<span class="string">&quot;ifconfig br1-eth4.20 up&quot;</span>)</span><br><span class="line">    r1.cmd(<span class="string">&quot;ifconfig r1-eth0.10 up&quot;</span>)</span><br><span class="line">    r1.cmd(<span class="string">&quot;ifconfig r1-eth0.20 up&quot;</span>)</span><br><span class="line">    br1.cmd(<span class="string">&quot;ifconfig mybr10 up&quot;</span>)</span><br><span class="line">    br1.cmd(<span class="string">&quot;ifconfig mybr20 up&quot;</span>)</span><br><span class="line">    <span class="comment"># set ip address and route</span></span><br><span class="line">    r1.cmd(<span class="string">&quot;ifconfig r1-eth0.10 192.168.10.254/24&quot;</span>)</span><br><span class="line">    r1.cmd(<span class="string">&quot;ifconfig r1-eth0.20 192.168.20.254/24&quot;</span>)</span><br><span class="line">    r1.cmd(<span class="string">&quot;echo 1 &gt; /proc/sys/net/ipv4/ip_forward&quot;</span>)</span><br><span class="line">    h1.cmd(<span class="string">&quot;ifconfig h1-eth0 192.168.10.1/24&quot;</span>)</span><br><span class="line">    h1.cmd(<span class="string">&quot;ip route add default via 192.168.10.254&quot;</span>)</span><br><span class="line">    h2.cmd(<span class="string">&quot;ifconfig h2-eth0 192.168.10.2/24&quot;</span>)</span><br><span class="line">    h2.cmd(<span class="string">&quot;ip route add default via 192.168.10.254&quot;</span>)</span><br><span class="line">    h3.cmd(<span class="string">&quot;ifconfig h3-eth0 192.168.20.1/24&quot;</span>)</span><br><span class="line">    h3.cmd(<span class="string">&quot;ip route add default via 192.168.20.254&quot;</span>)</span><br><span class="line">    h4.cmd(<span class="string">&quot;ifconfig h4-eth0 192.168.20.2/24&quot;</span>)</span><br><span class="line">    h4.cmd(<span class="string">&quot;ip route add default via 192.168.20.254&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment"># start CommandLine Interface</span></span><br><span class="line">    CLI(net)</span><br><span class="line">    <span class="comment"># release net structure</span></span><br><span class="line">    net.stop()</span><br></pre></td></tr></table></figure>
+<p><strong>数据包在穿过网桥送往路由器时会被打上一个特殊标签</strong><br><em>从vlan.10发往router时</em><br><img src="/2021/07/15/SDN/6-vlan-10.png" class="" title="vlan10"><br><em>从vlan.20发往router时</em><br><img src="/2021/07/15/SDN/6-vlan-20.png" class="" title="vlan20"></p>
 
       
     </div>
@@ -319,7 +325,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-18 16:04:58" itemprop="dateModified" datetime="2021-07-18T16:04:58+08:00">2021-07-18</time>
+                <time title="修改时间：2021-07-18 21:17:06" itemprop="dateModified" datetime="2021-07-18T21:17:06+08:00">2021-07-18</time>
               </span>
 
           
@@ -395,7 +401,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-18 16:04:58" itemprop="dateModified" datetime="2021-07-18T16:04:58+08:00">2021-07-18</time>
+                <time title="修改时间：2021-07-18 21:17:06" itemprop="dateModified" datetime="2021-07-18T21:17:06+08:00">2021-07-18</time>
               </span>
 
           
@@ -525,7 +531,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-18 16:04:58" itemprop="dateModified" datetime="2021-07-18T16:04:58+08:00">2021-07-18</time>
+                <time title="修改时间：2021-07-18 21:17:06" itemprop="dateModified" datetime="2021-07-18T21:17:06+08:00">2021-07-18</time>
               </span>
 
           
@@ -620,7 +626,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-18 16:04:58" itemprop="dateModified" datetime="2021-07-18T16:04:58+08:00">2021-07-18</time>
+                <time title="修改时间：2021-07-18 21:17:06" itemprop="dateModified" datetime="2021-07-18T21:17:06+08:00">2021-07-18</time>
               </span>
 
           
@@ -720,7 +726,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-18 16:04:58" itemprop="dateModified" datetime="2021-07-18T16:04:58+08:00">2021-07-18</time>
+                <time title="修改时间：2021-07-18 21:17:06" itemprop="dateModified" datetime="2021-07-18T21:17:06+08:00">2021-07-18</time>
               </span>
 
           
@@ -788,7 +794,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-18 16:04:58" itemprop="dateModified" datetime="2021-07-18T16:04:58+08:00">2021-07-18</time>
+                <time title="修改时间：2021-07-18 21:17:06" itemprop="dateModified" datetime="2021-07-18T21:17:06+08:00">2021-07-18</time>
               </span>
 
           
@@ -928,7 +934,7 @@ w_i=\cfrac{(\prod\limits_{j=1}^{n}a_{ij})^{\frac{1}{n}}}{\sum\limits_{k=1}^{n}{(
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-18 16:04:58" itemprop="dateModified" datetime="2021-07-18T16:04:58+08:00">2021-07-18</time>
+                <time title="修改时间：2021-07-18 21:17:06" itemprop="dateModified" datetime="2021-07-18T21:17:06+08:00">2021-07-18</time>
               </span>
 
           
@@ -1119,7 +1125,7 @@ isFinished(no)->read_rec</textarea><textarea id="flowchart-0-options" style="dis
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-18 16:04:58" itemprop="dateModified" datetime="2021-07-18T16:04:58+08:00">2021-07-18</time>
+                <time title="修改时间：2021-07-18 21:17:06" itemprop="dateModified" datetime="2021-07-18T21:17:06+08:00">2021-07-18</time>
               </span>
 
           
@@ -1200,7 +1206,7 @@ isFinished(no)->read_rec</textarea><textarea id="flowchart-0-options" style="dis
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-18 16:04:58" itemprop="dateModified" datetime="2021-07-18T16:04:58+08:00">2021-07-18</time>
+                <time title="修改时间：2021-07-18 21:17:06" itemprop="dateModified" datetime="2021-07-18T21:17:06+08:00">2021-07-18</time>
               </span>
 
           
@@ -1404,6 +1410,8 @@ isFinished(no)->read_rec</textarea><textarea id="flowchart-0-options" style="dis
 
   
   <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 
