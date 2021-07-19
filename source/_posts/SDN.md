@@ -6,6 +6,7 @@ tags:
     - Network
 ---
 # SDN
+
 ## 1. Mininet 基本使用
 
 ### Mininet指令
@@ -627,3 +628,71 @@ if '__main__' == __name__:
 {% asset_img 6-vlan-10.png vlan10 %}
 *从vlan.20发往router时*
 {% asset_img 6-vlan-20.png vlan20 %}
+
+## 7. Mininet中OVS的基本操作
+### OVS 基本指令
+#### 1. ovs-ofctl show <switch>
+显示OVS交换机的基本信息
+{% asset_img 7-1.png OVS信息 %}
+dpid -> OVS 交换机的唯一ID
+
+capabilities -> 交换机具有的能力
+
+actions -> 交换机可执行的操作 例如：
+* output 转发输出
+* mod_nw_dst 修改目的地址
+等等
+
+1,2,3 为该交换机具有的端口及其端口号
+
+#### 2. ovs-ofctl add-flow <switch> <rule>
+添加交换机的规则
+例如 ovs-ofctl add-flow s1 in_port=1,actions:output:2
+
+#### 3. ovs-ofctl del-flows <switch>
+删除该交换机上所有规则
+
+#### 4. ovs-ofctl del-flows <switch> <match>
+删除该交换机上匹配的规则
+例如 ovs-ofctl del-flows s1 in_port=1
+该指令将删除in_port=1对应的规则
+
+#### 5. ovs-ofctl dump-flows <switch>
+显示该交换机上所有规则
+{% asset_img 7-2.png OVS显示规则 %}
+
+### OVS 操作
+#### 1.两台主机的简单拓扑
+
+{% asset_img 7-3.png topo %}
+
+通过`mininet --topo sigle,2`
+建立拥有1台switch 两台host的拓扑
+
+首先 使用`ps -aux | grep controller` 
+获得controller的PID 然后使用 `kill -9 <PID>` 杀掉controller
+
+* `ovs-ofctl add-flow s1 in_port=1,actions=output:2` 将1口数据包转发到2口
+* `ovs-ofctl add-flow s1 in_port=2,actions=output:1` 将2口数据包转发到1口
+
+此时 两台主机可以ping通
+
+#### 2.三台主机的拓扑
+
+{% asset_img 7-4.png topo %}
+
+通过`mininet --topo sigle,3`
+建立拥有1台switch 三台host的拓扑
+
+首先 使用`ps -aux | grep controller`
+获得controller的PID 然后使用 `kill -9 <PID>` 杀掉controller
+
+* `ovs-ofctl add-flow s1 in_port=1,arp,actions=output:flood` 将1口的arp数据包泛洪
+* `ovs-ofctl add-flow s1 in_port=2,arp,actions=output:flood` 将2口的arp数据包泛洪
+* `ovs-ofctl add-flow s1 in_port=3,arp,actions=output:flood` 将3口的arp数据包泛洪
+* `ovs-ofctl add-flow s1 ip,nw_dst=10.0.0.1,actions=output:1` 将发往10.0.0.1的数据转发到1口
+* `ovs-ofctl add-flow s1 ip,nw_dst=10.0.0.2,actions=output:2` 将发往10.0.0.2的数据转发到2口
+* `ovs-ofctl add-flow s1 ip,nw_dst=10.0.0.3,actions=output:3` 将发往10.0.0.3的数据转发到3口
+
+此时 三台主机可以互相ping通
+{% asset_img 7-5.png pingall %} 
