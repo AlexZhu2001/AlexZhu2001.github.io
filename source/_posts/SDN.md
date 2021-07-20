@@ -6,6 +6,7 @@ tags:
     - Network
 ---
 # SDN
+**[GitHub仓库](https://github.com/AlexZhu2001/SDN)**
 
 ## 1. Mininet 基本使用
 
@@ -696,3 +697,72 @@ actions -> 交换机可执行的操作 例如：
 
 此时 三台主机可以互相ping通
 {% asset_img 7-5.png pingall %} 
+
+## 8. Mininet中SSH服务配置
+* 使用 `netstat -tunlp | grep 22` 查看sshd是否已经运行
+* 使用 `which sshd` 获得sshd位置
+* 使用完整路径启动sshd（不能使用`systemctl`或者`service`）
+
+## 9. containernet介绍
+
+### 1. 切换到containernet环境
+```bash
+cd /home/user/containernet
+python3 ./setup.py install
+```
+### 2. 创建需要的docker镜像
+```bash
+docker pull ubuntu:16.04
+docker run -it ubuntu:16.04 bash
+```
+在docker环境内 安装需要的软件 并创建用户
+```bash
+apt update
+apt install net-tools iputils-ping iproute openssh-server
+adduser user
+```
+完成后 新建一个终端 使用`docker ps`查看正在运行的镜像 获得container-id
+然后使用`docker commit <container-id> <name:tag>`
+将当前container保存为image
+本次创建了两个镜像 ubuntu:sshd1 ubuntu:sshd2
+{% asset_img 9-1.png images %}
+
+然后编写脚本
+```python
+#!/usr/bin/python
+
+from mininet.net import Containernet
+from mininet.node import Controller
+from mininet.cli import CLI
+from mininet.link import TCLink
+from mininet.log import info, setLogLevel
+setLogLevel('info')
+
+net = Containernet(controller=Controller)
+info('*** Adding controller ***')
+net.addController('c0')
+info('*** Adding docker containers ***')
+h1 = net.addHost('h1', ip='10.0.0.250/24')
+d1 = net.addDocker('d1', ip='10.0.0.251/24', dimage='ubuntu:sshd1')
+d2 = net.addDocker('d2', ip='10.0.0.252/24', dimage='ubuntu:sshd2')
+info('*** Adding switches ***')
+s1 = net.addSwitch('s1')
+info('*** Creating links ***')
+net.addLink(h1, s1)
+net.addLink(d1, s1)
+net.addLink(d2, s1)
+info('*** Starting network ***')
+net.start()
+info('*** Runing CLI ***')
+CLI(net)
+info('*** Stopping network ***')
+net.stop()
+```
+运行脚本后 可以使用`docker ps`查看到正在运行的容器
+{% asset_img 9-2.png containers %}
+可以使用`docker exec -it mn.d1 bash`进入d1主机 然后使用`ifconfig`检查IP是否设定正确
+最后使用`/etc/init.d/ssh start`开启ssh服务
+对d2执行相同操作即可
+然后在mininet控制台 使用`xterm h1` 开启h1的终端 
+输入`ssh user@10.0.0.251`可以远程登录到d1主机
+输入`ssh user@10.0.0.252`可以远程登录到d2主机
