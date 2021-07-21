@@ -5,8 +5,9 @@ tags:
     - SDN 
     - Network
 ---
-# SDN
+
 **[GitHub仓库](https://github.com/AlexZhu2001/SDN)**
+# Mininet
 
 ## 1. Mininet 基本使用
 
@@ -32,6 +33,7 @@ iperf
     -u 使用UDP
 ```
 
+---
 
 ## 2. 链路性能参数设置及iperf数据绘图
 ### 链路性能设置
@@ -214,6 +216,8 @@ if '__main__' == __name__:
 
 ```
 
+---
+
 ## 4.  使用Mininet脚本创建复杂网络拓扑
 ### 1. 两个路由器
 ```python
@@ -310,6 +314,8 @@ if '__main__' == __name__:
 `-o`匹配流出网卡为`r1-eth1`
 `-s`匹配源地址为`192.168.1.0/24`网段
 `-j`使用`MASQUERADE`选项进行地址伪装 可以自动匹配当前流出网卡的ip地址无需手动指定
+
+---
 
 ## 5. Mininet中如何创建bridge
 ### 1.简单的桥接
@@ -526,6 +532,8 @@ if '__main__' == __name__:
     3. `brctl addif <br_name> <if_name>` 添加名为if_name的接口到br_name的网桥
     3. 网桥不会自动up 需要`ifconfig <br_name> up`
 
+---
+
 ## 6. Mininet VLAN 配置
 
 虚拟局域网（VLAN）是一组逻辑上的设备和用户，这些设备和用户并不受物理位置的限制，可以根据功能、部门及应用等因素将它们组织起来，相互之间的通信就好像它们在同一个网段中一样，由此得名虚拟局域网
@@ -630,6 +638,8 @@ if '__main__' == __name__:
 *从vlan.20发往router时*
 {% asset_img 6-vlan-20.png vlan20 %}
 
+---
+
 ## 7. Mininet中OVS的基本操作
 ### OVS 基本指令
 #### 1. ovs-ofctl show <switch>
@@ -698,10 +708,14 @@ actions -> 交换机可执行的操作 例如：
 此时 三台主机可以互相ping通
 {% asset_img 7-5.png pingall %} 
 
+---
+
 ## 8. Mininet中SSH服务配置
 * 使用 `netstat -tunlp | grep 22` 查看sshd是否已经运行
 * 使用 `which sshd` 获得sshd位置
 * 使用完整路径启动sshd（不能使用`systemctl`或者`service`）
+
+---
 
 ## 9. containernet介绍
 
@@ -766,3 +780,99 @@ net.stop()
 然后在mininet控制台 使用`xterm h1` 开启h1的终端 
 输入`ssh user@10.0.0.251`可以远程登录到d1主机
 输入`ssh user@10.0.0.252`可以远程登录到d2主机
+
+---
+
+## 10. Mininet 应用-如何建立反向代理
+### 前置准备
+* 安装golang
+* 从GitHub克隆frp 并编译出可执行文件
+
+### 拓扑结构
+{% asset_img 10-1.png topo %}
+
+### 使用的脚本
+```python
+#!/usr/bin/python
+from mininet.net import Mininet
+from mininet.link import Link, TCLink
+from mininet.cli import CLI
+from mininet.log import setLogLevel
+
+
+def topology():
+    net = Mininet()
+
+    h1 = net.addHost("h1", ip="192.168.1.1/24")
+    h2 = net.addHost("h2", ip="1.1.1.1/24")
+    h3 = net.addHost("h3", ip="2.2.2.2/24")
+    r1 = net.addHost("r1")
+    r2 = net.addHost("r2")
+
+    net.addLink(h1, r1)
+    net.addLink(r1, r2)
+    net.addLink(r2, h2)
+    net.addLink(r2, h3)
+
+    net.build()
+
+    r1.cmd("echo 1 > /proc/sys/net/ipv4/ip_forward")
+    r2.cmd("echo 1 > /proc/sys/net/ipv4/ip_forward")
+    r1.cmd("ifconfig r1-eth0 0")
+    r1.cmd("ifconfig r1-eth1 0")
+    r2.cmd("ifconfig r2-eth0 0")
+    r2.cmd("ifconfig r2-eth1 0")
+    r2.cmd("ifconfig r2-eth2 0")
+    r1.cmd("ip addr add 192.168.1.254/24 brd + dev r1-eth0")
+    r1.cmd("ip addr add 12.1.1.1/24 brd + dev r1-eth1")
+    r2.cmd("ip addr add 12.1.1.2/24 brd + dev r2-eth0")
+    r2.cmd("ip addr add 1.1.1.254/24 brd + dev r2-eth1")
+    r2.cmd("ip addr add 2.2.2.254/24 brd + dev r2-eth2")
+    h1.cmd("ip route add default via 192.168.1.254")
+    h2.cmd("ip route add default via 1.1.1.254")
+    h3.cmd("ip route add default via 2.2.2.254")
+    r2.cmd("ip route add 12.1.1.0/24 via 12.1.1.1")
+    r1.cmd("ip route add 1.1.1.0/24 via 12.1.1.2")
+    r1.cmd("ip route add 2.2.2.0/24 via 12.1.1.2")
+    r1.cmd("iptables -t nat -A POSTROUTING -s 192.168.1.0/24 -o r1-eth1 -j MASQUERADE")
+
+    CLI(net)
+
+    net.stop()
+
+
+if "__main__" == __name__:
+    setLogLevel('info')
+    topology()
+
+```
+### 操作步骤
+* 运行脚本 建立拓扑结构
+* `xterm h1 h1 h2 h3`
+* 在其中一个h1终端上 执行`python -m SimpleHTTPServer 80`
+* 在h2上编辑frps.ini 内容如下
+```ini frps.ini
+[common]
+bind_port = 7000
+vhost_http_port = 8080
+```
+* h2运行`frps -c frps.ini`
+* h1另一台终端编辑frpc.ini
+```ini frpc.ini
+[common]
+server_addr = 1.1.1.1
+server_port = 7000
+
+[web]
+type = http
+local_port = 80
+custom_domains = www.example.com
+```
+* 在h1运行`frpc -c frpc.ini`
+* 在`/etc/hosts`添加`1.1.1.1 www.example.com`
+* 在h3可以使用`curl www.example.com:8080`取得网页
+
+{% asset_img 10-frp.png frp %}
+{% asset_img 10-http.png curl %}
+
+---
