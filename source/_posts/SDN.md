@@ -876,3 +876,324 @@ custom_domains = www.example.com
 {% asset_img 10-http.png curl %}
 
 ---
+
+## 11. Mininet 应用-如何建立SSH隧道
+
+本节将介绍ssh的三种转发方式
+**本节使用containernet**
+
+### 1. Local Forwarding
+#### **简单的点对点拓扑**
+拓扑结构如下
+{% asset_img 11-local-forwarding-1.png topo %}
+目标:访问在192.168.0.2上的http页面 但是通过ssh加密
+
+mininet脚本:
+```python
+#!/user/bin/python
+from mininet.net import Containernet
+from mininet.node import Docker
+from mininet.cli import CLI
+from mininet.log import setLogLevel,info
+from mininet.link import TCLink,Link
+
+def topology():
+    net=Containernet()
+    
+    info("Adding hosts")
+    h1=net.addHost('h1',ip='192.168.0.1/24')
+    d1=net.addDocker('d1',ip='192.168.0.2/24',dimage='smallko/php-apache-dev:v10')
+
+    info("Create links")
+    net.addLink(h1,d1)
+
+    info("Starting network")
+    net.start()
+    d1.cmd("/etc/init.d/ssh start")
+
+    info("Running CLI")
+    CLI(net)
+
+    info("Atopping network")
+    net.stop()
+
+if __name__=="__main__":
+    setLogLevel('info')
+    topology()
+```
+
+* 打开一个终端 使用`sudo docker exec -it mn.d1 bash`打开d1的终端
+* 在其中输入`python -m SimpleHTTPServer 80`
+* 在CLI中输入xterm h1
+* 在h1终端中使用`ssh -Nf -L 5555:192.168.0.2:80 user@192.168.0.2`
+* 输入密码建立链接 此时可以使用`curl 127.0.0.1:5555`获得远端服务器的内容
+
+{% asset_img 11-1-1.png result %}
+
+#### **带有中间主机的点对点访问**
+拓扑结构如下
+{% asset_img 11-local-forwarding-2.png topo %}
+目标:通过192.168.0.2访问在192.168.0.3上的http页面 但是通过ssh加密
+
+mininet脚本:
+```python
+#!/user/bin/python
+from mininet.net import Containernet
+from mininet.node import Docker
+from mininet.cli import CLI
+from mininet.log import setLogLevel,info
+from mininet.link import TCLink,Link
+
+def topology():
+    net=Containernet()
+    
+    info("Adding hosts")
+    h1=net.addHost('h1',ip='192.168.0.1/24')
+    d1=net.addDocker('d1',ip='192.168.0.2/24',dimage='smallko/php-apache-dev:v10')
+    h2=net.addHost('h2',ip='192.168.0.3/24')
+    br1=net.addHost('br1')
+
+    info("Create links")
+    net.addLink(h1,br1)
+    net.addLink(d1,br1)
+    net.addLink(h2,br1)
+
+    info("Starting network")
+    net.start()
+    d1.cmd("/etc/init.d/ssh start")
+    br1.cmd("ifconfig br1-eth0 0")
+    br1.cmd("ifconfig br1-eth1 0")
+    br1.cmd("ifconfig br1-eth2 0")
+    br1.cmd("brctl addbr br1")
+    br1.cmd("brctl addif br1 br1-eth0")
+    br1.cmd("brctl addif br1 br1-eth1")
+    br1.cmd("brctl addif br1 br1-eth2")
+    br1.cmd("ifconfig br1 up")
+
+    info("Running CLI")
+    CLI(net)
+
+    info("Atopping network")
+    net.stop()
+
+if __name__=="__main__":
+    setLogLevel('info')
+    topology()
+```
+
+* 在CLI中输入xterm h1 h2
+* 在h2终端输入`python -m SimpleHTTPServer 80`
+* 在h1终端中使用`ssh -Nf -L 5555:192.168.0.3:80 user@192.168.0.2`
+* 输入密码建立链接 此时可以使用`curl 127.0.0.1:5555`获得远端服务器的内容
+
+{% asset_img 11-1-2.png result %}
+
+### 2. Local Forwarding
+#### **从外网穿透访问内网服务器**
+拓扑结构如下
+{% asset_img 11-remote-forwarding-1.png topo %}
+目标: 由于路由器的NAT public network 不能直接存取 private network 的内容 使用ssh远程穿透路由器以达到存取内网内容的目的
+
+mininet脚本:
+```python
+#!/user/bin/python
+from mininet.net import Containernet
+from mininet.node import Docker
+from mininet.cli import CLI
+from mininet.log import setLogLevel,info
+from mininet.link import TCLink,Link
+
+def topology():
+    net=Containernet()
+    
+    info("Adding hosts")
+    h1=net.addHost('h1',ip='192.168.0.1/24')
+    r1=net.addHost('r1',ip='192.168.0.254/24')
+    d1=net.addDocker('d1',ip='10.0.0.1/24',dimage='smallko/php-apache-dev:v10')
+
+    info("Create links")
+    net.addLink(h1,r1)
+    net.addLink(r1,d1)
+
+    info("Starting network")
+    net.start()
+    d1.cmd("/etc/init.d/ssh start")
+    r1.cmd("ifconfig r1-eth1 0")
+    r1.cmd("ifconfig r1-eth1 10.0.0.2/24")
+    r1.cmd("echo 1 > /proc/sys/net/ipv4/ip_forward")
+    r1.cmd("iptables -t nat -A POSTROUTING -s 192.168.0.0/24 -o r1-eth1 -j MASQUERADE")
+    h1.cmd("ip route add default via 192.168.0.254")
+
+    info("Running CLI")
+    CLI(net)
+
+    info("Atopping network")
+    net.stop()
+
+if __name__=="__main__":
+    setLogLevel('info')
+    topology()
+```
+
+* 在CLI中输入xterm h1 h1
+* 在一个h1终端输入`python -m SimpleHTTPServer 80`
+* 在另一个h1终端中使用`ssh -Nf -R 10.0.0.1:5555:192.168.0.1:80 user@10.0.0.1` 输入密码
+* 开启一个终端 输入`sudo docker exec -it mn.d1 bash`
+* 使用`curl 127.0.0.1:5555`即可访问192.168.0.1的内容
+
+{% asset_img 11-2-1.png result %}
+
+#### **更复杂的情况**
+拓扑结构如下
+{% asset_img 11-remote-forwarding-2.png topo %}
+目标: 存取内网的另一台主机
+
+mininet脚本:
+```python
+#!/user/bin/python
+from mininet.net import Containernet
+from mininet.node import Docker
+from mininet.cli import CLI
+from mininet.log import setLogLevel,info
+from mininet.link import TCLink,Link
+
+def topology():
+    net=Containernet()
+    
+    info("Adding hosts")
+    h1=net.addHost('h1',ip='192.168.0.1/24')
+    h2=net.addHost('h2',ip='192.168.0.2/24')
+    br1=net.addHost('br1')
+    r1=net.addHost('r1',ip='192.168.0.254/24')
+    d1=net.addDocker('d1',ip='10.0.0.1/24',dimage='smallko/php-apache-dev:v10')
+
+    info("Create links")
+    net.addLink(h1,br1)
+    net.addLink(h2,br1)
+    net.addLink(r1,br1)
+    net.addLink(r1,d1)
+
+    info("Starting network")
+    net.start()
+    d1.cmd("/etc/init.d/ssh start")
+    r1.cmd("ifconfig r1-eth1 0")
+    r1.cmd("ifconfig r1-eth1 10.0.0.2/24")
+    r1.cmd("echo 1 > /proc/sys/net/ipv4/ip_forward")
+    r1.cmd("iptables -t nat -A POSTROUTING -s 192.168.0.0/24 -o r1-eth1 -j MASQUERADE")
+    h1.cmd("ip route add default via 192.168.0.254")
+    br1.cmd("ifconfig br1-eth0 0")
+    br1.cmd("ifconfig br1-eth1 0")
+    br1.cmd("ifconfig br1-eth2 0")
+    br1.cmd("brctl addbr br1")
+    br1.cmd("brctl addif br1 br1-eth0")
+    br1.cmd("brctl addif br1 br1-eth1")
+    br1.cmd("brctl addif br1 br1-eth2")
+    br1.cmd("ifconfig br1 up")
+
+    info("Running CLI")
+    CLI(net)
+
+    info("Atopping network")
+    net.stop()
+
+if __name__=="__main__":
+    setLogLevel('info')
+    topology()
+```
+
+* 在CLI中输入xterm h1 h2
+* 在h2终端输入`python -m SimpleHTTPServer 80`
+* 在h1终端中使用`ssh -Nf -R 10.0.0.1:5555:192.168.0.2:80 user@10.0.0.1` 输入密码
+* 开启一个终端 输入`sudo docker exec -it mn.d1 bash`
+* 使用`curl 127.0.0.1:5555`即可访问192.168.0.1的内容
+
+{% asset_img 11-2-2.png result %}
+
+### 3. Dynamic Forwarding
+拓扑结构如下
+{% asset_img 11-dynamic-forwarding.png topo %}
+目标: 在这个拓扑中 r1阻止了对外网的80端口的访问 此时可以使用ssh完成对远程服务器80端口的存取
+
+mininet脚本:
+```python
+#!/user/bin/python
+from mininet.net import Containernet
+from mininet.node import Docker
+from mininet.cli import CLI
+from mininet.log import setLogLevel,info
+from mininet.link import TCLink,Link
+
+def topology():
+    net=Containernet()
+    
+    info("Adding hosts")
+    h1=net.addHost('h1',ip='192.168.0.1/24')
+    r1=net.addHost('r1',ip='192.168.0.254/24')
+    d1=net.addDocker('d1',ip='10.0.0.1/24',dimage='smallko/php-apache-dev:v10')
+    br1=net.addHost('br1')
+    h2=net.addHost('h2',ip='10.0.0.3/24')
+    h3=net.addHost('h3',ip='10.0.0.4/24')
+    
+    info("Create links")
+    net.addLink(h1,r1)
+    net.addLink(r1,br1)
+    net.addLink(d1,br1)
+    net.addLink(h2,br1)
+    net.addLink(h3,br1)
+
+    info("Starting network")
+    net.start()
+    d1.cmd("/etc/init.d/ssh start")
+    r1.cmd("ifconfig r1-eth1 0")
+    r1.cmd("ifconfig r1-eth1 10.0.0.2/24")
+    r1.cmd("echo 1 > /proc/sys/net/ipv4/ip_forward")
+    r1.cmd("iptables -t nat -A POSTROUTING -s 192.168.0.0/24 -o r1-eth1 -j MASQUERADE")
+    r1.cmd("iptables -A FORWARD -s 192.168.0.0/24 -p tcp --dport 80 -j REJECT") # 阻止80端口访问
+    h1.cmd("ip route add default via 192.168.0.254")
+    br1.cmd("ifconfig br1-eth0 0")
+    br1.cmd("ifconfig br1-eth1 0")
+    br1.cmd("ifconfig br1-eth2 0")
+    br1.cmd("ifconfig br1-eth3 0")
+    br1.cmd("brctl addbr br1")
+    br1.cmd("brctl addif br1 br1-eth0")
+    br1.cmd("brctl addif br1 br1-eth1")
+    br1.cmd("brctl addif br1 br1-eth2")
+    br1.cmd("brctl addif br1 br1-eth3")
+    br1.cmd("ifconfig br1 up")
+
+    info("Running CLI")
+    CLI(net)
+
+    info("Atopping network")
+    net.stop()
+
+if __name__=="__main__":
+    setLogLevel('info')
+    topology()
+```
+准备一个网页hi.html
+```html
+<!DOCTYPE HTML>
+<html>
+<body>
+<h1>Hi</h1>
+</body>
+</html>
+```
+* 在CLI中输入xterm h1 h2 h3 
+* 在h2和还h3终端输入`python -m SimpleHTTPServer 80`
+**此时尝试从h1 ping h2和h3 是可以ping通的**
+**但是curl无法存取80端口的网页hi.html**
+
+{% asset_img 11-3-reject.png 80_port_reject %}
+
+
+* 在h1终端中使用`ssh -Nf -D 127.0.0.1:8080 user@10.0.0.1` 输入密码
+* 在h1终端中使用`su - user`切换到普通用户
+* 使用`firefox`打开firefox 设置中设置SockV5代理为127.0.0.1 8080端口
+{% asset_img 11-3-firefox.png firefox %}
+
+* 可以访问10.0.0.3和10.0.0.4的hi.html了
+{% asset_img 11-3.png result %}
+
+---
