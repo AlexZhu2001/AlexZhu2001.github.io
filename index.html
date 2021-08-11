@@ -183,7 +183,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-08-07 16:38:17" itemprop="dateModified" datetime="2021-08-07T16:38:17+08:00">2021-08-07</time>
+                <time title="修改时间：2021-08-11 11:30:08" itemprop="dateModified" datetime="2021-08-11T11:30:08+08:00">2021-08-11</time>
               </span>
 
           
@@ -404,6 +404,9 @@
 </ul>
 <hr>
 <h2 id="12-OVS的操作"><a href="#12-OVS的操作" class="headerlink" title="12. OVS的操作"></a>12. OVS的操作</h2><p>实验所用拓扑结构:<br><img src="/2021/07/15/SDN/12-topo.png" class="" title="topo"><br>mininet脚本:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="keyword">from</span> mininet.cli <span class="keyword">import</span> CLI</span><br><span class="line"><span class="keyword">from</span> mininet.link <span class="keyword">import</span> TCLink,Link,Intf</span><br><span class="line"><span class="keyword">from</span> mininet.net <span class="keyword">import</span> Mininet</span><br><span class="line"><span class="keyword">from</span> mininet.node <span class="keyword">import</span> Controller,RemoteController</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> <span class="string">&quot;__main__&quot;</span> == __name__:</span><br><span class="line">    net=Mininet(link=TCLink)</span><br><span class="line">    h1=net.addHost(<span class="string">&quot;h1&quot;</span>)</span><br><span class="line">    h2=net.addHost(<span class="string">&quot;h2&quot;</span>)</span><br><span class="line">    s1=net.addSwitch(<span class="string">&#x27;s1&#x27;</span>)</span><br><span class="line">    s2=net.addSwitch(<span class="string">&#x27;s2&#x27;</span>)</span><br><span class="line">    s3=net.addSwitch(<span class="string">&#x27;s3&#x27;</span>)</span><br><span class="line">    c0=net.addController(<span class="string">&#x27;c0&#x27;</span>,controller=RemoteController)</span><br><span class="line"></span><br><span class="line">    net.addLink(h1,s1)</span><br><span class="line">    net.addLink(s1,s2)</span><br><span class="line">    net.addLink(s1,s3)</span><br><span class="line">    net.addLink(s3,s2)</span><br><span class="line">    net.addLink(s2,h2)</span><br><span class="line"></span><br><span class="line">    net.build()</span><br><span class="line">    c0.start()</span><br><span class="line">    s1.start([c0])</span><br><span class="line">    s2.start([c0])</span><br><span class="line">    s3.start([c0])</span><br><span class="line"></span><br><span class="line">    CLI(net)</span><br><span class="line">    net.stop()</span><br></pre></td></tr></table></figure><br>然后我们通过命令行手动下发流表<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># s1</span></span><br><span class="line">ovs-ofctl add-flow s1 arp,arp_op=1,arp_spa=10.0.0.1,arp_tpa=10.0.0.2,actions=output:2</span><br><span class="line">ovs-ofctl add-flow s1 arp,arp_op=1,arp_spa=10.0.0.2,arp_tpa=10.0.0.1,actions=output:1</span><br><span class="line">ovs-ofctl add-flow s1 arp,arp_op=2,arp_spa=10.0.0.1,arp_tpa=10.0.0.2,actions=output:2</span><br><span class="line">ovs-ofctl add-flow s1 arp,arp_op=2,arp_spa=10.0.0.2,arp_tpa=10.0.0.1,actions=output:1</span><br><span class="line">ovs-ofctl add-flow s1 icmp,nw_src=10.0.0.1,nw_dst=10.0.0.2,icmp_type=8,icmp_code=0,actions=output:2</span><br><span class="line">ovs-ofctl add-flow s1 icmp,nw_src=10.0.0.2,nw_dst=10.0.0.1,icmp_type=0,icmp_code=0,actions=output:1</span><br><span class="line"><span class="comment"># s2</span></span><br><span class="line">ovs-ofctl add-flow s2 arp,arp_op=1,arp_spa=10.0.0.1,arp_tpa=10.0.0.2,actions=output:3</span><br><span class="line">ovs-ofctl add-flow s2 arp,arp_op=1,arp_spa=10.0.0.2,arp_tpa=10.0.0.1,actions=output:1</span><br><span class="line">ovs-ofctl add-flow s2 arp,arp_op=2,arp_spa=10.0.0.1,arp_tpa=10.0.0.2,actions=output:3</span><br><span class="line">ovs-ofctl add-flow s2 arp,arp_op=2,arp_spa=10.0.0.2,arp_tpa=10.0.0.1,actions=output:1</span><br><span class="line">ovs-ofctl add-flow s2 icmp,nw_src=10.0.0.1,nw_dst=10.0.0.2,icmp_type=8,icmp_code=0,actions=output:3</span><br><span class="line">ovs-ofctl add-flow s2 icmp,nw_src=10.0.0.2,nw_dst=10.0.0.1,icmp_type=0,icmp_code=0,actions=output:2</span><br><span class="line"><span class="comment"># s3</span></span><br><span class="line">ovs-ofctl add-flow s3 icmp,nw_src=10.0.0.2,nw_dst=10.0.0.1,icmp_type=0,icmp_code=0,actions=output:1</span><br></pre></td></tr></table></figure><br>此时h1可以ping通h2<br><img src="/2021/07/15/SDN/12-ovs-res.png" class="" title="result"></p>
+<h2 id="13-OVS交换机封包复制示例介绍"><a href="#13-OVS交换机封包复制示例介绍" class="headerlink" title="13. OVS交换机封包复制示例介绍"></a>13. OVS交换机封包复制示例介绍</h2><p>实验所用拓扑结构:<br><img src="/2021/07/15/SDN/13-topo.png" class="" title="topo"><br>mininet脚本:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> mininet.cli <span class="keyword">import</span> CLI</span><br><span class="line"><span class="keyword">from</span> mininet.net <span class="keyword">import</span> Mininet</span><br><span class="line"><span class="keyword">from</span> mininet.link <span class="keyword">import</span> Link,TCLink,Intf</span><br><span class="line"><span class="keyword">from</span> mininet.node <span class="keyword">import</span> Controller,RemoteController</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> <span class="string">&#x27;__main__&#x27;</span>==__name__:</span><br><span class="line">    net=Mininet(link=TCLink)</span><br><span class="line">    h1=net.addHost(<span class="string">&#x27;h1&#x27;</span>,ip=<span class="string">&#x27;10.0.0.1/24&#x27;</span>,mac=<span class="string">&#x27;00:00:00:00:00:01&#x27;</span>)</span><br><span class="line">    h2=net.addHost(<span class="string">&#x27;h2&#x27;</span>,ip=<span class="string">&#x27;10.0.0.2/24&#x27;</span>,mac=<span class="string">&#x27;00:00:00:00:00:02&#x27;</span>)</span><br><span class="line">    h3=net.addHost(<span class="string">&#x27;h3&#x27;</span>,ip=<span class="string">&#x27;10.0.0.3/24&#x27;</span>,mac=<span class="string">&#x27;00:00:00:00:00:03&#x27;</span>)</span><br><span class="line">    s1=net.addSwitch(<span class="string">&#x27;s1&#x27;</span>)</span><br><span class="line">    c0=net.addController(<span class="string">&#x27;c0&#x27;</span>,controller=RemoteController)</span><br><span class="line">    </span><br><span class="line">    net.addLink(h1,s1)</span><br><span class="line">    net.addLink(h2,s1)</span><br><span class="line">    net.addLink(h3,s1)</span><br><span class="line">    </span><br><span class="line">    net.build()</span><br><span class="line"></span><br><span class="line">    c0.start()</span><br><span class="line">    s1.start([c0])</span><br><span class="line"></span><br><span class="line">    h1.cmd(<span class="string">&quot;arp -s 10.0.0.2 00:00:00:00:00:02&quot;</span>)</span><br><span class="line">    h1.cmd(<span class="string">&quot;arp -s 10.0.0.3 00:00:00:00:00:03&quot;</span>)</span><br><span class="line">    h2.cmd(<span class="string">&quot;arp -s 10.0.0.1 00:00:00:00:00:01&quot;</span>)</span><br><span class="line">    h2.cmd(<span class="string">&quot;arp -s 10.0.0.3 00:00:00:00:00:03&quot;</span>)</span><br><span class="line">    h3.cmd(<span class="string">&quot;arp -s 10.0.0.1 00:00:00:00:00:01&quot;</span>)</span><br><span class="line">    h3.cmd(<span class="string">&quot;arp -s 10.0.0.2 00:00:00:00:00:02&quot;</span>)</span><br><span class="line"></span><br><span class="line">    CLI(net)</span><br><span class="line">    net.stop()</span><br></pre></td></tr></table></figure><br>实验目标：通过h1发往h2的udp数据包复制一份给h3</p>
+<h3 id="1-直接复制-不修改信息"><a href="#1-直接复制-不修改信息" class="headerlink" title="1. 直接复制 不修改信息"></a>1. 直接复制 不修改信息</h3><p>下发如下流表<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ovs-ofctl add-flow s1 priority=1,ip,nw_dst=10.0.0.1,actions=output:1</span><br><span class="line">ovs-ofctl add-flow s1 priority=1,ip,nw_dst=10.0.0.2,actions=output:2</span><br><span class="line">ovs-ofctl add-flow s1 priority=1,ip,nw_dst=10.0.0.3,actions=output:3</span><br><span class="line">ovs-ofctl add-flow s1 priority=10,udp,nw_src=10.0.0.1,nw_dst=10.0.0.2,actions=output:2,output:3</span><br></pre></td></tr></table></figure><br>此时 三台机器可以互相ping 且h1-&gt;h2的udp包会转发一份给h3<br><img src="/2021/07/15/SDN/13-res-1.png" class="" title="result"></p>
+<h3 id="2-复制并修改目的地址"><a href="#2-复制并修改目的地址" class="headerlink" title="2. 复制并修改目的地址"></a>2. 复制并修改目的地址</h3><p>在1的基础上下发如下流表<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ovs-ofctl add-flow s1 priority=100,udp,nw_src=10.0.0.1,nw_dst=10.0.0.2,actions=output:2,mod_dl_dst=00:00:00:00:00:03,mod_nw_dst=10.0.0.3,output:3</span><br></pre></td></tr></table></figure><br>此时 h3会收到修改后的数据包<br><img src="/2021/07/15/SDN/13-res-2.png" class="" title="result"></p>
 
       
     </div>
@@ -454,7 +457,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-08-07 16:38:17" itemprop="dateModified" datetime="2021-08-07T16:38:17+08:00">2021-08-07</time>
+                <time title="修改时间：2021-08-11 11:30:08" itemprop="dateModified" datetime="2021-08-11T11:30:08+08:00">2021-08-11</time>
               </span>
 
           
@@ -530,7 +533,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-08-07 16:38:17" itemprop="dateModified" datetime="2021-08-07T16:38:17+08:00">2021-08-07</time>
+                <time title="修改时间：2021-08-11 11:30:08" itemprop="dateModified" datetime="2021-08-11T11:30:08+08:00">2021-08-11</time>
               </span>
 
           
@@ -660,7 +663,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-08-07 16:38:17" itemprop="dateModified" datetime="2021-08-07T16:38:17+08:00">2021-08-07</time>
+                <time title="修改时间：2021-08-11 11:30:08" itemprop="dateModified" datetime="2021-08-11T11:30:08+08:00">2021-08-11</time>
               </span>
 
           
@@ -755,7 +758,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-08-07 16:38:17" itemprop="dateModified" datetime="2021-08-07T16:38:17+08:00">2021-08-07</time>
+                <time title="修改时间：2021-08-11 11:30:08" itemprop="dateModified" datetime="2021-08-11T11:30:08+08:00">2021-08-11</time>
               </span>
 
           
@@ -855,7 +858,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-08-07 16:38:17" itemprop="dateModified" datetime="2021-08-07T16:38:17+08:00">2021-08-07</time>
+                <time title="修改时间：2021-08-11 11:30:08" itemprop="dateModified" datetime="2021-08-11T11:30:08+08:00">2021-08-11</time>
               </span>
 
           
@@ -923,7 +926,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-08-07 16:38:17" itemprop="dateModified" datetime="2021-08-07T16:38:17+08:00">2021-08-07</time>
+                <time title="修改时间：2021-08-11 11:30:08" itemprop="dateModified" datetime="2021-08-11T11:30:08+08:00">2021-08-11</time>
               </span>
 
           
@@ -1063,7 +1066,7 @@ w_i=\cfrac{(\prod\limits_{j=1}^{n}a_{ij})^{\frac{1}{n}}}{\sum\limits_{k=1}^{n}{(
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-08-07 16:38:17" itemprop="dateModified" datetime="2021-08-07T16:38:17+08:00">2021-08-07</time>
+                <time title="修改时间：2021-08-11 11:30:08" itemprop="dateModified" datetime="2021-08-11T11:30:08+08:00">2021-08-11</time>
               </span>
 
           
@@ -1254,7 +1257,7 @@ isFinished(no)->read_rec</textarea><textarea id="flowchart-0-options" style="dis
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-08-07 16:38:17" itemprop="dateModified" datetime="2021-08-07T16:38:17+08:00">2021-08-07</time>
+                <time title="修改时间：2021-08-11 11:30:08" itemprop="dateModified" datetime="2021-08-11T11:30:08+08:00">2021-08-11</time>
               </span>
 
           
@@ -1335,7 +1338,7 @@ isFinished(no)->read_rec</textarea><textarea id="flowchart-0-options" style="dis
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-08-07 16:38:17" itemprop="dateModified" datetime="2021-08-07T16:38:17+08:00">2021-08-07</time>
+                <time title="修改时间：2021-08-11 11:30:08" itemprop="dateModified" datetime="2021-08-11T11:30:08+08:00">2021-08-11</time>
               </span>
 
           
