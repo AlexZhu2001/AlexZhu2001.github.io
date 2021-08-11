@@ -1254,3 +1254,60 @@ ovs-ofctl add-flow s3 icmp,nw_src=10.0.0.2,nw_dst=10.0.0.1,icmp_type=0,icmp_code
 ```
 此时h1可以ping通h2
 {% asset_img 12-ovs-res.png result %}
+
+## 13. OVS交换机封包复制示例介绍
+实验所用拓扑结构:
+{% asset_img 13-topo.png topo %}
+mininet脚本:
+```python
+from mininet.cli import CLI
+from mininet.net import Mininet
+from mininet.link import Link,TCLink,Intf
+from mininet.node import Controller,RemoteController
+
+if '__main__'==__name__:
+    net=Mininet(link=TCLink)
+    h1=net.addHost('h1',ip='10.0.0.1/24',mac='00:00:00:00:00:01')
+    h2=net.addHost('h2',ip='10.0.0.2/24',mac='00:00:00:00:00:02')
+    h3=net.addHost('h3',ip='10.0.0.3/24',mac='00:00:00:00:00:03')
+    s1=net.addSwitch('s1')
+    c0=net.addController('c0',controller=RemoteController)
+    
+    net.addLink(h1,s1)
+    net.addLink(h2,s1)
+    net.addLink(h3,s1)
+    
+    net.build()
+
+    c0.start()
+    s1.start([c0])
+
+    h1.cmd("arp -s 10.0.0.2 00:00:00:00:00:02")
+    h1.cmd("arp -s 10.0.0.3 00:00:00:00:00:03")
+    h2.cmd("arp -s 10.0.0.1 00:00:00:00:00:01")
+    h2.cmd("arp -s 10.0.0.3 00:00:00:00:00:03")
+    h3.cmd("arp -s 10.0.0.1 00:00:00:00:00:01")
+    h3.cmd("arp -s 10.0.0.2 00:00:00:00:00:02")
+
+    CLI(net)
+    net.stop()
+```
+实验目标：通过h1发往h2的udp数据包复制一份给h3
+### 1. 直接复制 不修改信息
+下发如下流表
+```bash
+ovs-ofctl add-flow s1 priority=1,ip,nw_dst=10.0.0.1,actions=output:1
+ovs-ofctl add-flow s1 priority=1,ip,nw_dst=10.0.0.2,actions=output:2
+ovs-ofctl add-flow s1 priority=1,ip,nw_dst=10.0.0.3,actions=output:3
+ovs-ofctl add-flow s1 priority=10,udp,nw_src=10.0.0.1,nw_dst=10.0.0.2,actions=output:2,output:3
+```
+此时 三台机器可以互相ping 且h1->h2的udp包会转发一份给h3
+{% asset_img 13-res-1.png result %}
+
+### 2. 复制并修改目的地址
+在1的基础上下发如下流表
+```bash
+ovs-ofctl add-flow s1 priority=100,udp,nw_src=10.0.0.1,nw_dst=10.0.0.2,actions=output:2,mod_dl_dst=00:00:00:00:00:03,mod_nw_dst=10.0.0.3,output:3
+```
+此时 h3会收到修改后的数据包
+{% asset_img 13-res-2.png result %}
